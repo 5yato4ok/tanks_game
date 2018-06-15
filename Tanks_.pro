@@ -25,10 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    track.cpp \
+    tank.cpp \
+    turret.cpp \
+    gun.cpp \
+    vision.cpp \
+    body.cpp \
+    action.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    track.h \
+    tank.h \
+    turret.h \
+    gun.h \
+    vision.h \
+    body.h \
+    action.h
 
 FORMS += \
         mainwindow.ui
