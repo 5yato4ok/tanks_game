@@ -12,6 +12,7 @@ class GamePadMngr : public QObject {
   explicit GamePadMngr(QObject *parent = nullptr);
   ~GamePadMngr();
  private:
+  void GamePadMngr::connectedChangedEvent(bool value);
   QGamepad* m_gamepad;
   //gamepad;
 signals:
