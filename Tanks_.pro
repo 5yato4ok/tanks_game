@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += gamepad
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,7 +33,9 @@ SOURCES += \
     gun.cpp \
     vision.cpp \
     body.cpp \
-    action.cpp
+    action.cpp \
+    player.cpp \
+    gamepadmngr.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +45,9 @@ HEADERS += \
     gun.h \
     vision.h \
     body.h \
-    action.h
+    action.h \
+    player.h \
+    gamepadmngr.h
 
 FORMS += \
         mainwindow.ui
