@@ -4,18 +4,22 @@
 #include "turret.h"
 #include "track.h"
 #include "action.h"
+#include "gamepadmngr.h"
 
 
 namespace tank {
 class Tank_mngr {
  public:
-    Tank_mngr();
-    tank_status WaitForAction();
-    tank_status SendActionToMngr(Action& action);
+   explicit Tank_mngr(GamePadMngr& gamepad);
+   tank_status WaitForAction();
+   tank_status SendActionToMngr(Action& action);
+   bool Is_initialized() { return is_intialized_; }
  private:
-    Turret_mngr turet;
-    Track_mngr track;
-    Body_mngr body_mngr;
+   GamePadMngr& gamepad;
+   Turret_mngr turet;
+   Track_mngr track;
+   Body_mngr body_mngr;
+   bool is_intialized_;
 };
 
 } //namespace Tank

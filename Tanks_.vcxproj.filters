@@ -23,10 +23,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -34,80 +30,79 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="tanks_part">
+      <UniqueIdentifier>{2d48a518-0697-48c3-92b0-64b78c0c91e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{3e955033-29f0-47a5-a6a4-317a09332ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="steel_stuff">
+      <UniqueIdentifier>{c36d503d-5aa5-4f6a-b4b5-87123a6b4d3c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="action.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="body.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gamepadmngr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gun.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Form Files</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="body.cpp">
+      <Filter>tanks_part</Filter>
+    </ClCompile>
+    <ClCompile Include="gun.cpp">
+      <Filter>tanks_part</Filter>
     </ClCompile>
     <ClCompile Include="tank.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>tanks_part</Filter>
     </ClCompile>
     <ClCompile Include="track.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>tanks_part</Filter>
     </ClCompile>
     <ClCompile Include="turret.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>tanks_part</Filter>
     </ClCompile>
     <ClCompile Include="vision.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>tanks_part</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="gamepadmngr.cpp">
+      <Filter>steel_stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>steel_stuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="action.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="body.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <QtMoc Include="gamepadmngr.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClInclude Include="gun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClInclude Include="player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tank.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="track.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="vision.h">
+      <Filter>tanks_part</Filter>
     </ClInclude>
     <ClInclude Include="turret.h">
-      <Filter>Header Files</Filter>
+      <Filter>tanks_part</Filter>
     </ClInclude>
-    <ClInclude Include="vision.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="track.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="tank.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="body.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>steel_stuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    
-    
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -122,5 +117,13 @@
     <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="mainwindow.h">
+      <Filter>Form Files</Filter>
+    </QtMoc>
+    <QtMoc Include="gamepadmngr.h">
+      <Filter>steel_stuff</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

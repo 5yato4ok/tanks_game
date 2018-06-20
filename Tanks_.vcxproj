@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F44BC38A-2BAD-3EED-B8B9-6A8F5B5A2EC1}</ProjectGuid>
+    <ProjectGuid>{F7E0DD92-E13C-3255-9F8A-B67345863882}</ProjectGuid>
     <RootNamespace>Tanks_</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>

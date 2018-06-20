@@ -10,9 +10,11 @@ class GamePadMngr : public QObject {
   Q_OBJECT
  public:
   explicit GamePadMngr(QObject *parent = nullptr);
+  void Listen_Input();
+  bool Is_connected();
   ~GamePadMngr();
  private:
-  void GamePadMngr::connectedChangedEvent(bool value);
+ void connectedChangedEvent(bool value);
   QGamepad* m_gamepad;
   //gamepad;
 signals:
