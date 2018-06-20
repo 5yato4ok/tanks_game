@@ -181,8 +181,9 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="action.cpp" />
+    <ClCompile Include="arduino_sender.cpp" />
     <ClCompile Include="body.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="gamepadmngr.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
@@ -195,14 +196,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="action.h" />
+    <ClInclude Include="arduino_sender.h" />
     <ClInclude Include="body.h" />
     <QtMoc Include="gamepadmngr.h">
     </QtMoc>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="gun.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
     <ClInclude Include="player.h" />
-    <ClInclude Include="tank.h" />
+    <QtMoc Include="tank.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtGamepad;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;.\debug;\include;$(QTDIR)\mkspecs\win32-msvc</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_WINDOWS;UNICODE;_UNICODE;WIN32;WIN64;QT_DEPRECATED_WARNINGS;QT_GAMEPAD_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtGamepad;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;.\release;\include;$(QTDIR)\mkspecs\win32-msvc</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_WINDOWS;UNICODE;_UNICODE;WIN32;WIN64;QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_GAMEPAD_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG</Define>
+    </QtMoc>
     <ClInclude Include="track.h" />
     <ClInclude Include="turret.h" />
     <ClInclude Include="vision.h" />

@@ -72,7 +72,10 @@
     <ClCompile Include="gamepadmngr.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
-    <ClCompile Include="action.cpp">
+    <ClCompile Include="arduino_sender.cpp">
+      <Filter>steel_stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,9 +89,6 @@
     <ClInclude Include="track.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
-    <ClInclude Include="tank.h">
-      <Filter>tanks_part</Filter>
-    </ClInclude>
     <ClInclude Include="body.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
@@ -99,6 +99,12 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
+      <Filter>steel_stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="arduino_sender.h">
+      <Filter>steel_stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
       <Filter>steel_stuff</Filter>
     </ClInclude>
   </ItemGroup>
@@ -124,6 +130,9 @@
     </QtMoc>
     <QtMoc Include="gamepadmngr.h">
       <Filter>steel_stuff</Filter>
+    </QtMoc>
+    <QtMoc Include="tank.h">
+      <Filter>tanks_part</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

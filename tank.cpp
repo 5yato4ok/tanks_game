@@ -1,11 +1,18 @@
 #include "tank.h"
 namespace tank {
-Tank_mngr::Tank_mngr(GamePadMngr& gamepad_) : 
+TankMngr::TankMngr(GamePadMngr* gamepad_, QObject *parent) :
   gamepad(gamepad_), is_intialized_(false) {
-  if (!gamepad.Is_connected()) {
+  if (!gamepad->Is_connected()) {
     return;
   }
-  gamepad.Listen_Input();
+}
 
+void TankMngr::ReceiveData(Action buffer) {
+  SendActionToMngr(buffer);
+}
+
+void TankMngr::Init_signals() {
+  gamepad->Listen_Input();
+  connect(gamepad, SIGNAL(GamePadMngr::sendAction(Action)), this, SLOT(TankMngr::ReceiveData(Action)));
 }
 } //namespace Tank

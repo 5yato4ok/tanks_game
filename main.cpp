@@ -8,6 +8,6 @@ int main(int argc, char *argv[]) {
     MainWindow w;
     w.show();
     GamePadMngr cntrl;
-    tank::Tank_mngr tank(cntrl);
+    tank::TankMngr tank(&cntrl);
     return a.exec();
 }

@@ -8,9 +8,11 @@ enum class tank_status:int32_t {OPPERATION_SUCCESS,OPERATION_FAILED};
 //TODO: What else?
 enum class game_status:int32_t {DIED,LOST_LIFE,WIN};
 
-class Action {
- public:
-  Action();
+struct Action {
+  action_type type;
+  tank_status result;
+  double double_value;
+  std::vector<uintptr_t> additional_buffer;
 };
 
 #endif // ACTION_H
