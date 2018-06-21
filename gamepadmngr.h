@@ -11,12 +11,14 @@
 // TODO: make action setting window
 // TODO: make opportunity to more than one button
 // TODO: test more thn one gamepad connection
+// TODO: for axis make more value;
 
 namespace gp_helper {
 
 struct Raw_Action {
   gp_helper::gp_buttons button;
   double value;
+  bool x;
 };
 
 class GamePadMngr : public QObject {
@@ -32,7 +34,9 @@ public:
 private:
   QGamepad* m_gamepad;
   void axisLeftX_packet(double value);
+  void axisRightX_packet(double value);
   void axisLeftY_packet(double value);
+  void axisRightY_packet(double value);
   void buttonA_packet(bool pressed);
   void buttonB_packet(bool pressed);
   void buttonX_packet(bool pressed);
