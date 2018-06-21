@@ -4,6 +4,7 @@ TankMngr::TankMngr( QObject *parent) : is_intialized_(false) {
   if (!gamepad.Is_connected()) {
     return;
   }
+  gamepad.Listen_Input();
 }
 
 bool TankMngr::is_tank_action(gp_helper::Raw_Action& buffer) {
@@ -53,9 +54,12 @@ void TankMngr::ReceiveData(gp_helper::Raw_Action buffer) {
   return;
 }
 
-void TankMngr::Init_signals() {
-  gamepad.Listen_Input();
+void TankMngr::Connect_signals() {
   connect(&gamepad, SIGNAL(gp_helper::GamePadMngr::sendAction(gp_helper::Raw_Action)), this,
+    SLOT(TankMngr::ReceiveData(gp_helper::Raw_Action)));
+}
+void TankMngr::Disconnect_signals() {
+  disconnect(&gamepad, SIGNAL(gp_helper::GamePadMngr::sendAction(gp_helper::Raw_Action)), this,
     SLOT(TankMngr::ReceiveData(gp_helper::Raw_Action)));
 }
 } //namespace Tank

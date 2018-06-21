@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     w.show();
     tank::TankMngr tank;
     if (tank.Is_initialized()) {
-      tank.Init_signals();
+      tank.Connect_signals();
     }
     return a.exec();
 }

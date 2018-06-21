@@ -13,7 +13,8 @@ class TankMngr:QObject {
  public:
   explicit TankMngr(QObject *parent = nullptr);
   bool Is_initialized() { return is_intialized_; }
-  void Init_signals();
+  void Connect_signals();
+  void Disconnect_signals();
  public slots:
   void ReceiveData(gp_helper::Raw_Action buffer);
  private:

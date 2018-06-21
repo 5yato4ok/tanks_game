@@ -27,46 +27,19 @@ void GamePadMngr::Listen_Input() {
     qDebug() << "Button A" << pressed;
   });
   connect(m_gamepad, &QGamepad::axisLeftXChanged, this, &GamePadMngr::axisLeftX_packet);
-  connect(m_gamepad, &QGamepad::axisLeftYChanged, this, [](double value) {
-    qDebug() << "Left Y" << value;
-  });
-  connect(m_gamepad, &QGamepad::axisRightXChanged, this, [](double value) {
-    qDebug() << "Right X" << value;
-  });
-  connect(m_gamepad, &QGamepad::axisRightYChanged, this, [](double value) {
-    qDebug() << "Right Y" << value;
-  });
-
-  connect(m_gamepad, &QGamepad::buttonBChanged, this, [](bool pressed) {
-    qDebug() << "Button B" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonXChanged, this, [](bool pressed) {
-    qDebug() << "Button X" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonYChanged, this, [](bool pressed) {
-    qDebug() << "Button Y" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonL1Changed, this, [](bool pressed) {
-    qDebug() << "Button L1" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonR1Changed, this, [](bool pressed) {
-    qDebug() << "Button R1" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonL2Changed, this, [](double value) {
-    qDebug() << "Button L2: " << value;
-  });
-  connect(m_gamepad, &QGamepad::buttonR2Changed, this, [](double value) {
-    qDebug() << "Button R2: " << value;
-  });
-  connect(m_gamepad, &QGamepad::buttonSelectChanged, this, [](bool pressed) {
-    qDebug() << "Button Select" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonStartChanged, this, [](bool pressed) {
-    qDebug() << "Button Start" << pressed;
-  });
-  connect(m_gamepad, &QGamepad::buttonGuideChanged, this, [](bool pressed) {
-    qDebug() << "Button Guide" << pressed;
-  });
+  connect(m_gamepad, &QGamepad::axisLeftYChanged, this, &GamePadMngr::axisLeftY_packet);
+  connect(m_gamepad, &QGamepad::axisRightXChanged, this, &GamePadMngr::axisRightX_packet);
+  connect(m_gamepad, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
+  connect(m_gamepad, &QGamepad::buttonBChanged, this, &GamePadMngr::buttonB_packet);
+  connect(m_gamepad, &QGamepad::buttonXChanged, this, &GamePadMngr::buttonX_packet);
+  connect(m_gamepad, &QGamepad::buttonYChanged, this, &GamePadMngr::buttonY_packet);
+  connect(m_gamepad, &QGamepad::buttonL1Changed, this, &GamePadMngr::buttonL1_packet);
+  connect(m_gamepad, &QGamepad::buttonR1Changed, this, &GamePadMngr::buttonR1_packet);
+  connect(m_gamepad, &QGamepad::buttonL2Changed, this, &GamePadMngr::buttonL2_packet);
+  connect(m_gamepad, &QGamepad::buttonR2Changed, this, &GamePadMngr::buttonR2_packet);
+  connect(m_gamepad, &QGamepad::buttonSelectChanged, this, &GamePadMngr::buttonSelect_packet);
+  connect(m_gamepad, &QGamepad::buttonStartChanged, this, &GamePadMngr::buttonStart_packet);
+  connect(m_gamepad, &QGamepad::buttonGuideChanged, this, &GamePadMngr::buttonGuide_packet);
 
 }
 
@@ -199,10 +172,6 @@ void GamePadMngr::buttonGuide_packet(bool pressed) {
   buffer.value = pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
-
-//connect(m_gamepad, &QGamepad::axisLeftXChanged, this, [](double value) {
-//  qDebug() << "Left X" << value;
-//});
 
 GamePadMngr::~GamePadMngr() {
   delete m_gamepad;
