@@ -27,9 +27,9 @@ void GamePadMngr::Listen_Input() {
     qDebug() << "Button A" << pressed;
   });
   connect(m_gamepad, &QGamepad::axisLeftXChanged, this, &GamePadMngr::axisLeftX_packet);
-  connect(m_gamepad, &QGamepad::axisLeftYChanged, this, &GamePadMngr::axisLeftY_packet);
+  //connect(m_gamepad, &QGamepad::axisLeftYChanged, this, &GamePadMngr::axisLeftY_packet);
   connect(m_gamepad, &QGamepad::axisRightXChanged, this, &GamePadMngr::axisRightX_packet);
-  connect(m_gamepad, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
+  //connect(m_gamepad, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
   connect(m_gamepad, &QGamepad::buttonBChanged, this, &GamePadMngr::buttonB_packet);
   connect(m_gamepad, &QGamepad::buttonXChanged, this, &GamePadMngr::buttonX_packet);
   connect(m_gamepad, &QGamepad::buttonYChanged, this, &GamePadMngr::buttonY_packet);
@@ -47,132 +47,122 @@ void GamePadMngr::Listen_Input() {
 }
 
 void GamePadMngr::axisLeftX_packet(double value) {
-  qDebug() << "Left X" << value;
-  //here create a packet init it
+  qDebug() << "Left X: " << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_LEFT;
-  buffer.value = value;
-  buffer.x = true;
+  buffer.value_x = value;
+  buffer.value_y = m_gamepad->axisLeftY();
+  qDebug() << "Left Y: " << buffer.value_y;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::axisRightX_packet(double value) {
-  qDebug() << "Right X" << value;
-  //here create a packet init it
+  qDebug() << "Right X: " << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
-  buffer.value = value;
-  buffer.x = true;
+  buffer.value_x = value;
+  buffer.value_y = m_gamepad->axisRightY();
+  qDebug() << "Right Y: " << buffer.value_y;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::axisRightY_packet(double value) {
   qDebug() << "Left Y" << value;
-  //here create a packet init it
+  
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
-  buffer.value = value;
-  buffer.x = false;
+  buffer.value_x= m_gamepad->axisRightX();
+  buffer.value_y = value;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::axisLeftY_packet(double value) {
   qDebug() << "Left Y" << value;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_LEFT;
-  buffer.value = value;
-  buffer.x = false;
+  buffer.value_x= m_gamepad->axisLeftX();
+  buffer.value_y = value;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::buttonA_packet(bool pressed) {
   qDebug() << "Button A" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_A;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::buttonB_packet(bool pressed) {
   qDebug() << "Button B" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_B;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
 void GamePadMngr::buttonX_packet(bool pressed) {
   qDebug() << "Button X" << pressed;
-  //here create a packet init it
+  
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_X;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonY_packet(bool pressed) {
   qDebug() << "Button Y" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_Y;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonL1_packet(bool pressed) {
   qDebug() << "Button L1" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_L1;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonR1_packet(bool pressed) {
   qDebug() << "Button R1" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_R1;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonL2_packet(double value) {
   qDebug() << "Button L2: " << value;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_L2;
-  buffer.value = value;
+  buffer.value_x= value;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonR2_packet(double value) {
   qDebug() << "Button R2: " << value;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_R2;
-  buffer.value = value;
+  buffer.value_x= value;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonSelect_packet(bool pressed) {
   qDebug() << "Button Select" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_SELECT;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonStart_packet(bool pressed) {
   qDebug() << "Button Start" << pressed;
-  //here create a packet init it
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_START;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonGuide_packet(bool pressed) {
   qDebug() << "Button Guide: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_GUIDE;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
@@ -180,28 +170,28 @@ void GamePadMngr::buttonUP_packet(bool value) {
   qDebug() << "Button UP: " << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_UP;
-  buffer.value = value;
+  buffer.value_x= value;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonDOWN_packet(bool pressed) {
   qDebug() << "Button DOWN: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_DOWN;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonLEFT_packet(bool pressed) {
   qDebug() << "Button LEFT: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_LEFT;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonRIGHT_packet(bool pressed) {
   qDebug() << "Button RIGHT: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_RIGHT;
-  buffer.value = pressed;
+  buffer.value_x= pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }
 

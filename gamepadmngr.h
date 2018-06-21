@@ -9,16 +9,14 @@
 #include "default_gp_settings.h"
 
 // TODO: make opportunity to use more than one button
-// TODO: test more thn one gamepad connection
-// TODO: for axis make more value;
+// TODO: test more than one gamepad connection
 // TODO: add disconnect function
-
 namespace gp_helper {
 
 struct Raw_Action {
   gp_helper::gp_buttons button;
-  double value;
-  bool x;
+  double value_x;
+  double value_y;
 };
 
 class GamePadMngr : public QObject {
