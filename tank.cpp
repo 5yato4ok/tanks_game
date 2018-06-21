@@ -8,11 +8,14 @@ TankMngr::TankMngr( QObject *parent) : is_intialized_(false) {
 }
 
 bool TankMngr::is_tank_action(gp_helper::Raw_Action& buffer) {
+  //check here all supported actions and buttons for tank. create vector of supported buttons.
   return true;
 }
 
 bool TankMngr::is_turret_action(gp_helper::Raw_Action& buffer) {
-  return true;
+  //also check up,down buttons for gun
+  // check right left for turret
+  return false;
 }
 TankAction TankMngr::get_turret_action(gp_helper::Raw_Action& buffer) {
   TankAction action;
@@ -21,7 +24,8 @@ TankAction TankMngr::get_turret_action(gp_helper::Raw_Action& buffer) {
 
 
 bool TankMngr::is_body_action(gp_helper::Raw_Action& buffer) {
-  return true;
+  //maybe put here something for vision. maybe push on button for zooming
+  return false;
 }
 TankAction TankMngr::get_body_action(gp_helper::Raw_Action& buffer) {
   TankAction action;
@@ -29,6 +33,7 @@ TankAction TankMngr::get_body_action(gp_helper::Raw_Action& buffer) {
 }
 
 bool TankMngr::is_track_action(gp_helper::Raw_Action& buffer) {
+  //check left and right axis. check validaty according doc
   return true;
 }
 TankAction TankMngr::get_track_action(gp_helper::Raw_Action& buffer) {
@@ -49,7 +54,7 @@ void TankMngr::ReceiveData(gp_helper::Raw_Action buffer) {
     } else if (is_body_action(buffer)) {
       qDebug() << "Is body action";
       body_mngr.ManageAction(get_track_action(buffer));
-  }
+    }
   }
   return;
 }

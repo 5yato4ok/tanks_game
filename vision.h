@@ -10,6 +10,7 @@ class Vision_mngr {
     tank_status ManageAction(TankAction& action);
  private:
   void zoom();
+  //here some camera OpenCV class
 };
 }
 #endif // VISION_H
