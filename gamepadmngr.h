@@ -8,10 +8,10 @@
 #include "action.h"
 #include "default_gp_settings.h"
 
-// TODO: make action setting window
-// TODO: make opportunity to more than one button
+// TODO: make opportunity to use more than one button
 // TODO: test more thn one gamepad connection
 // TODO: for axis make more value;
+// TODO: add disconnect function
 
 namespace gp_helper {
 
@@ -48,6 +48,10 @@ private:
   void buttonSelect_packet(bool pressed);
   void buttonStart_packet(bool pressed);
   void buttonGuide_packet(bool pressed);
+  void buttonUP_packet(bool value);
+  void buttonDOWN_packet(bool pressed);
+  void buttonLEFT_packet(bool pressed);
+  void buttonRIGHT_packet(bool pressed);
 
 };
 }//namespace gp_helper

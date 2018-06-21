@@ -40,7 +40,10 @@ void GamePadMngr::Listen_Input() {
   connect(m_gamepad, &QGamepad::buttonSelectChanged, this, &GamePadMngr::buttonSelect_packet);
   connect(m_gamepad, &QGamepad::buttonStartChanged, this, &GamePadMngr::buttonStart_packet);
   connect(m_gamepad, &QGamepad::buttonGuideChanged, this, &GamePadMngr::buttonGuide_packet);
-
+  connect(m_gamepad, &QGamepad::buttonUpChanged, this, &GamePadMngr::buttonUP_packet);
+  connect(m_gamepad, &QGamepad::buttonDownChanged, this, &GamePadMngr::buttonDOWN_packet);
+  connect(m_gamepad, &QGamepad::buttonLeftChanged, this, &GamePadMngr::buttonLEFT_packet);
+  connect(m_gamepad, &QGamepad::buttonRightChanged, this, &GamePadMngr::buttonRIGHT_packet);
 }
 
 void GamePadMngr::axisLeftX_packet(double value) {
@@ -166,9 +169,38 @@ void GamePadMngr::buttonStart_packet(bool pressed) {
   emit sendAction(buffer); //TODO: check is it right?
 }
 void GamePadMngr::buttonGuide_packet(bool pressed) {
-  qDebug() << "Button Guide" << pressed;
+  qDebug() << "Button Guide: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_GUIDE;
+  buffer.value = pressed;
+  emit sendAction(buffer); //TODO: check is it right?
+}
+
+void GamePadMngr::buttonUP_packet(bool value) {
+  qDebug() << "Button UP: " << value;
+  Raw_Action buffer;
+  buffer.button = gp_buttons::BUT_UP;
+  buffer.value = value;
+  emit sendAction(buffer); //TODO: check is it right?
+}
+void GamePadMngr::buttonDOWN_packet(bool pressed) {
+  qDebug() << "Button DOWN: " << pressed;
+  Raw_Action buffer;
+  buffer.button = gp_buttons::BUT_DOWN;
+  buffer.value = pressed;
+  emit sendAction(buffer); //TODO: check is it right?
+}
+void GamePadMngr::buttonLEFT_packet(bool pressed) {
+  qDebug() << "Button LEFT: " << pressed;
+  Raw_Action buffer;
+  buffer.button = gp_buttons::BUT_LEFT;
+  buffer.value = pressed;
+  emit sendAction(buffer); //TODO: check is it right?
+}
+void GamePadMngr::buttonRIGHT_packet(bool pressed) {
+  qDebug() << "Button RIGHT: " << pressed;
+  Raw_Action buffer;
+  buffer.button = gp_buttons::BUT_RIGHT;
   buffer.value = pressed;
   emit sendAction(buffer); //TODO: check is it right?
 }

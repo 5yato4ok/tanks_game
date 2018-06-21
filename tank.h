@@ -6,6 +6,7 @@
 #include "action.h"
 #include "gamepadmngr.h"
 
+// TODO: make action setting window from qt example
 
 namespace tank {
 class TankMngr:QObject {
