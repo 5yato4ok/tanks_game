@@ -5,16 +5,31 @@ TankMngr::TankMngr( QObject *parent) : is_intialized_(false) {
     return;
   }
   gamepad.Listen_Input();
+  init_supported_buttons();
 }
-
+void TankMngr::init_supported_buttons() {
+  supported_buttons = {
+    /*gp_helper::gp_buttons::AXIS_LEFT,*/ gp_helper::gp_buttons::AXIS_RIGHT,
+    gp_helper::gp_buttons::BUT_DOWN, gp_helper::gp_buttons::BUT_RIGHT,
+    gp_helper::gp_buttons::BUT_UP, gp_helper::gp_buttons::BUT_LEFT
+  };
+}
 bool TankMngr::is_tank_action(gp_helper::Raw_Action& buffer) {
-  //check here all supported actions and buttons for tank. create vector of supported buttons.
-  return true;
+  for (auto& sp_button : supported_buttons) {
+    if (sp_button == buffer.button) {
+      return true;
+    }
+  }
+  return false;
 }
 
 bool TankMngr::is_turret_action(gp_helper::Raw_Action& buffer) {
-  //also check up,down buttons for gun
-  // check right left for turret
+  if (buffer.button == gp_helper::gp_buttons::BUT_LEFT ||
+      buffer.button == gp_helper::gp_buttons::BUT_RIGHT ||
+      buffer.button == gp_helper::gp_buttons::BUT_DOWN ||
+      buffer.button == gp_helper::gp_buttons::BUT_UP) {
+    return true;
+  }
   return false;
 }
 TankAction TankMngr::get_turret_action(gp_helper::Raw_Action& buffer) {
@@ -34,6 +49,9 @@ TankAction TankMngr::get_body_action(gp_helper::Raw_Action& buffer) {
 
 bool TankMngr::is_track_action(gp_helper::Raw_Action& buffer) {
   //check left and right axis. check validaty according doc
+  if (buffer.button == gp_helper::gp_buttons::AXIS_RIGHT) {
+    return true;
+  }
   return true;
 }
 TankAction TankMngr::get_track_action(gp_helper::Raw_Action& buffer) {

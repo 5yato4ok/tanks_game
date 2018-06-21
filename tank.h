@@ -19,6 +19,7 @@ class TankMngr:QObject {
  public slots:
   void ReceiveData(gp_helper::Raw_Action buffer);
  private:
+  void init_supported_buttons();
   bool is_tank_action(gp_helper::Raw_Action& buffer);
 
   bool is_turret_action(gp_helper::Raw_Action& buffer);
@@ -37,6 +38,7 @@ class TankMngr:QObject {
   Track_mngr track;
   Body_mngr body_mngr;
   bool is_intialized_;
+  std::vector<gp_helper::gp_buttons> supported_buttons;
 };
 
 } //namespace Tank
