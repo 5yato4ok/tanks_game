@@ -7,7 +7,7 @@ namespace tank {
 class Track_mngr {
  public:
     Track_mngr();
-    tank_status ManageAction(Action& action);
+    tank_status ManageAction(TankAction& action);
  private:
     int32_t change_velocity();
     int32_t change_direction();

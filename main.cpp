@@ -7,7 +7,9 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    GamePadMngr cntrl;
-    tank::TankMngr tank(&cntrl);
+    tank::TankMngr tank;
+    if (tank.Is_initialized()) {
+      tank.Init_signals();
+    }
     return a.exec();
 }

@@ -6,21 +6,30 @@
 #include <QtGamepad/QGamepad>
 #include <QDebug>
 #include "action.h"
+#include "default_gp_settings.h"
 
-//TODO: make action setting window
+// TODO: make action setting window
 // TODO: make opportunity to more than one button
+// TODO: test more thn one gamepad connection
+
+namespace gp_helper {
+
+struct Raw_Action {
+  gp_helper::gp_buttons button;
+  double value;
+};
 
 class GamePadMngr : public QObject {
   Q_OBJECT
- public:
+public:
   explicit GamePadMngr(QObject *parent = nullptr);
   void Listen_Input();
   bool Is_connected();
   ~GamePadMngr();
   //signals
   void connectedChangedEvent(bool value);
-  void sendAction(Action buffer);
- private:
+  void sendAction(Raw_Action buffer);
+private:
   QGamepad* m_gamepad;
   void axisLeftX_packet(double value);
   void axisLeftY_packet(double value);
@@ -37,5 +46,5 @@ class GamePadMngr : public QObject {
   void buttonGuide_packet(bool pressed);
 
 };
-
+}//namespace gp_helper
 #endif // GAMEPADMNGR_H

@@ -1,7 +1,7 @@
 #include "gamepadmngr.h"
 #include "iostream"
-
-GamePadMngr::GamePadMngr(QObject *parent) : QObject(parent),m_gamepad(0) {
+namespace gp_helper {
+GamePadMngr::GamePadMngr(QObject *parent) : QObject(parent), m_gamepad(0){
   m_gamepad = new QGamepad(0, this);//or just m_gamepad = new QGamepad; is ok//
   connect(m_gamepad, &QGamepad::connectedChanged, this, &GamePadMngr::connectedChangedEvent);
 }
@@ -18,7 +18,7 @@ void GamePadMngr::connectedChangedEvent(bool value) {
   }
 }
 
-void GamePadMngr::sendAction(Action buffer) {
+void GamePadMngr::sendAction(Raw_Action buffer) {
   qDebug() << "Sending action to Tank Mngr";
 }
 
@@ -73,7 +73,7 @@ void GamePadMngr::Listen_Input() {
 void GamePadMngr::axisLeftX_packet(double value) {
   qDebug() << "Left X" << value;
   //here create a packet init it
-  Action buffer;
+  Raw_Action buffer;
   emit sendAction(buffer); //TODO: check is it right?
 }
 
@@ -122,6 +122,6 @@ void GamePadMngr::buttonGuide_packet(bool pressed) {
 //});
 
 GamePadMngr::~GamePadMngr() {
-    delete m_gamepad;
+  delete m_gamepad;
 }
-
+}//namespace gp_helper

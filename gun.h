@@ -7,7 +7,7 @@ namespace tank {
 class Gun_mngr {
  public:
   Gun_mngr();
-  tank_status ManageAction(Action& action);
+  tank_status ManageAction(TankAction& action);
  private:
   tank_status shot();
   tank_status change_height();

@@ -9,7 +9,7 @@ namespace tank{
 class Turret_mngr {
   public:
     Turret_mngr();
-    tank_status ManageAction(Action& action);
+    tank_status ManageAction(TankAction& action);
   private:
     int32_t rotate();
     Gun_mngr gun;

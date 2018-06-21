@@ -74,6 +74,9 @@
     <ClCompile Include="camera.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
+    <ClCompile Include="default_gp_settings.cpp">
+      <Filter>steel_stuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vision.h">
@@ -101,6 +104,9 @@
       <Filter>steel_stuff</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>steel_stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="default_gp_settings.h">
       <Filter>steel_stuff</Filter>
     </ClInclude>
   </ItemGroup>
