@@ -1,7 +1,7 @@
 #ifndef TANK_H
 #define TANK_H
 #include "body.h"
-#include "turret.h"
+#include "tower.h"
 #include "track.h"
 #include "action.h"
 #include "gamepadmngr.h"
@@ -22,8 +22,8 @@ class TankMngr:QObject {
   void init_supported_buttons();
   bool is_tank_action(gp_helper::Raw_Action& buffer);
 
-  bool is_turret_action(gp_helper::Raw_Action& buffer);
-  TankAction get_turret_action(gp_helper::Raw_Action& buffer);
+  bool is_tower_action(gp_helper::Raw_Action& buffer);
+  TankAction get_tower_action(gp_helper::Raw_Action& buffer);
 
 
   bool is_body_action(gp_helper::Raw_Action& buffer);
@@ -34,7 +34,7 @@ class TankMngr:QObject {
   TankAction get_track_action(gp_helper::Raw_Action& buffer);
 
   gp_helper::GamePadMngr gamepad;
-  Turret_mngr turret;
+  Tower_mngr tower;
   Track_mngr track;
   Body_mngr body_mngr;
   bool is_intialized_;

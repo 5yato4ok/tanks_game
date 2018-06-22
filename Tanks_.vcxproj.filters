@@ -56,9 +56,6 @@
     <ClCompile Include="track.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
-    <ClCompile Include="turret.cpp">
-      <Filter>tanks_part</Filter>
-    </ClCompile>
     <ClCompile Include="vision.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
@@ -77,12 +74,12 @@
     <ClCompile Include="default_gp_settings.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
+    <ClCompile Include="tower.cpp">
+      <Filter>tanks_part</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vision.h">
-      <Filter>tanks_part</Filter>
-    </ClInclude>
-    <ClInclude Include="turret.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
     <ClInclude Include="track.h">
@@ -134,6 +131,9 @@
       <Filter>steel_stuff</Filter>
     </QtMoc>
     <QtMoc Include="tank.h">
+      <Filter>tanks_part</Filter>
+    </QtMoc>
+    <QtMoc Include="tower.h">
       <Filter>tanks_part</Filter>
     </QtMoc>
   </ItemGroup>

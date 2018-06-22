@@ -23,7 +23,7 @@ bool TankMngr::is_tank_action(gp_helper::Raw_Action& buffer) {
   return false;
 }
 
-bool TankMngr::is_turret_action(gp_helper::Raw_Action& buffer) {
+bool TankMngr::is_tower_action(gp_helper::Raw_Action& buffer) {
   if (buffer.button == gp_helper::gp_buttons::BUT_LEFT ||
       buffer.button == gp_helper::gp_buttons::BUT_RIGHT ||
       buffer.button == gp_helper::gp_buttons::BUT_DOWN ||
@@ -32,8 +32,21 @@ bool TankMngr::is_turret_action(gp_helper::Raw_Action& buffer) {
   }
   return false;
 }
-TankAction TankMngr::get_turret_action(gp_helper::Raw_Action& buffer) {
+TankAction TankMngr::get_tower_action(gp_helper::Raw_Action& buffer) {
   TankAction action;
+  if (buffer.button == gp_helper::gp_buttons::BUT_LEFT) {
+    action.type == action_type::MOVE_TOWER;
+    action.x_value = -1;
+  } else if (buffer.button == gp_helper::gp_buttons::BUT_RIGHT) {
+    action.type == action_type::MOVE_TOWER;
+    action.x_value = 1;
+  } else if (buffer.button == gp_helper::gp_buttons::BUT_UP) {
+    action.type == action_type::MOVE_GUN;
+    action.y_value = 1;
+  } else if (buffer.button == gp_helper::gp_buttons::BUT_DOWN) {
+    action.type == action_type::MOVE_GUN;
+    action.y_value = -1;
+  }
   return action;
 }
 
@@ -56,6 +69,9 @@ bool TankMngr::is_track_action(gp_helper::Raw_Action& buffer) {
 }
 TankAction TankMngr::get_track_action(gp_helper::Raw_Action& buffer) {
   TankAction action;
+  action.type = action_type::MOVE_TRACK;
+  action.x_value = buffer.value_x;
+  action.y_value = buffer.value_y;
   return action;
 }
 
@@ -66,12 +82,12 @@ void TankMngr::ReceiveData(gp_helper::Raw_Action buffer) {
     if (is_track_action(buffer)) {
       qDebug() << "Is track action";
       track.ManageAction(get_track_action(buffer));
-    } else if (is_turret_action(buffer)){
-      qDebug() << "Is turret action";
-      turret.ManageAction(get_track_action(buffer));
+    } else if (is_tower_action(buffer)){
+      qDebug() << "Is tower action";
+      tower.ManageAction(get_tower_action(buffer));
     } else if (is_body_action(buffer)) {
       qDebug() << "Is body action";
-      body_mngr.ManageAction(get_track_action(buffer));
+      body_mngr.ManageAction(get_body_action(buffer));
     }
   }
   return;

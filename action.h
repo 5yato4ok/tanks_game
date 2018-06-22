@@ -4,17 +4,20 @@
 #include <vector>
 #include "default_gp_settings.h"
 //all actions which user can do
-enum class action_type : int32_t {MOVE_TURRET,MOVE_TRACK,MOVE_GUN,WAIT,SHOT}; //TODO: what else?
+enum class action_type : int32_t {MOVE_TOWER,MOVE_TRACK,MOVE_GUN,WAIT,SHOT,NONE}; //TODO: what else?
 //TODO:Which kind of debug signals can be returned
 
 enum class tank_status:int32_t {OPPERATION_SUCCESS,OPERATION_FAILED};
 //TODO: What else?
 enum class game_status:int32_t {DIED,LOST_LIFE,WIN,SHOT,GET_HIT};
 
+enum class direction :int8_t { UP, DOWN, RIGHT, LEFT ,NONE};
+
 struct TankAction {
   action_type type;
   tank_status result;
-  double double_value;
+  double x_value;
+  double y_value;
   std::vector<uintptr_t> additional_buffer;
 };
 

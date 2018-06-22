@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "action.h"
 namespace tank {
-
+//TODO: set limits
 class Gun_mngr {
  public:
   Gun_mngr();
