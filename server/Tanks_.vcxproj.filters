@@ -62,16 +62,10 @@
     <ClCompile Include="player.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="gamepadmngr.cpp">
-      <Filter>steel_stuff</Filter>
-    </ClCompile>
     <ClCompile Include="arduino_sender.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
-      <Filter>steel_stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="default_gp_settings.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
     <ClCompile Include="tower.cpp">
@@ -103,9 +97,6 @@
     <ClInclude Include="camera.h">
       <Filter>steel_stuff</Filter>
     </ClInclude>
-    <ClInclude Include="default_gp_settings.h">
-      <Filter>steel_stuff</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -126,9 +117,6 @@
   <ItemGroup>
     <QtMoc Include="mainwindow.h">
       <Filter>Form Files</Filter>
-    </QtMoc>
-    <QtMoc Include="gamepadmngr.h">
-      <Filter>steel_stuff</Filter>
     </QtMoc>
     <QtMoc Include="tank.h">
       <Filter>tanks_part</Filter>

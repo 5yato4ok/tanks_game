@@ -2,9 +2,10 @@
 #define ACTION_H
 #include <stdint.h>
 #include <vector>
-#include "default_gp_settings.h"
+
 //all actions which user can do
-enum class action_type : int32_t {MOVE_TOWER,MOVE_TRACK,MOVE_GUN,WAIT,SHOT,NONE}; //TODO: what else?
+enum class action_type : int32_t {MOVE_TOWER_LEFT,MOVE_TOWER_RIGHT,
+  MOVE_TRACK,MOVE_GUN_UP,MOVE_GUN_DOWN,WAIT,SHOT,NONE}; //TODO: what else?
 //TODO:Which kind of debug signals can be returned
 
 enum class tank_status:int32_t {OPPERATION_SUCCESS,OPERATION_FAILED};

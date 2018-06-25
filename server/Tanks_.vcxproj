@@ -184,8 +184,6 @@
     <ClCompile Include="arduino_sender.cpp" />
     <ClCompile Include="body.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="default_gp_settings.cpp" />
-    <ClCompile Include="gamepadmngr.cpp" />
     <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -199,10 +197,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="arduino_sender.h" />
     <ClInclude Include="body.h" />
-    <QtMoc Include="gamepadmngr.h">
-    </QtMoc>
     <ClInclude Include="camera.h" />
-    <ClInclude Include="default_gp_settings.h" />
     <ClInclude Include="gun.h" />
     <QtMoc Include="mainwindow.h">
     </QtMoc>
