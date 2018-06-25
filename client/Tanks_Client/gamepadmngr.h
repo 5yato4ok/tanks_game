@@ -11,13 +11,16 @@
 // TODO: make opportunity to use more than one button
 // TODO: test more than one gamepad connection
 // TODO: add disconnect function
-namespace gp_helper {
 
 struct Raw_Action {
   gp_helper::gp_buttons button;
   double value_x;
   double value_y;
 };
+
+
+namespace gp_helper {
+
 
 class GamePadMngr : public QObject {
   Q_OBJECT
@@ -26,8 +29,8 @@ public:
   void Listen_Input();
   bool Is_connected();
   ~GamePadMngr();
-  //signals
   void connectedChangedEvent(bool value);
+signals:
   void sendAction(Raw_Action buffer);
 private:
   QGamepad* m_gamepad;
