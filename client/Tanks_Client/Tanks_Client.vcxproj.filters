@@ -58,16 +58,16 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="Tanks_Client.qrc">
-      <Filter>Form Files</Filter>
-    </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="game_type.h">
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="default_gp_settings.h">
       <Filter>gamepad</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Tanks_Client.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
   </ItemGroup>
 </Project>

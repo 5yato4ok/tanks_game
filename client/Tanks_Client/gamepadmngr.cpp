@@ -18,9 +18,9 @@ void GamePadMngr::connectedChangedEvent(bool value) {
   }
 }
 
-void GamePadMngr::sendAction(Raw_Action buffer) {
-  qDebug() << "Sending action";
-}
+//void GamePadMngr::sendAction(Raw_Action buffer) {
+//  qDebug() << "Sending action";
+//}
 
 void GamePadMngr::Listen_Input() {
   connect(m_gamepad, &QGamepad::buttonAChanged, this, [](bool pressed) {

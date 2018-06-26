@@ -15,11 +15,11 @@ class Tanks_Client : public Player_local {
   bool Is_initialized() { return is_intialized_; }
   gp_helper::Button_settings Init_User_Buttons(gp_helper::Button_settings user_def);
  public slots:
-  void ReceiveData(gp_helper::Raw_Action buffer);
+  void ReceiveData(Raw_Action buffer);
  private:
   bool get_default_buttons_settings();
   gp_helper::Button_settings supported_buttons;
-  bool is_tank_action(gp_helper::Raw_Action& buffer);
+  bool is_tank_action(Raw_Action& buffer);
   gp_helper::GamePadMngr gamepad;
   Ui::Tanks_ClientClass ui;
   bool is_intialized_;

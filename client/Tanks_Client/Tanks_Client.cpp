@@ -1,10 +1,11 @@
 #include "Tanks_Client.h"
 namespace client {
 Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent) {
-  if (!gamepad.Is_connected()) {
-    return;
-  }
+  //if (!gamepad.Is_connected()) {
+  //  return;
+  //}
   ui.setupUi(this);
+  Connect_signals();
   gamepad.Listen_Input();
   get_default_buttons_settings();
 }
@@ -17,7 +18,7 @@ gp_helper::Button_settings Tanks_Client::Init_User_Buttons(gp_helper::Button_set
 bool Tanks_Client::get_default_buttons_settings() {
   return false;
 }
-bool Tanks_Client::is_tank_action(gp_helper::Raw_Action& buffer) {
+bool Tanks_Client::is_tank_action(Raw_Action& buffer) {
   for (auto& sp_button : supported_buttons) {
     if (sp_button.first == buffer.button) {
       return true;
@@ -26,7 +27,7 @@ bool Tanks_Client::is_tank_action(gp_helper::Raw_Action& buffer) {
   return false;
 }
 
-void Tanks_Client::ReceiveData(gp_helper::Raw_Action buffer) {
+void Tanks_Client::ReceiveData(Raw_Action buffer) {
   qDebug() << "Tank: Received Data";
   if (!is_tank_action(buffer)) {
     return;
@@ -50,12 +51,12 @@ void Tanks_Client::ReceiveData(gp_helper::Raw_Action buffer) {
 }
 
 void Tanks_Client::Connect_signals() {
-  connect(&gamepad, SIGNAL(gp_helper::GamePadMngr::sendAction(gp_helper::Raw_Action)), this,
-    SLOT(Tanks_Client::ReceiveData(gp_helper::Raw_Action)));
+  connect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
+    SLOT(ReceiveData(Raw_Action)));
 }
 void Tanks_Client::Disconnect_signals() {
-  disconnect(&gamepad, SIGNAL(gp_helper::GamePadMngr::sendAction(gp_helper::Raw_Action)), this,
-    SLOT(Tanks_Client::ReceiveData(gp_helper::Raw_Action)));
+  disconnect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
+    SLOT(ReceiveData(Raw_Action)));
 }
   
 }//namespace client
