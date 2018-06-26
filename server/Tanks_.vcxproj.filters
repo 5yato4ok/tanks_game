@@ -71,6 +71,15 @@
     <ClCompile Include="tower.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="rules.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\default_gp_settings.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vision.h">
@@ -88,14 +97,29 @@
     <ClInclude Include="player.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="action.h">
-      <Filter>steel_stuff</Filter>
-    </ClInclude>
     <ClInclude Include="arduino_sender.h">
       <Filter>steel_stuff</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>steel_stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="rules.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="tanks_settings.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\default_gp_settings.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\action.h">
+      <Filter>steel_stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\game_type.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

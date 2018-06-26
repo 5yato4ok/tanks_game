@@ -3,7 +3,7 @@
 namespace client {
 Player_local::Player_local(QWidget *parent): QMainWindow(parent), 
 user_id(1234), password("pass") {
-  choosed_game = game_type::ERROR;
+  choosed_game = game_type::ERROR_GAME;
 }
 
 void Player_local::ReDrawStreamingVideo() {

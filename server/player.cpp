@@ -1,7 +1,7 @@
 #include "player.h"
 
 namespace game{
-Player::Player() {
-
+Player_server::Player_server(): player_id(-1) {
+  
 }
 } //namespace game
