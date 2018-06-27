@@ -2,12 +2,21 @@
 #define PLAYER_H
 #include <stdint.h>
 #include <QtCore/qobject.h>
+#include <QtCore/qsettings.h>
+#include <Qvector>
 #include "action.h"
 #include "game_type.h"
+#include "QtNetwork/qnetworkconfigmanager.h"
+#include "QtNetwork/qtcpserver.h"
+#include "QtNetwork/qtcpsocket.h"
+#include "QtNetwork/qnetworksession.h"
+#include "qrandom.h"
+#include "qdatastream.h"
+
 namespace game {
 class Player_server: public QObject {
  public:
-  Player_server();
+  Player_server(QObject *parent = nullptr);
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
   void GetGameAttributes(game_type type);
   void SendVideoToLocal();
@@ -16,9 +25,15 @@ class Player_server: public QObject {
   void SendSteelAction(TankAction action);
  public slots:
   void ManageArduinoInfo(); //Steel Info
-private:
+ private:
   void find_free_steel();
   int32_t player_id;
+  QTcpServer *tcpServer = nullptr;
+  QNetworkSession *networkSession = nullptr;
+ private slots:
+  void sessionOpened();
+  void init_player_id();
+  void sendBuffer();
 };
 }
 #endif // PLAYER_H
