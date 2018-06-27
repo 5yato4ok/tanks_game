@@ -1,9 +1,9 @@
 #pragma once
-#include "ui_Tanks_Client.h"
 #include "Player_local.h"
 #include "gamepadmngr.h"
 
 //TODO: Make controller as input
+//TODO: make separate gui tank_client or improve this to gui
 namespace client {
   //Tank controlled by GamePad for now
 class Tanks_Client : public Player_local {

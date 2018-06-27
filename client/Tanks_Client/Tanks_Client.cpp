@@ -4,7 +4,7 @@ Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent) {
   //if (!gamepad.Is_connected()) {
   //  return;
   //}
-  ui.setupUi(this);
+  //ui.setupUi(this);
   Connect_signals();
   gamepad.Listen_Input();
   get_default_buttons_settings();

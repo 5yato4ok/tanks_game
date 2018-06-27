@@ -4,7 +4,7 @@
 #include "tower.h"
 #include "track.h"
 #include "action.h"
-#include "player.h"
+#include "player_server.h"
 // TODO: make action setting window from qt example
 
 namespace tank {

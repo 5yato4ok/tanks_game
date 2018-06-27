@@ -47,9 +47,6 @@
     <ClCompile Include="body.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
-    <ClCompile Include="gun.cpp">
-      <Filter>tanks_part</Filter>
-    </ClCompile>
     <ClCompile Include="tank.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
@@ -58,9 +55,6 @@
     </ClCompile>
     <ClCompile Include="vision.cpp">
       <Filter>tanks_part</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="arduino_sender.cpp">
       <Filter>steel_stuff</Filter>
@@ -80,6 +74,12 @@
     <ClCompile Include="..\common\default_gp_settings.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="player_server.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="gun.cpp">
+      <Filter>steel_stuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vision.h">
@@ -93,9 +93,6 @@
     </ClInclude>
     <ClInclude Include="gun.h">
       <Filter>tanks_part</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="arduino_sender.h">
       <Filter>steel_stuff</Filter>
@@ -119,6 +116,9 @@
       <Filter>steel_stuff</Filter>
     </ClInclude>
     <ClInclude Include="..\common\game_type.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="player_server.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>

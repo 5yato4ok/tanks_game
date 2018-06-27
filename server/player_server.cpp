@@ -2,27 +2,6 @@
 //TODO: realize close
 namespace game{
 Player_server::Player_server(QObject *parent): player_id(-1) {
-  QNetworkConfigurationManager manager;
-  if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
-    // Get saved network configuration
-    QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
-    settings.beginGroup(QLatin1String("QtNetwork"));
-    const QString id = settings.value(QLatin1String("DefaultNetworkConfiguration")).toString();
-    settings.endGroup();
-
-    // If the saved network configuration is not currently discovered use the system default
-    QNetworkConfiguration config = manager.configurationFromIdentifier(id);
-    if ((config.state() & QNetworkConfiguration::Discovered) != QNetworkConfiguration::Discovered) {
-      config = manager.defaultConfiguration();
-    }
-
-    networkSession = new QNetworkSession(config, this);
-    connect(networkSession, &QNetworkSession::opened, this, &Player_server::sessionOpened);
-    qDebug() << "Opening network session.";
-    networkSession->open();
-  } else {
-    sessionOpened();
-  }
 }
 
 void Player_server::init_player_id() {
