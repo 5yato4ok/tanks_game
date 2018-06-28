@@ -12,11 +12,12 @@
 #include "QtNetwork/qnetworksession.h"
 #include "qrandom.h"
 #include "qdatastream.h"
+#include "ui_tanks_server.h"
 
 namespace game {
-class Player_server: public QObject {
+class Player_server: public QMainWindow {
  public:
-  Player_server(QObject *parent = nullptr);
+  Player_server(QMainWindow *parent = nullptr);
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
   void GetGameAttributes(game_type type);
   void SendVideoToLocal();
@@ -25,7 +26,8 @@ class Player_server: public QObject {
   void SendSteelAction(TankAction action);
  public slots:
   void ManageArduinoInfo(); //Steel Info
- private:
+private:
+  Ui_MainWindow* gui;
   void find_free_steel();
   int32_t player_id;
   QTcpServer *tcpServer = nullptr;

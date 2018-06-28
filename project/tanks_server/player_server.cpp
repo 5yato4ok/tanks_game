@@ -1,7 +1,32 @@
 #include "player_server.h"
 //TODO: realize close
 namespace game{
-Player_server::Player_server(QObject *parent): player_id(-1) {
+Player_server::Player_server(QMainWindow *parent): player_id(-1),gui(new Ui::MainWindow) {
+  gui->setupUi(this);
+  QNetworkConfigurationManager manager;
+  if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
+    // Get saved network configuration
+    QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
+    settings.beginGroup(QLatin1String("QtNetwork"));
+    const QString id = settings.value(QLatin1String("DefaultNetworkConfiguration")).toString();
+    settings.endGroup();
+
+    // If the saved network configuration is not currently discovered use the system default
+    QNetworkConfiguration config = manager.configurationFromIdentifier(id);
+    if ((config.state() & QNetworkConfiguration::Discovered) !=
+      QNetworkConfiguration::Discovered) {
+      config = manager.defaultConfiguration();
+    }
+
+    networkSession = new QNetworkSession(config, this);
+    connect(networkSession, &QNetworkSession::opened, this, &Player_server::sessionOpened);
+
+    gui->label->setText(tr("Opening network session."));
+    networkSession->open();
+  } else {
+    sessionOpened();
+  }
+  connect(tcpServer, &QTcpServer::newConnection, this, &Player_server::sendBuffer);
 }
 
 void Player_server::init_player_id() {
@@ -44,9 +69,9 @@ void Player_server::sessionOpened() {
   // if we did not find one, use IPv4 localhost
   if (ipAddress.isEmpty())
     ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-  //statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
-  //  "Run the Tank Client example now.")
-  //  .arg(ipAddress).arg(tcpServer->serverPort()));
+  gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
+    "Run the Tank Client example now.")
+    .arg(ipAddress).arg(tcpServer->serverPort()));
 }
 
 void Player_server::sendBuffer() {
