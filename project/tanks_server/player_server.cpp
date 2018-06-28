@@ -44,10 +44,9 @@ void Player_server::sessionOpened() {
   // if we did not find one, use IPv4 localhost
   if (ipAddress.isEmpty())
     ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-  qDebug() << "The server is running on\n\nIP";
-  qDebug() << ipAddress;
-  qDebug() << "port:";
-  qDebug() << tcpServer->serverPort();
+  //statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
+  //  "Run the Tank Client example now.")
+  //  .arg(ipAddress).arg(tcpServer->serverPort()));
 }
 
 void Player_server::sendBuffer() {

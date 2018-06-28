@@ -4,6 +4,30 @@ namespace client {
   Player_local::Player_local(QWidget *parent) : QMainWindow(parent),
     user_id(1234), password("pass"), tcpSocket(new QTcpSocket(this)) {
     choosed_game = game_type::ERROR_GAME;
+    in.setDevice(tcpSocket);
+    in.setVersion(QDataStream::Qt_4_0);
+    connect(tcpSocket, &QIODevice::readyRead, this, &Player_local::readBuffer);
+    connect(tcpSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+      this, &Player_local::displayError);
+    QNetworkConfigurationManager manager;
+    if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
+      // Get saved network configuration
+      QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
+      settings.beginGroup(QLatin1String("QtNetwork"));
+      const QString id = settings.value(QLatin1String("DefaultNetworkConfiguration")).toString();
+      settings.endGroup();
+
+      // If the saved network configuration is not currently discovered use the system default
+      QNetworkConfiguration config = manager.configurationFromIdentifier(id);
+      if ((config.state() & QNetworkConfiguration::Discovered) !=
+        QNetworkConfiguration::Discovered) {
+        config = manager.defaultConfiguration();
+      }
+      networkSession = new QNetworkSession(config, this);
+      connect(networkSession, &QNetworkSession::opened, this, &Player_local::sessionOpened);
+      qDebug()<<"Opening network session.";
+      networkSession->open();
+    }
   }
 
 void Player_local::request_player_id() {

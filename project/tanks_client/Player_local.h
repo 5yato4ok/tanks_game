@@ -16,6 +16,8 @@
 enum class player_type : int32_t {TANK,ROBOT, LAST};
 enum class controler_type: int32_t {GAMEPAD, KEYBOARD,LAST};
 
+//TODO: add threading
+
 namespace client {
 
 class Player_local: public QMainWindow {

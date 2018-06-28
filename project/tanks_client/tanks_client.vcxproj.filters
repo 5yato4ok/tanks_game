@@ -5,6 +5,11 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
     <Filter Include="Form Files">
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
@@ -15,61 +20,62 @@
       <ParseFiles>false</ParseFiles>
     </Filter>
     <Filter Include="gamepad">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="player">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{f8f3609e-4b57-400f-810c-669cd1f42353}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tanks_Client.cpp">
+    <ClCompile Include="Player_local.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="tanks_client.cpp">
       <Filter>player</Filter>
     </ClCompile>
     <ClCompile Include="gamepadmngr.cpp">
       <Filter>gamepad</Filter>
     </ClCompile>
-    <ClCompile Include="Player_local.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\common\default_gp_settings.cpp">
+    <ClCompile Include="..\common\default_gp_settings.cpp">
       <Filter>gamepad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Tanks_Client.h">
+    <QtUic Include="tanks_client.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="tanks_client.qrc">
+      <Filter>Form Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="tanks_client.h">
+      <Filter>player</Filter>
+    </QtMoc>
+    <QtMoc Include="Player_local.h">
       <Filter>player</Filter>
     </QtMoc>
     <QtMoc Include="gamepadmngr.h">
       <Filter>gamepad</Filter>
     </QtMoc>
-    <QtMoc Include="Player_local.h">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="server_settings.h">
       <Filter>player</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="Tanks_Client.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="Tanks_Client.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\common\action.h">
+    </ClInclude>
+    <ClInclude Include="..\common\action.h">
       <Filter>gamepad</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\default_gp_settings.h">
+    <ClInclude Include="..\common\default_gp_settings.h">
       <Filter>gamepad</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\game_type.h">
+    <ClInclude Include="..\common\game_type.h">
       <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
