@@ -5,7 +5,7 @@ namespace client {
     user_id(1234), password("pass"), tcpSocket(new QTcpSocket(this)) {
     choosed_game = game_type::ERROR_GAME;
     in.setDevice(tcpSocket);
-    in.setVersion(QDataStream::Qt_4_0);
+    in.setVersion(QDataStream::Qt_5_10);
     connect(tcpSocket, &QIODevice::readyRead, this, &Player_local::readBuffer);
     connect(tcpSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
       this, &Player_local::displayError);
@@ -36,14 +36,18 @@ void Player_local::request_player_id() {
 }
 
 void Player_local::readBuffer() {
-  in.startTransaction();
+  //in.startTransaction();
 
   QString input_buff;
-  in >> input_buff;
-
-  if (!in.commitTransaction())
-    return;
-  qDebug() << input_buff;
+  //in >> input_buff;
+  for (;;) {
+    in.startTransaction();
+    in >> input_buff;
+    if (in.commitTransaction())
+      qDebug() << "Received: " << input_buff;
+    else
+      break;
+  }
 }
 
 
@@ -75,11 +79,11 @@ void Player_local::displayError(QAbstractSocket::SocketError socketError) {
   case QAbstractSocket::RemoteHostClosedError:
     break;
   case QAbstractSocket::HostNotFoundError:
-    qDebug()<<"Fortune Client"<<"The host was not found. Please check the "<<
+    qDebug()<<"Tank Client"<<"The host was not found. Please check the "<<
         "host name and port settings.";
     break;
   case QAbstractSocket::ConnectionRefusedError:
-    qDebug()<<"Fortune Client. "<<
+    qDebug()<<"Tank Client. "<<
       "The connection was refused by the peer. "<<
         "Make sure the fortune server is running, "<<
         "and check that the host name and port "<<

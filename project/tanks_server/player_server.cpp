@@ -51,24 +51,27 @@ void Player_server::sessionOpened() {
   }
 
   tcpServer = new QTcpServer(this);
-  if (!tcpServer->listen()) {
-    qDebug() << "Unable to start the server: %1. " << tcpServer->errorString();
-    //close();
-    return;
-  }
+
   QString ipAddress;
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
+  QHostAddress ip;
   for (int i = 0; i < ipAddressesList.size(); ++i) {
-    if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
-      ipAddressesList.at(i).toIPv4Address()) {
+    if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
       ipAddress = ipAddressesList.at(i).toString();
+      ip = ipAddressesList.at(i);
       break;
     }
   }
   // if we did not find one, use IPv4 localhost
+
   if (ipAddress.isEmpty())
     ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+  if (!tcpServer->listen(ip, 15666)) {
+    qDebug() << "Unable to start the server: %1. " << tcpServer->errorString();
+    //close();
+    return;
+  }
   gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
     "Run the Tank Client example now.")
     .arg(ipAddress).arg(tcpServer->serverPort()));
@@ -78,8 +81,8 @@ void Player_server::sendBuffer() {
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
-
-  out << "Some test data. Player id"<<player_id;
+  QString tmp = "Some test data.Player id.12345";
+  out << tmp;
   QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
   connect(clientConnection, &QAbstractSocket::disconnected,
     clientConnection, &QObject::deleteLater);
