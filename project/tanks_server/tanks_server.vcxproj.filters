@@ -109,6 +109,9 @@
     <ClInclude Include="player_server.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\server_buffer.h">
+      <Filter>game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="tank.h">

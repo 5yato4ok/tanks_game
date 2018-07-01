@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\action.h" />
+    <ClInclude Include="..\common\server_buffer.h" />
     <ClInclude Include="arduino_sender.h" />
     <ClInclude Include="body.h" />
     <ClInclude Include="camera.h" />

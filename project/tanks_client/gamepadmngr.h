@@ -18,7 +18,6 @@ struct Raw_Action {
   double value_y;
 };
 
-
 namespace gp_helper {
 
 

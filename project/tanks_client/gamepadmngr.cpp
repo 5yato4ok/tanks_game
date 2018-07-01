@@ -3,6 +3,7 @@
 namespace gp_helper {
 GamePadMngr::GamePadMngr(QObject *parent) : QObject(parent), m_gamepad(0){
   m_gamepad = new QGamepad(0, this);//or just m_gamepad = new QGamepad; is ok//
+  //auto list = m_gamepad->
   connect(m_gamepad, &QGamepad::connectedChanged, this, &GamePadMngr::connectedChangedEvent);
 }
 
