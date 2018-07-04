@@ -17,60 +17,24 @@
    <widget class="QPushButton" name="ChooseGameButton">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>70</y>
-      <width>61</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Choose Game</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="ServerCombobx">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>10</y>
-      <width>111</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>40</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
+      <x>420</x>
       <y>20</y>
-      <width>35</width>
-      <height>10</height>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Server</string>
+     <string>PingServer</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QPlainTextEdit" name="output">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>40</y>
-      <width>35</width>
-      <height>10</height>
+      <x>20</x>
+      <y>20</y>
+      <width>281</width>
+      <height>201</height>
      </rect>
-    </property>
-    <property name="text">
-     <string>Port</string>
     </property>
    </widget>
   </widget>

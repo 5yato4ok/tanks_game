@@ -42,7 +42,7 @@ class Player_local: public QMainWindow {
   void get_streaming_video();
   bool writeData(QByteArray data);
  public slots:
-  void connect_to_host();
+  bool connect_to_host();
  private slots:
   void readBuffer();
   void displayError(QAbstractSocket::SocketError socketError);

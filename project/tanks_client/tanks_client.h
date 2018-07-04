@@ -1,9 +1,10 @@
 #pragma once
 #include "Player_local.h"
 #include "gamepadmngr.h"
-
+#include "ui_tanks_client.h"
 //TODO: Make controller as input
 //TODO: make separate gui tank_client or improve this to gui
+//TODO: make button to ping server
 namespace client {
   //Tank controlled by GamePad for now
 class Tanks_Client : public Player_local {
@@ -21,7 +22,7 @@ class Tanks_Client : public Player_local {
   gp_helper::Button_settings supported_buttons;
   bool is_tank_action(Raw_Action& buffer);
   gp_helper::GamePadMngr gamepad;
-  Ui::Tanks_ClientClass ui;
+  Ui::Tanks_ClientClass* ui;
   bool is_intialized_;
 };
 }//namespace client

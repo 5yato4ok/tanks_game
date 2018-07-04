@@ -106,9 +106,6 @@
     <ClInclude Include="rules.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="player_server.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
       <Filter>game</Filter>
     </ClInclude>
@@ -119,6 +116,9 @@
     </QtMoc>
     <QtMoc Include="tower.h">
       <Filter>tanks_part</Filter>
+    </QtMoc>
+    <QtMoc Include="player_server.h">
+      <Filter>game</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

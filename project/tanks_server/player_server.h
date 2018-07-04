@@ -13,9 +13,11 @@
 #include "qrandom.h"
 #include "qdatastream.h"
 #include "ui_tanks_server.h"
-
+#include "server_buffer.h"
+//TODO: make gui global
 namespace game {
 class Player_server: public QMainWindow {
+  Q_OBJECT
  public:
   Player_server(QMainWindow *parent = nullptr);
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
@@ -23,19 +25,27 @@ class Player_server: public QMainWindow {
   void SendVideoToLocal();
   int32_t GetPlayerId() { return player_id; }
  signals:
-  void SendSteelAction(TankAction action);
+  void tankDataReceived(TankAction action);
+  void dataReceived(QByteArray);
  public slots:
   void ManageArduinoInfo(); //Steel Info
-private:
+ protected:
   Ui_MainWindow* gui;
+ private:
   void find_free_steel();
+  bool is_tank_action(ServerBuffer buffer);
   int32_t player_id;
   QTcpServer *tcpServer = nullptr;
   QNetworkSession *networkSession = nullptr;
+  QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
+  QHash<QTcpSocket*, qint32*> sizes; //We need to store the size to verify if a block has received completely
  private slots:
   void sessionOpened();
   void init_player_id();
   void sendBuffer();
+  void disconnected();
+  void readyRead();
+  void newConnection();
 };
 }
 #endif // PLAYER_H

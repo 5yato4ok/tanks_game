@@ -30,9 +30,10 @@ Player_local::Player_local(QWidget *parent) : QMainWindow(parent),
   }
 }
 
-void Player_local::connect_to_host() {
+bool Player_local::connect_to_host() {
   tcpSocket->abort();
   tcpSocket->connectToHost(g_server_ip, g_server_port);
+  return tcpSocket->waitForConnected();
 }
 
 void Player_local::readBuffer() {
@@ -114,6 +115,7 @@ void Player_local::sessionOpened() {
 }
 
 bool Player_local::writeData(QByteArray data) {
+  auto value = tcpSocket->state();
   if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
     tcpSocket->write(IntToArray(data.size())); //write size of data
     tcpSocket->write(data); //write the data itself

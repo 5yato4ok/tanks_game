@@ -1,10 +1,11 @@
 #include "Tanks_Client.h"
 namespace client {
-Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent) {
+Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent), ui(new Ui::Tanks_ClientClass) {
   //if (!gamepad.Is_connected()) {
   //  return;
   //}
-  //ui.setupUi(this);
+  ui->setupUi(this);
+  auto result = Player_local::connect_to_host();
   Connect_signals();
   gamepad.Listen_Input();
   get_default_buttons_settings();
@@ -28,19 +29,23 @@ bool Tanks_Client::is_tank_action(Raw_Action& buffer) {
 }
 
 void Tanks_Client::ReceiveData(Raw_Action buffer) {
-  qDebug() << "Tank: Received Data";
+  //qDebug() << "Tank: Received Data";
+  ui->output->appendPlainText("\nTank: Received Data");
   if (!is_tank_action(buffer)) {
     return;
   }
   if (supported_buttons[buffer.button] == (int)action_type::MOVE_TRACK) {
-    qDebug() << "Is track action";
+    //qDebug() << "Is track action";
+    ui->output->appendPlainText("\nIs track action");
   } else if (supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_RIGHT||
     supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_LEFT ||
     supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_UP || 
     supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_DOWN) {
-    qDebug() << "Is tower action";
+    //qDebug() << "Is tower action";
+    ui->output->appendPlainText("\nIs tower action");
   } else if (supported_buttons[buffer.button] == (int)action_type::SHOT) {
-    qDebug() << "Is gun action";
+    //qDebug() << "Is gun action";
+    ui->output->appendPlainText("\nIs gun action");
   }
   TankAction action;
   action.type = (action_type)supported_buttons[buffer.button];

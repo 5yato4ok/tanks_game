@@ -1,6 +1,13 @@
 #include "player_server.h"
 //TODO: realize close
 namespace game{
+  TankAction tk; //TODO: fix
+qint32 ArrayToInt(QByteArray source) {
+  qint32 temp;
+  QDataStream data(&source, QIODevice::ReadWrite);
+  data >> temp;
+  return temp;
+}
 Player_server::Player_server(QMainWindow *parent): player_id(-1),gui(new Ui::MainWindow) {
   gui->setupUi(this);
   QNetworkConfigurationManager manager;
@@ -26,7 +33,7 @@ Player_server::Player_server(QMainWindow *parent): player_id(-1),gui(new Ui::Mai
   } else {
     sessionOpened();
   }
-  connect(tcpServer, &QTcpServer::newConnection, this, &Player_server::sendBuffer);
+  connect(tcpServer, &QTcpServer::newConnection, this, &Player_server::newConnection);
 }
 
 void Player_server::init_player_id() {
@@ -91,4 +98,71 @@ void Player_server::sendBuffer() {
   clientConnection->disconnectFromHost();
 }
 
+void Player_server::newConnection() {
+  while (tcpServer->hasPendingConnections()) {
+    QTcpSocket *socket = tcpServer->nextPendingConnection();
+    connect(socket, &QTcpSocket::readyRead,this, &Player_server::readyRead);
+    connect(socket, &QTcpSocket::disconnected, this, &Player_server::disconnected);
+    QByteArray *buffer = new QByteArray();
+    qint32 *s = new qint32(0);
+    buffers.insert(socket, buffer);
+    sizes.insert(socket, s);
+  }
+}
+
+void Player_server::disconnected() {
+  QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+  QByteArray *buffer = buffers.value(socket);
+  qint32 *s = sizes.value(socket);
+  socket->deleteLater();
+  delete buffer;
+  delete s;
+}
+
+void Player_server::ManageArduinoInfo() {
+  return;
+}
+
+void Player_server::readyRead() {
+  QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+  QByteArray *buffer = buffers.value(socket);
+  qint32 *s = sizes.value(socket);
+  qint32 size = *s;
+
+  gui->output->appendPlainText("Started readyRead()");
+  while (socket->bytesAvailable() > 0) {
+    buffer->append(socket->readAll());
+    //While can process data, process it
+    gui->output->appendPlainText("Reading data");
+    while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size))  {
+      //if size of data has received completely, then store it on our global variable
+      if (size == 0 && buffer->size() >= 4) {
+        size = ArrayToInt(buffer->mid(0, 4));
+        *s = size;
+        buffer->remove(0, 4);
+      }
+      gui->output->appendPlainText("Storing received data");
+      if (size > 0 && buffer->size() >= size) {
+        QByteArray data = buffer->mid(0, size);
+        buffer->remove(0, size);
+        size = 0;
+        *s = size;
+        ServerBuffer buffer;
+        memcpy(&buffer, data.data(), data.size());
+        
+          if (is_tank_action(buffer)) {
+            memcpy(&tk, buffer.tankAction, sizeof(tk));
+            //gui->output->appendPlainText("Sending Tank Action with following data:");
+            //gui->output->appendPlainText("Type: " + QString::number((int)tk.type) + "; X value: "
+            //  + QString::number(tk.x_value) + "; Y value:" + QString::number(tk.y_value));
+            emit tankDataReceived(tk);
+          }
+        //emit dataReceived(data);
+      }
+    }
+  }
+}
+bool Player_server::is_tank_action(ServerBuffer buffer) {
+  return buffer.type == 1;
+}
 } //namespace game
