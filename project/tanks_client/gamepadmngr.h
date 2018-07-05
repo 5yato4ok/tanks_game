@@ -16,6 +16,7 @@ struct Raw_Action {
   gp_helper::gp_buttons button;
   double value_x;
   double value_y;
+  bool is_pressed;
 };
 
 namespace gp_helper {

@@ -6,15 +6,16 @@
 #include "action.h"
 #include "stdint.h"
 #include "arduino_sender.h"
-
+#include "ui_tanks_server.h"
 //TODO: make limit
 namespace tank{
 class Tower_mngr: QObject {
   Q_OBJECT
  public:
-  Tower_mngr(QObject *parent = nullptr);
+  explicit Tower_mngr(Ui_MainWindow* gui,QObject *parent = nullptr);
   tank_status ManageAction(TankAction& action);
  private:
+  Ui_MainWindow* gui;
   Gun_mngr gun;
   Vision_mngr vision;
   ArduinoSender ard_mngr;
@@ -23,7 +24,7 @@ class Tower_mngr: QObject {
   bool is_step_less_max();
   bool is_step_more_min();
   int8_t update_rotation_step();
-  void form_arduino_packet(TankAction & action);
+  std::string form_arduino_packet(TankAction & action);
   const int8_t max_rotation_step = 300;
   const int8_t min_rotation_step = -300;
 };

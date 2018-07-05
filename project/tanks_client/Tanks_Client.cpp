@@ -51,6 +51,7 @@ void Tanks_Client::ReceiveData(Raw_Action buffer) {
   action.type = (action_type)supported_buttons[buffer.button];
   action.x_value = buffer.value_x;
   action.y_value = buffer.value_y;
+  action.is_pressed = buffer.is_pressed;
   ServerBuffer packet;
   packet.size = sizeof(TankAction);
   packet.type = 1;

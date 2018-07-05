@@ -12,14 +12,14 @@
 #include "QtNetwork/qnetworksession.h"
 #include "qrandom.h"
 #include "qdatastream.h"
-#include "ui_tanks_server.h"
 #include "server_buffer.h"
+#include "ui_tanks_server.h"
 //TODO: make gui global
 namespace game {
-class Player_server: public QMainWindow {
+class Player_server: public QObject {
   Q_OBJECT
  public:
-  Player_server(QMainWindow *parent = nullptr);
+  Player_server(Ui_MainWindow* gui);
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
   void GetGameAttributes(game_type type);
   void SendVideoToLocal();

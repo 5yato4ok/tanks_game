@@ -19,6 +19,7 @@ struct TankAction {
   tank_status result;
   double x_value;
   double y_value;
+  bool is_pressed;
   std::vector<uintptr_t> additional_buffer;
 };
 

@@ -115,7 +115,7 @@
   <ItemGroup>
     <ClCompile Include="..\common\default_gp_settings.cpp" />
     <ClCompile Include="gamepadmngr.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_client.cpp" />
     <ClCompile Include="Player_local.cpp" />
     <ClCompile Include="tanks_client.cpp" />
   </ItemGroup>

@@ -8,8 +8,7 @@ qint32 ArrayToInt(QByteArray source) {
   data >> temp;
   return temp;
 }
-Player_server::Player_server(QMainWindow *parent): player_id(-1),gui(new Ui::MainWindow) {
-  gui->setupUi(this);
+Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_) {
   QNetworkConfigurationManager manager;
   if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
     // Get saved network configuration

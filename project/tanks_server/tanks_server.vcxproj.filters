@@ -28,9 +28,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gun.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
@@ -64,6 +61,9 @@
     <ClCompile Include="player_server.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="main_server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_server.ui">
@@ -82,17 +82,11 @@
     <ClInclude Include="tanks_settings.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
-    <ClInclude Include="track.h">
-      <Filter>tanks_part</Filter>
-    </ClInclude>
     <ClInclude Include="vision.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
     <ClInclude Include="body.h">
       <Filter>tanks_part</Filter>
-    </ClInclude>
-    <ClInclude Include="arduino_sender.h">
-      <Filter>steel_stuff</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>steel_stuff</Filter>
@@ -109,6 +103,9 @@
     <ClInclude Include="..\common\server_buffer.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="tanks_ip.h">
+      <Filter>steel_stuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="tank.h">
@@ -119,6 +116,12 @@
     </QtMoc>
     <QtMoc Include="player_server.h">
       <Filter>game</Filter>
+    </QtMoc>
+    <QtMoc Include="arduino_sender.h">
+      <Filter>steel_stuff</Filter>
+    </QtMoc>
+    <QtMoc Include="track.h">
+      <Filter>tanks_part</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

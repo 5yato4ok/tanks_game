@@ -11,7 +11,7 @@ namespace tank {
 class TankMngr: public game::Player_server {
   Q_OBJECT
  public:
-  explicit TankMngr(QObject *parent = nullptr);
+  explicit TankMngr(Ui_MainWindow* gui);
   bool Is_initialized() { return is_intialized_; }
  signals:
   void GetArduinoInfo(); //TankInfo

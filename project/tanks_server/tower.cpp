@@ -1,6 +1,7 @@
 #include "tower.h"
 namespace tank{
-Tower_mngr::Tower_mngr(QObject *parent){
+Tower_mngr::Tower_mngr(Ui_MainWindow* gui_,QObject *parent):
+  gui(gui_),gun(gui_),vision(gui_), ard_mngr(gui_) {
   cur_rotation_step = update_rotation_step();
 }
 
@@ -10,8 +11,25 @@ int8_t Tower_mngr::update_rotation_step() {
   return 0;
 }
 
-void Tower_mngr::form_arduino_packet(TankAction & action) {
-
+//H010 Ц управление башней танка, 
+//где 1 цифра это направление движени€ (0-вправо, 1-влево), 
+//2 и 3 цифры количество щагов необходимое сделать за один раз от 00 до 99
+std::string Tower_mngr::form_arduino_packet(TankAction & action) {
+  std::string tower_packet;
+  switch (action.type) {
+    case action_type::MOVE_TOWER_LEFT:
+      tower_packet = "H1010";
+      cur_rotation_step -= 10;
+      break;
+    case action_type::MOVE_TOWER_RIGHT:
+      tower_packet = "H0010";
+      cur_rotation_step += 10;
+      break;
+    default:
+      break;
+  }
+  return tower_packet;
+  
 }
 
 tank_status Tower_mngr::ManageAction(TankAction & action)  {
@@ -22,8 +40,14 @@ tank_status Tower_mngr::ManageAction(TankAction & action)  {
   }
   if (!is_action_valid(action))
     return result;
-  form_arduino_packet(action);
-  ard_mngr.SendAction();
+  if (action.is_pressed 
+    && is_step_less_max()&& is_step_more_min()) {
+    return ard_mngr.SendAction(form_arduino_packet(action));
+  } else if (!is_step_less_max()){
+    gui->output->appendPlainText("Tower manager:\n Max limit. Turn to left");
+  } else if (!is_step_more_min()) {
+    gui->output->appendPlainText("Tower manager:\n Min limit. Turn to right");
+  }
   return result;
 }
 

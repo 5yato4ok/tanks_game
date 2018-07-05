@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   ServerBuffer tmp = { 0 };
   tmp.type = 1;
   TankAction tmp_tk;
-  tmp_tk.type = action_type::MOVE_TRACK;
+  tmp_tk.type = action_type::MOVE_TOWER_LEFT;
   tmp_tk.x_value = 1.234567;
   tmp_tk.y_value = -2.987654;
   memcpy(tmp.tankAction, &tmp_tk, sizeof(TankAction));

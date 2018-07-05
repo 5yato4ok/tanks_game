@@ -1,7 +1,7 @@
 #include "gun.h"
 
 namespace tank {
-Gun_mngr::Gun_mngr(){
+Gun_mngr::Gun_mngr(Ui_MainWindow* gui_):gui(gui_){
 
 }
 

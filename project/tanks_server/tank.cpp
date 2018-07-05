@@ -1,6 +1,7 @@
 #include "tank.h"
 namespace tank {
-TankMngr::TankMngr( QObject *parent) : is_intialized_(false) {
+TankMngr::TankMngr(Ui_MainWindow* gui_) : 
+  is_intialized_(false),Player_server(gui_),tower(gui_),track(gui_) {
   init_receive_port();
   connect(this, SIGNAL(tankDataReceived(TankAction)),SLOT(ReceiveData(TankAction)));
 }

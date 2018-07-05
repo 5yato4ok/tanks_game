@@ -1,20 +1,35 @@
 #pragma once
+#include <QDataStream>
+#include <QTcpSocket>
+#include <QNetworkSession>
+#include <QtNetwork>
 #include "windows.h"
 #include "WinSock.h"
 #include "action.h"
 #include <map>
-struct ArduinoPacket {
-
-};
+#include <string>
+#include "ui_tanks_server.h"
 
 extern std::map<action_type, std::string> command_dict;
 
-class ArduinoSender {
+class ArduinoSender:public QObject {
+  Q_OBJECT
  public:
-  ArduinoSender();
-  tank_status SendAction();
-private:
-  void init_socket();
-  void check_port();
-  void send_buffer_to_port();
+  explicit ArduinoSender(Ui_MainWindow* gui);
+  tank_status SendAction(std::string& packet);
+ private:
+  Ui_MainWindow* gui;
+  QHostAddress tank_ip;
+  quint16 tank_port;
+  QTcpSocket *tcpSocket = nullptr;
+  QByteArray IntToArray(qint32 source);
+  QNetworkSession *networkSession = nullptr;
+  QDataStream in;
+  bool writeData(const std::string& data);
+  public slots:
+  bool connect_to_host();
+  private slots:
+  void readBuffer();
+  void displayError(QAbstractSocket::SocketError socketError);
+  void sessionOpened();
 };

@@ -1,7 +1,7 @@
 #include "track.h"
 
 namespace tank {
-Track_mngr::Track_mngr() {
+Track_mngr::Track_mngr(Ui_MainWindow* gui_):gui(gui_) {
 
 }
 
