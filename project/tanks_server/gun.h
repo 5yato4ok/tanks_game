@@ -11,12 +11,16 @@ class Gun_mngr {
   Gun_mngr(Ui_MainWindow* gui, QHostAddress steel_ip = QHostAddress::Any, 
     quint16 steel_port = 34005);
   tank_status ManageAction(TankAction& action);
+  void Init_arduino(const QHostAddress& ip, quint16 steel_port);
  private:
+  bool is_action_valid(TankAction & action);
+  bool is_step_less_max();
+  bool is_step_more_min();
   Ui_MainWindow* gui;
-  tank_status shot();
-  tank_status change_height();
+  ArduinoSender ard_mngr;
+  std::string form_arduino_packet(TankAction & action);
   int32_t shoot_num;
-  int32_t cur_rotation;
+  int32_t cur_rotation; 
   int32_t max_rotation;
   int32_t min_rotation;
 };

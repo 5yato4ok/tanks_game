@@ -8,6 +8,7 @@ Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
 
 void Tower_mngr::Init_arduino(const QHostAddress& ip, quint16 steel_port) {
   ard_mngr.Init(ip, steel_port);
+  gun.Init_arduino(ip, steel_port);
 }
 
 int8_t Tower_mngr::update_rotation_step() {

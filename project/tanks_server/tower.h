@@ -27,8 +27,8 @@ class Tower_mngr: QObject {
   bool is_step_more_min();
   int8_t update_rotation_step();
   std::string form_arduino_packet(TankAction & action);
-  const int8_t max_rotation_step = 300;
-  const int8_t min_rotation_step = -300;
+  const int8_t max_rotation_step = 100;
+  const int8_t min_rotation_step = -100;
 };
 
 }//namespace tank
