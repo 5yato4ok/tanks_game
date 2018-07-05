@@ -4,8 +4,10 @@
 #include "action.h"
 #include "arduino_sender.h"
 #include "ui_tanks_server.h"
+#include "qtimer.h"
+
 namespace tank {
-//TODO: set limits
+//TODO: Add wait time
 class Gun_mngr {
  public:
   Gun_mngr(Ui_MainWindow* gui, QHostAddress steel_ip = QHostAddress::Any, 

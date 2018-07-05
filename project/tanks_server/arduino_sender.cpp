@@ -63,8 +63,9 @@ tank_status ArduinoSender::SendAction(std::string& packet) {
 
 bool ArduinoSender::connect_to_host() {
   tcpSocket->abort();
+  gui->arduino_out->appendPlainText("Arduino sender: connecting to " + steel_ip.toString());
   tcpSocket->connectToHost(steel_ip, steel_port);
-  return tcpSocket->waitForConnected();
+  return tcpSocket->waitForConnected(1000);
 }
 
 void ArduinoSender::readBuffer() {

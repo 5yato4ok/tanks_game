@@ -18,10 +18,13 @@ tank_status Gun_mngr::ManageAction(TankAction & action) {
     return ard_mngr.SendAction(std::string("S"));
   case action_type::MOVE_GUN_UP:
   case action_type::MOVE_GUN_DOWN:
-    //check here all constants
+  {
+    QTimer time;
+    time.start(100);
     if (is_action_valid(action)) {
       return ard_mngr.SendAction(form_arduino_packet(action));
     }
+  }
   default:
     break;
   }
