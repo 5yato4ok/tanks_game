@@ -12,8 +12,10 @@ namespace tank{
 class Tower_mngr: QObject {
   Q_OBJECT
  public:
-  explicit Tower_mngr(Ui_MainWindow* gui,QObject *parent = nullptr);
+  Tower_mngr(Ui_MainWindow* gui,QHostAddress steel_ip = QHostAddress::Any,
+    quint16 steel_port = 34005, QObject *parent = nullptr);
   tank_status ManageAction(TankAction& action);
+  void Init_arduino(const QHostAddress& ip, quint16 steel_port);
  private:
   Ui_MainWindow* gui;
   Gun_mngr gun;

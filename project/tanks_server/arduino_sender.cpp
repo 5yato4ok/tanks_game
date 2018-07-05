@@ -2,8 +2,9 @@
 
 std::map<action_type, std::string> command_dict;
 
-ArduinoSender::ArduinoSender(Ui_MainWindow* gui_):
-  tcpSocket(new QTcpSocket(this)), gui(gui_) {
+ArduinoSender::ArduinoSender(Ui_MainWindow* gui_, QHostAddress steel_ip_, quint16 steel_port_):
+  tcpSocket(new QTcpSocket(this)), gui(gui_) , steel_ip(steel_ip_),steel_port(steel_port_)
+{
   in.setDevice(tcpSocket);
   in.setVersion(QDataStream::Qt_5_10);
 
@@ -26,9 +27,15 @@ ArduinoSender::ArduinoSender(Ui_MainWindow* gui_):
     }
     networkSession = new QNetworkSession(config, this);
     connect(networkSession, &QNetworkSession::opened, this, &ArduinoSender::sessionOpened);
-    gui->output->appendPlainText("Arduino sender: Opening network session.");
+    gui->arduino_out->appendPlainText("Arduino sender: Opening network session.");
+    gui->centralWidget->update();
     networkSession->open();
   }
+}
+
+void ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_) {
+  steel_ip = steel_ip_;
+  steel_port = steel_port_;
 }
 
 bool ArduinoSender::writeData(const std::string& data) {
@@ -42,20 +49,21 @@ bool ArduinoSender::writeData(const std::string& data) {
 }
 
 tank_status ArduinoSender::SendAction(std::string& packet) {
-  gui->output->appendPlainText("Arduino sender: Sending Data to Steel");
+  gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel");
   if (connect_to_host() && writeData(packet)) {
-    gui->output->appendPlainText("Arduino sender: Sending Data to Steel Success");
+    gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel Success");
     return tank_status::OPPERATION_SUCCESS;
   } else {
-    gui->output->appendPlainText("Arduino sender: Sending Data to Steel Error");
+    gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel Error");
   }
+  gui->centralWidget->update();
   return tank_status::OPERATION_FAILED;
 }
 
 
 bool ArduinoSender::connect_to_host() {
   tcpSocket->abort();
-  tcpSocket->connectToHost(tank_ip, tank_port);
+  tcpSocket->connectToHost(steel_ip, steel_port);
   return tcpSocket->waitForConnected();
 }
 
@@ -69,7 +77,7 @@ void ArduinoSender::readBuffer() {
     in.startTransaction();
     in >> input_buff;
     if (in.commitTransaction())
-      qDebug() << "Received: " << input_buff;
+      gui->arduino_out->appendPlainText("Received: " + input_buff);
     else
       break;
   }
@@ -88,18 +96,19 @@ void ArduinoSender::displayError(QAbstractSocket::SocketError socketError) {
   case QAbstractSocket::RemoteHostClosedError:
     break;
   case QAbstractSocket::HostNotFoundError:
-    qDebug() << "Tank Client" << "The host was not found. Please check the " <<
-      "host name and port settings.";
+    gui->arduino_out->appendPlainText("Arduino Sender\n The host was not found.");
+    gui->arduino_out->appendPlainText("Please check the \n host name and port settings.");
     break;
   case QAbstractSocket::ConnectionRefusedError:
-    qDebug() << "Tank Client. " <<
-      "The connection was refused by the peer. " <<
-      "Make sure the fortune server is running, " <<
-      "and check that the host name and port " <<
-      "settings are correct.";
+    gui->arduino_out->appendPlainText("Arduino Sender ");
+    gui->arduino_out->appendPlainText("The connection was refused by the peer. ");
+    gui->arduino_out->appendPlainText("Make sure the fortune server is running, ");
+    gui->arduino_out->appendPlainText("and check that the host name and port ");
+    gui->arduino_out->appendPlainText("settings are correct.");
     break;
   default:
-    qDebug() << "Fortune Client." << "The following error occurred: " << tcpSocket->errorString();
+    gui->arduino_out->appendPlainText("Arduino Sender. The following error occurred: ");
+    gui->arduino_out->appendPlainText(tcpSocket->errorString());
   }
 }
 void ArduinoSender::sessionOpened() {

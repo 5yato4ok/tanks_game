@@ -10,7 +10,8 @@ namespace tank {
 class Track_mngr:public QObject {
   Q_OBJECT
  public:
-  explicit Track_mngr(Ui_MainWindow* gui);
+  Track_mngr(Ui_MainWindow* gui, QHostAddress steel_ip = QHostAddress::Any,
+    quint16 steel_port = 34005);
   tank_status ManageAction(TankAction& action);
  private:
   Ui_MainWindow* gui;

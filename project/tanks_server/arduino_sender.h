@@ -15,12 +15,13 @@ extern std::map<action_type, std::string> command_dict;
 class ArduinoSender:public QObject {
   Q_OBJECT
  public:
-  explicit ArduinoSender(Ui_MainWindow* gui);
+  ArduinoSender(Ui_MainWindow* gui, QHostAddress steel_ip, quint16 steel_port);
+  void Init(const QHostAddress steel_ip, quint16 steel_port);
   tank_status SendAction(std::string& packet);
  private:
   Ui_MainWindow* gui;
-  QHostAddress tank_ip;
-  quint16 tank_port;
+  QHostAddress steel_ip;
+  quint16 steel_port;
   QTcpSocket *tcpSocket = nullptr;
   QByteArray IntToArray(qint32 source);
   QNetworkSession *networkSession = nullptr;

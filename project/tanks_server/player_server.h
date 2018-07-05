@@ -14,7 +14,7 @@
 #include "qdatastream.h"
 #include "server_buffer.h"
 #include "ui_tanks_server.h"
-//TODO: make gui global
+//TODO: make gui global as separate debug class
 namespace game {
 class Player_server: public QObject {
   Q_OBJECT
@@ -32,7 +32,6 @@ class Player_server: public QObject {
  protected:
   Ui_MainWindow* gui;
  private:
-  void find_free_steel();
   bool is_tank_action(ServerBuffer buffer);
   int32_t player_id;
   QTcpServer *tcpServer = nullptr;

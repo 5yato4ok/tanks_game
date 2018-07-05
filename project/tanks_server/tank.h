@@ -5,6 +5,7 @@
 #include "track.h"
 #include "action.h"
 #include "player_server.h"
+#include "tanks_ip.h"
 // TODO: make action setting window from qt example
 
 namespace tank {
@@ -18,6 +19,9 @@ class TankMngr: public game::Player_server {
  public slots:
   void ReceiveData(TankAction buffer);
  private:
+  void find_free_steel();
+  quint16 steel_port;
+  QHostAddress steel_ip;
   int32_t tank_id;
   void init_receive_port();
   Tower_mngr tower;

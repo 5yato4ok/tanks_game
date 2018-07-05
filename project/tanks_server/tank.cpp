@@ -6,7 +6,7 @@ TankMngr::TankMngr(Ui_MainWindow* gui_) :
   connect(this, SIGNAL(tankDataReceived(TankAction)),SLOT(ReceiveData(TankAction)));
 }
 void TankMngr::ReceiveData(TankAction buffer) {
-  gui->output->appendPlainText("TankMngr Received Data. Switching the type");
+  gui->tank_out->appendPlainText("TankMngr Received Data. Switching the type");
  switch (buffer.type) {
   case action_type::MOVE_GUN_UP:
   case action_type::MOVE_GUN_DOWN:
@@ -18,8 +18,11 @@ void TankMngr::ReceiveData(TankAction buffer) {
   }
 }
 
-void TankMngr::init_receive_port() {
+void TankMngr::find_free_steel() {}
 
+void TankMngr::init_receive_port() {
+  find_free_steel();
+  tower.Init_arduino(ip_tank_0, port_in);
 }
 
 } //namespace Tank

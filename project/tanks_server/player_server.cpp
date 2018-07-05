@@ -81,6 +81,7 @@ void Player_server::sessionOpened() {
   gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
     "Run the Tank Client example now.")
     .arg(ipAddress).arg(tcpServer->serverPort()));
+  gui->centralWidget->update();
 }
 
 void Player_server::sendBuffer() {
@@ -128,11 +129,14 @@ void Player_server::readyRead() {
   qint32 *s = sizes.value(socket);
   qint32 size = *s;
 
-  gui->output->appendPlainText("Started readyRead()");
+  gui->player_out->appendPlainText("Started readyRead()");
+  gui->centralWidget->update();
+  gui->centralWidget->update();
   while (socket->bytesAvailable() > 0) {
     buffer->append(socket->readAll());
     //While can process data, process it
-    gui->output->appendPlainText("Reading data");
+    gui->player_out->appendPlainText("Reading data");
+    gui->centralWidget->update();
     while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size))  {
       //if size of data has received completely, then store it on our global variable
       if (size == 0 && buffer->size() >= 4) {
@@ -140,7 +144,8 @@ void Player_server::readyRead() {
         *s = size;
         buffer->remove(0, 4);
       }
-      gui->output->appendPlainText("Storing received data");
+      gui->player_out->appendPlainText("Storing received data");
+      gui->centralWidget->update();
       if (size > 0 && buffer->size() >= size) {
         QByteArray data = buffer->mid(0, size);
         buffer->remove(0, size);
@@ -151,9 +156,10 @@ void Player_server::readyRead() {
         
           if (is_tank_action(buffer)) {
             memcpy(&tk, buffer.tankAction, sizeof(tk));
-            //gui->output->appendPlainText("Sending Tank Action with following data:");
-            //gui->output->appendPlainText("Type: " + QString::number((int)tk.type) + "; X value: "
-            //  + QString::number(tk.x_value) + "; Y value:" + QString::number(tk.y_value));
+            gui->player_out->appendPlainText("Sending Tank Action with following data:");
+            gui->player_out->appendPlainText("Type: " + QString::number((int)tk.type) + "; X value: "
+              + QString::number(tk.x_value) + "; Y value:" + QString::number(tk.y_value));
+            gui->centralWidget->update();
             emit tankDataReceived(tk);
           }
         //emit dataReceived(data);

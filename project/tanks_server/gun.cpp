@@ -1,7 +1,8 @@
 #include "gun.h"
 
 namespace tank {
-Gun_mngr::Gun_mngr(Ui_MainWindow* gui_):gui(gui_){
+Gun_mngr::Gun_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
+  quint16 steel_port):gui(gui_){
 
 }
 

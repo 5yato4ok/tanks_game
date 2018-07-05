@@ -1,7 +1,8 @@
 #include "track.h"
 
 namespace tank {
-Track_mngr::Track_mngr(Ui_MainWindow* gui_):gui(gui_) {
+Track_mngr::Track_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
+  quint16 steel_port):gui(gui_) {
 
 }
 

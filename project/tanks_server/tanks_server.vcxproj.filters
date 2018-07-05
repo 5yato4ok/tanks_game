@@ -104,7 +104,7 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="tanks_ip.h">
-      <Filter>steel_stuff</Filter>
+      <Filter>tanks_part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
