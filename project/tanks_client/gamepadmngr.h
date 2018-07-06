@@ -22,7 +22,7 @@ struct Raw_Action {
 namespace gp_helper {
 
 
-class GamePadMngr : public QObject {
+class GamePadMngr : public QGamepad {
   Q_OBJECT
 public:
   explicit GamePadMngr(QObject *parent = nullptr);
@@ -33,7 +33,7 @@ public:
 signals:
   void sendAction(Raw_Action buffer);
 private:
-  QGamepad* m_gamepad;
+  //QGamepad* m_gamepad;
   void axisLeftX_packet(double value);
   void axisRightX_packet(double value);
   void axisLeftY_packet(double value);
