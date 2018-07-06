@@ -1,8 +1,8 @@
 #include "track.h"
 
 namespace tank {
-Track_mngr::Track_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
-  quint16 steel_port):gui(gui_) {
+Track_mngr::Track_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_)
+  :gui(gui_),ard_mngr(ard_mngr_) {
 
 }
 

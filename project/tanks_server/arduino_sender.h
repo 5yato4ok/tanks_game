@@ -9,14 +9,17 @@
 #include <map>
 #include <string>
 #include "ui_tanks_server.h"
+#include "tanks_ip.h"
+
 
 extern std::map<action_type, std::string> command_dict;
 
 class ArduinoSender:public QObject {
   Q_OBJECT
  public:
-  ArduinoSender(Ui_MainWindow* gui, QHostAddress steel_ip, quint16 steel_port);
-  void Init(const QHostAddress steel_ip, quint16 steel_port);
+  ArduinoSender(Ui_MainWindow* gui, QHostAddress steel_ip = QHostAddress::Any,
+    quint16 steel_port = port_in);
+  bool Init(const QHostAddress steel_ip, quint16 steel_port);
   tank_status SendAction(std::string& packet);
  private:
   Ui_MainWindow* gui;

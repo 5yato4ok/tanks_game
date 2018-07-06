@@ -10,11 +10,11 @@ namespace tank {
 class Track_mngr:public QObject {
   Q_OBJECT
  public:
-  Track_mngr(Ui_MainWindow* gui, QHostAddress steel_ip = QHostAddress::Any,
-    quint16 steel_port = 34005);
+  Track_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr);
   tank_status ManageAction(TankAction& action);
  private:
   Ui_MainWindow* gui;
+  ArduinoSender& ard_mngr;
   int32_t change_velocity();
   int32_t change_direction();
   void get_direction(double value_x, double value_y);

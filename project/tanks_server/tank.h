@@ -23,7 +23,8 @@ class TankMngr: public game::Player_server {
   quint16 steel_port;
   QHostAddress steel_ip;
   int32_t tank_id;
-  void init_receive_port();
+  bool init_receive_port();
+  ArduinoSender ard_mngr;
   Tower_mngr tower;
   Track_mngr track;
   Body_mngr body_mngr;

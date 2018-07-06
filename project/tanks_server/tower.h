@@ -12,15 +12,13 @@ namespace tank{
 class Tower_mngr: QObject {
   Q_OBJECT
  public:
-  Tower_mngr(Ui_MainWindow* gui,QHostAddress steel_ip = QHostAddress::Any,
-    quint16 steel_port = 34005, QObject *parent = nullptr);
+  Tower_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr, QObject *parent = nullptr);
   tank_status ManageAction(TankAction& action);
-  void Init_arduino(const QHostAddress& ip, quint16 steel_port);
  private:
   Ui_MainWindow* gui;
+  ArduinoSender& ard_mngr;
   Gun_mngr gun;
   Vision_mngr vision;
-  ArduinoSender ard_mngr;
   int8_t cur_rotation_step;
   bool is_action_valid(TankAction & action);
   bool is_step_less_max();

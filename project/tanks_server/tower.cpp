@@ -1,14 +1,8 @@
 #include "tower.h"
 namespace tank{
-Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
-  quint16 steel_port, QObject *parent):
-  gui(gui_),gun(gui_),vision(gui_), ard_mngr(gui_, QHostAddress::Any, 34005) {
+Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_,QObject *parent):
+  gui(gui_),gun(gui_,ard_mngr_),vision(gui_), ard_mngr(ard_mngr_) {
   cur_rotation_step = update_rotation_step();
-}
-
-void Tower_mngr::Init_arduino(const QHostAddress& ip, quint16 steel_port) {
-  ard_mngr.Init(ip, steel_port);
-  gun.Init_arduino(ip, steel_port);
 }
 
 int8_t Tower_mngr::update_rotation_step() {
@@ -24,11 +18,11 @@ std::string Tower_mngr::form_arduino_packet(TankAction & action) {
   std::string tower_packet;
   switch (action.type) {
     case action_type::MOVE_TOWER_LEFT:
-      tower_packet = "H1010";
+      tower_packet = "H105";
       cur_rotation_step -= 10;
       break;
     case action_type::MOVE_TOWER_RIGHT:
-      tower_packet = "H0010";
+      tower_packet = "H005";
       cur_rotation_step += 10;
       break;
     default:
@@ -46,8 +40,7 @@ tank_status Tower_mngr::ManageAction(TankAction & action)  {
   }
   if (!is_action_valid(action))
     return result;
-  if (action.is_pressed 
-    && is_step_less_max()&& is_step_more_min()) {
+  if (is_action_valid(action)) {
     return ard_mngr.SendAction(form_arduino_packet(action));
   } else if (!is_step_less_max()){
     gui->tank_out->appendPlainText("Tower manager:\n Max limit. Turn to left");

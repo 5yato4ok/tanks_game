@@ -1,15 +1,11 @@
 #include "gun.h"
 
 namespace tank {
-Gun_mngr::Gun_mngr(Ui_MainWindow* gui_, QHostAddress steel_ip,
-  quint16 steel_port):gui(gui_),ard_mngr(gui_, QHostAddress::Any, 34005) {
+Gun_mngr::Gun_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_):
+  gui(gui_),ard_mngr(ard_mngr_) {
   cur_rotation = 0;
   max_rotation = 48;
   min_rotation = -48;
-}
-
-void Gun_mngr::Init_arduino(const QHostAddress& ip, quint16 steel_port) {
-  ard_mngr.Init(ip, steel_port);
 }
 
 tank_status Gun_mngr::ManageAction(TankAction & action) {

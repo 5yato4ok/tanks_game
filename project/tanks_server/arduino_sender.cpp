@@ -33,9 +33,10 @@ ArduinoSender::ArduinoSender(Ui_MainWindow* gui_, QHostAddress steel_ip_, quint1
   }
 }
 
-void ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_) {
+bool ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_) {
   steel_ip = steel_ip_;
   steel_port = steel_port_;
+  return connect_to_host();
 }
 
 bool ArduinoSender::writeData(const std::string& data) {
@@ -50,12 +51,13 @@ bool ArduinoSender::writeData(const std::string& data) {
 
 tank_status ArduinoSender::SendAction(std::string& packet) {
   gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel");
-  if (connect_to_host() && writeData(packet)) {
+  if (writeData(packet)) {
     gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel Success");
     return tank_status::OPPERATION_SUCCESS;
   } else {
     gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel Error");
   }
+
   gui->centralWidget->update();
   return tank_status::OPERATION_FAILED;
 }
@@ -73,7 +75,6 @@ void ArduinoSender::readBuffer() {
 
   QString input_buff;
   //in >> input_buff;
-
   for (;;) {
     in.startTransaction();
     in >> input_buff;
