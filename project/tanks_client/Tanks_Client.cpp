@@ -34,30 +34,33 @@ void Tanks_Client::ReceiveData(Raw_Action buffer) {
   if (!is_tank_action(buffer)) {
     return;
   }
-  if (supported_buttons[buffer.button] == (int)action_type::MOVE_TRACK) {
-    //qDebug() << "Is track action";
-    ui->output->appendPlainText("\nIs track action");
-  } else if (supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_RIGHT||
-    supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_LEFT ||
-    supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_UP || 
-    supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_DOWN) {
-    //qDebug() << "Is tower action";
-    ui->output->appendPlainText("\nIs tower action");
-  } else if (supported_buttons[buffer.button] == (int)action_type::SHOT) {
-    //qDebug() << "Is gun action";
-    ui->output->appendPlainText("\nIs gun action");
-  }
   TankAction action;
   action.type = (action_type)supported_buttons[buffer.button];
   action.x_value = buffer.value_x;
   action.y_value = buffer.value_y;
   action.is_pressed = buffer.is_pressed;
+  if (supported_buttons[buffer.button] == (int)action_type::MOVE_TRACK) {
+    ui->output->appendPlainText("\nIs track action");
+  } else if (supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_RIGHT||
+    supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_LEFT ||
+    supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_UP || 
+    supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_DOWN) {
+    ui->output->appendPlainText("\nIs tower action");
+    send_action(action);
+  } else if (supported_buttons[buffer.button] == (int)action_type::SHOT) {
+    ui->output->appendPlainText("\nIs gun action");
+    send_action(action);
+  }
+  
+  return;
+}
+
+void Tanks_Client::send_action(TankAction buffer) {
   ServerBuffer packet;
   packet.size = sizeof(TankAction);
   packet.type = 1;
-  memcpy(packet.tankAction, &action, sizeof(TankAction));
+  memcpy(packet.tankAction, &buffer, sizeof(TankAction));
   Player_local::SendActionsToServer(packet);
-  return;
 }
 
 void Tanks_Client::Connect_signals() {

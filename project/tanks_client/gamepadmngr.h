@@ -5,22 +5,19 @@
 #include <QtCore/QTimer>
 #include <QtGamepad/QGamepad>
 #include <QDebug>
+#include <QThread>
+#include <thread>
+#include <mutex>
 #include "action.h"
 #include "default_gp_settings.h"
+#include "thread_mngr.h"
 
 // TODO: make opportunity to use more than one button
 // TODO: test more than one gamepad connection
 // TODO: add disconnect function
 
-struct Raw_Action {
-  gp_helper::gp_buttons button;
-  double value_x;
-  double value_y;
-  bool is_pressed;
-};
 
 namespace gp_helper {
-
 
 class GamePadMngr : public QGamepad {
   Q_OBJECT
@@ -32,8 +29,15 @@ public:
   void connectedChangedEvent(bool value);
 signals:
   void sendAction(Raw_Action buffer);
+
+  void buttonUP_false();
+  void buttonDOWN_false();
+  void buttonLEFT_false();
+  void buttonRIGHT_false();
+public slots:
+  void button_is_pressed(Raw_Action buffer);
 private:
-  //QGamepad* m_gamepad;
+  GamePadThread thread;
   void axisLeftX_packet(double value);
   void axisRightX_packet(double value);
   void axisLeftY_packet(double value);

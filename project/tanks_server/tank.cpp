@@ -3,10 +3,11 @@ namespace tank {
 TankMngr::TankMngr(Ui_MainWindow* gui_) : 
   is_intialized_(false),Player_server(gui_),ard_mngr(gui_),
   tower(gui_,ard_mngr),track(gui_,ard_mngr) {
-  if (init_receive_port()) {
-    is_intialized_ = true;
-    connect(this, SIGNAL(tankDataReceived(TankAction)), SLOT(ReceiveData(TankAction)));
-  }
+  //if (init_receive_port()) {
+  init_receive_port();
+  is_intialized_ = true;
+  connect(this, SIGNAL(tankDataReceived(TankAction)), SLOT(ReceiveData(TankAction)));
+  //}
 }
 
 void TankMngr::ReceiveData(TankAction buffer) {

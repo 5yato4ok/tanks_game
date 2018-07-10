@@ -43,6 +43,9 @@
     <ClCompile Include="main_client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thread_mngr.cpp">
+      <Filter>gamepad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_client.ui">
@@ -62,6 +65,9 @@
       <Filter>player</Filter>
     </QtMoc>
     <QtMoc Include="gamepadmngr.h">
+      <Filter>gamepad</Filter>
+    </QtMoc>
+    <QtMoc Include="thread_mngr.h">
       <Filter>gamepad</Filter>
     </QtMoc>
   </ItemGroup>

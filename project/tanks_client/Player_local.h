@@ -38,6 +38,8 @@ class Player_local: public QMainWindow {
   QTcpSocket *tcpSocket = nullptr;
   QByteArray IntToArray(qint32 source);
   QNetworkSession *networkSession = nullptr;
+  QMutex mutex;
+  QWaitCondition cond;
   QDataStream in;
   void get_streaming_video();
   bool writeData(QByteArray data);

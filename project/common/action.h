@@ -31,7 +31,19 @@ struct Action {
   TankAction tank_action;
   InterfaceAction interface_action;
 };
-
+namespace gp_helper {
+  enum class gp_buttons :int32_t {
+    BUT_A, BUT_X, BUT_Y, BUT_B, BUT_L1, BUT_L2,
+    BUT_R1, BUT_R2, BUT_SELECT, BUT_GUIDE, BUT_START,
+    AXIS_LEFT, AXIS_RIGHT, BUT_UP, BUT_DOWN, BUT_RIGHT, BUT_LEFT
+  }; //TODO: what else?
+}
+struct Raw_Action {
+  gp_helper::gp_buttons button;
+  double value_x;
+  double value_y;
+  bool is_pressed;
+};
 
 
 #endif // ACTION_H
