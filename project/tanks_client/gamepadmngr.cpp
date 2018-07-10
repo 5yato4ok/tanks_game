@@ -54,7 +54,8 @@ void GamePadMngr::axisLeftX_packet(double value) {
   buffer.value_x = value;
   buffer.value_y = QGamepad::axisLeftY();
   qDebug() << "Left Y: " << buffer.value_y;
-  emit sendAction(buffer); //TODO: check is it right?
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 void GamePadMngr::axisRightX_packet(double value) {
@@ -64,7 +65,8 @@ void GamePadMngr::axisRightX_packet(double value) {
   buffer.value_x = value;
   buffer.value_y = QGamepad::axisRightY();
   qDebug() << "Right Y: " << buffer.value_y;
-  emit sendAction(buffer); //TODO: check is it right?
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 void GamePadMngr::axisRightY_packet(double value) {
@@ -74,7 +76,8 @@ void GamePadMngr::axisRightY_packet(double value) {
   buffer.button = gp_buttons::AXIS_RIGHT;
   buffer.value_x= QGamepad::axisRightX();
   buffer.value_y = value;
-  emit sendAction(buffer); //TODO: check is it right?
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 void GamePadMngr::axisLeftY_packet(double value) {
@@ -83,7 +86,8 @@ void GamePadMngr::axisLeftY_packet(double value) {
   buffer.button = gp_buttons::AXIS_LEFT;
   buffer.value_x= QGamepad::axisLeftX();
   buffer.value_y = value;
-  emit sendAction(buffer); //TODO: check is it right?
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 void GamePadMngr::buttonA_packet(bool pressed) {
@@ -172,22 +176,16 @@ void GamePadMngr::buttonUP_packet(bool pressed) {
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_UP;
   buffer.is_pressed= pressed;
-  if (pressed) {
-    emit sendAction(buffer);
-  } else {
-    emit buttonUP_false();
-  }
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 void GamePadMngr::buttonDOWN_packet(bool pressed) {
   qDebug() << "Button DOWN: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_DOWN;
   buffer.is_pressed= pressed;
-  if (pressed) {
-    emit sendAction(buffer);
-  } else {
-    emit buttonDOWN_false();
-  }
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 void GamePadMngr::button_is_pressed(Raw_Action buffer) {
@@ -204,24 +202,15 @@ void GamePadMngr::buttonLEFT_packet(bool pressed) {
   buffer.button = gp_buttons::BUT_LEFT;
   buffer.is_pressed = pressed;
   thread.SetRawAction(buffer);
-  thread.SetCondition(gp_buttons::BUT_LEFT, pressed);
   thread.Start();
-  //if (pressed) {
-  //  emit sendAction(buffer);
-  //} else {
-  //  emit buttonLEFT_false();
-  //}
 }
 void GamePadMngr::buttonRIGHT_packet(bool pressed) {
   qDebug() << "Button RIGHT: " << pressed;
   Raw_Action buffer;
   buffer.button = gp_buttons::BUT_RIGHT;
   buffer.is_pressed= pressed;
-  if (pressed) {
-    emit sendAction(buffer);
-  } else {
-    emit buttonRIGHT_false();
-  }
+  thread.SetRawAction(buffer);
+  thread.Start();
 }
 
 GamePadMngr::~GamePadMngr() {

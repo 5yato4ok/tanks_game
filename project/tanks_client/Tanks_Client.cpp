@@ -51,7 +51,6 @@ void Tanks_Client::ReceiveData(Raw_Action buffer) {
     ui->output->appendPlainText("\nIs gun action");
     send_action(action);
   }
-  
   return;
 }
 

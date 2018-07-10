@@ -9,11 +9,32 @@
 
 using Button_state = std::map<gp_helper::gp_buttons, double>;
 
+class Axis_values {
+ public:
+  Axis_values() {};
+  double x;
+  double y;
+  bool operator ==(const Axis_values& rhs) const {
+    return (x == rhs.x) && (y == rhs.y);
+  }
+};
+
+class Axis_state {
+ public:
+  Axis_state() {};
+  Axis_values previos;
+  Axis_values current;
+  bool operator <(const Axis_state& rhs) const {
+    return previos.x < current.x;
+  }
+};
+
+using Axis_condition = std::map<gp_helper::gp_buttons, Axis_state>;
 class GamePadThread: public QObject {
   Q_OBJECT
  public:
    GamePadThread();
-   void SetCondition(gp_helper::gp_buttons button, double condition);
+   ~GamePadThread();
    void SetRawAction(Raw_Action buffer);
    void ThreadLoop();
    void Start();
@@ -26,4 +47,5 @@ class GamePadThread: public QObject {
    Raw_Action input_state;
    QMutex mutex;
    Button_state condition_state;
+   Axis_condition axis_condition;
 };
