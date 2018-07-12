@@ -15,15 +15,18 @@ tank_status Gun_mngr::ManageAction(TankAction & action) {
   case action_type::MOVE_GUN_UP:
   case action_type::MOVE_GUN_DOWN:
   {
-    QTimer time;
-    time.start(100);
+    QEventLoop loop;
+    QTimer::singleShot(10, &loop, SLOT(quit()));
+    loop.exec();
     if (is_action_valid(action)) {
       return ard_mngr.SendAction(form_arduino_packet(action));
     }
+    gui->tank_out->appendPlainText("Gun Mngr: invalid action. Limit is reached.");
   }
   default:
     break;
   }
+  return tank_status::OPERATION_FAILED;
 }
 
 std::string Gun_mngr::form_arduino_packet(TankAction & action) {
@@ -50,7 +53,10 @@ bool Gun_mngr::is_step_more_min() {
 }
 
 bool Gun_mngr::is_action_valid(TankAction & action) {
-  return is_step_less_max() && is_step_more_min();
+  if (action.type == action_type::MOVE_GUN_DOWN) {
+    return is_step_more_min();
+  }
+  return is_step_less_max();
 }
 
 }

@@ -38,8 +38,7 @@ tank_status Tower_mngr::ManageAction(TankAction & action)  {
     action.type == action_type::MOVE_GUN_DOWN) {
     return gun.ManageAction(action);
   }
-  if (!is_action_valid(action))
-    return result;
+
   if (is_action_valid(action)) {
     return ard_mngr.SendAction(form_arduino_packet(action));
   } else if (!is_step_less_max()){
@@ -59,6 +58,9 @@ bool Tower_mngr::is_step_more_min() {
 }
 
 bool Tower_mngr::is_action_valid(TankAction & action) {
-  return is_step_less_max() && is_step_more_min();
+  if (action.type == action_type::MOVE_TOWER_LEFT) {
+    return is_step_more_min();
+  }
+  return is_step_less_max();
 }
 }
