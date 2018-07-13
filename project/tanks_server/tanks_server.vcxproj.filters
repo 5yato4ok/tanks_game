@@ -37,9 +37,6 @@
     <ClCompile Include="tower.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
-    <ClCompile Include="track.cpp">
-      <Filter>tanks_part</Filter>
-    </ClCompile>
     <ClCompile Include="vision.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
@@ -63,6 +60,12 @@
     </ClCompile>
     <ClCompile Include="main_server.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tracks.cpp">
+      <Filter>tanks_part</Filter>
+    </ClCompile>
+    <ClCompile Include="track.cpp">
+      <Filter>tanks_part</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +109,9 @@
     <ClInclude Include="tanks_ip.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
+    <ClInclude Include="track.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="tank.h">
@@ -120,7 +126,7 @@
     <QtMoc Include="arduino_sender.h">
       <Filter>steel_stuff</Filter>
     </QtMoc>
-    <QtMoc Include="track.h">
+    <QtMoc Include="tracks.h">
       <Filter>tanks_part</Filter>
     </QtMoc>
   </ItemGroup>

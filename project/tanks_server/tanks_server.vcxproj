@@ -124,6 +124,7 @@
     <ClCompile Include="tank.cpp" />
     <ClCompile Include="tower.cpp" />
     <ClCompile Include="track.cpp" />
+    <ClCompile Include="tracks.cpp" />
     <ClCompile Include="vision.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,10 +151,11 @@
     <ClInclude Include="rules.h" />
     <ClInclude Include="tanks_ip.h" />
     <ClInclude Include="tanks_settings.h" />
-    <QtMoc Include="track.h">
+    <QtMoc Include="tracks.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
     </QtMoc>
+    <ClInclude Include="track.h" />
     <ClInclude Include="vision.h" />
     <QtMoc Include="tower.h" />
     <QtMoc Include="tank.h" />
