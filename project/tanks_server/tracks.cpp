@@ -4,6 +4,7 @@ namespace tank {
 Track_mngr::Track_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_)
   :gui(gui_),ard_mngr(ard_mngr_) {
   current_x = 0;
+  current_y = 0;
   current_tracks.right_track.is_right = true;
 }
 
@@ -21,28 +22,31 @@ std::string Track_mngr::form_arduino_packet(const Tank_Tracks& tracks_descr) {
   return command;
 }
 
+int8_t Track_mngr::get_delta_velocity(const TankAction& descr) {
+  return int8_t();
+}
+
 Tank_Tracks Track_mngr::get_rotate_descr(const TankAction& descr) {
   return Tank_Tracks();
 }
 
 bool Track_mngr::is_left_turn(const TankAction& action) {
-  return true;
-}
-
-bool Track_mngr::is_down_move(const TankAction& action) {
-  return true;
+  return action.x_value< current_x;
 }
 
 bool Track_mngr::is_right_turn(const TankAction& action) {
-  return false;
-}
-
-bool Track_mngr::is_up_move(const TankAction& action) {
-  return true;
+  return action.x_value > current_x;
 }
 
 track_move Track_mngr::get_track_move_kind(const TankAction& action) {
-  return track_move();
+  track_move result = track_move::ROTATE_MOVE;
+  if (action.x_value == current_x && action.y_value == current_y) {
+    return track_move::CONTINUE_MOVE;
+  } else if (!action.x_value && action.y_value ||
+    !action.y_value && action.x_value) {
+    return track_move::DIRECT_MOVE;
+  }
+  return result;
 }
 
 bool Track_mngr::is_first_launch() {
@@ -121,11 +125,4 @@ direction Track_mngr::get_direction(const TankAction& descr) {
   return (descr.y_value < current_y) ? direction::DOWN : direction::UP;
 }
 
-int8_t get_common_velocity(const TankAction& descr) {
-  return int8_t();
-}
-
-int8_t Track_mngr::get_delta_velocity(const TankAction& descr) {
-  return int8_t();
-}
 }//namespace tank

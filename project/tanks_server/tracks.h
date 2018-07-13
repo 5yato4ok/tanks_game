@@ -22,8 +22,6 @@ class Track_mngr:public QObject {
   track_move get_track_move_kind(const TankAction& action);
   bool is_left_turn(const TankAction& action);
   bool is_right_turn(const TankAction& action);
-  bool is_up_move(const TankAction& action);
-  bool is_down_move(const TankAction& action);
   int8_t get_delta_velocity(const TankAction& descr);
   int8_t get_common_velocity(const TankAction& descr);
   direction get_direction(const TankAction& descr);
