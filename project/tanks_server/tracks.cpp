@@ -23,11 +23,25 @@ std::string Track_mngr::form_arduino_packet(const Tank_Tracks& tracks_descr) {
 }
 
 int8_t Track_mngr::get_delta_velocity(const TankAction& descr) {
-  return int8_t();
+  //float angle = atan2(p1.y - p2.y, p1.x - p2.x)
+  //return type is in radians, if you need it in degrees just do angle * 180 / PI
+  float angle_new = atan2(descr.y_value, descr.x_value);
+  float angle_new_degree = angle_new * 180 / 3.41;
+  float angle_old = atan2(current_y, current_x);
+  float angle_old_degree = angle_old * 180 / 3.41;
+  return 0;
 }
 
 Tank_Tracks Track_mngr::get_rotate_descr(const TankAction& descr) {
-  return Tank_Tracks();
+  Tank_Tracks rotate_descr = current_tracks;
+  rotate_descr.left_track.up_down = get_direction(descr);
+  rotate_descr.right_track.up_down = get_direction(descr);
+  if (is_left_turn(descr)) {
+    rotate_descr.right_track.velocity += get_delta_velocity(descr);
+  } else if (is_right_turn(descr)) {
+    rotate_descr.left_track.velocity += get_delta_velocity(descr);
+  }
+  return rotate_descr;
 }
 
 bool Track_mngr::is_left_turn(const TankAction& action) {
