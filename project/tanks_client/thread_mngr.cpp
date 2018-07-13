@@ -41,7 +41,7 @@ void GamePadThread::ThreadLoop() {
     while (axis_condition[input_state.button].current
       == axis_condition[input_state.button].previos) {
       QEventLoop loop;
-      QTimer::singleShot(500, &loop, SLOT(quit()));
+      QTimer::singleShot(250, &loop, SLOT(quit()));
       loop.exec();
       emit is_same(input_state);
     }
@@ -49,7 +49,7 @@ void GamePadThread::ThreadLoop() {
    default:
      while (condition_state[input_state.button]) {
        QEventLoop loop;
-       QTimer::singleShot(500, &loop, SLOT(quit()));
+       QTimer::singleShot(250, &loop, SLOT(quit()));
        loop.exec();
        emit is_same(input_state);
      }

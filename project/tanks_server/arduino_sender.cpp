@@ -57,7 +57,6 @@ tank_status ArduinoSender::SendAction(std::string& packet) {
   } else {
     gui->arduino_out->appendPlainText("Arduino sender: Sending Data to Steel Error");
   }
-
   gui->centralWidget->update();
   return tank_status::OPERATION_FAILED;
 }

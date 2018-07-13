@@ -12,7 +12,7 @@ enum class tank_status:int32_t {OPPERATION_SUCCESS,OPERATION_FAILED};
 //TODO: What else?
 enum class game_status:int32_t {DIED,LOST_LIFE,WIN,SHOT,GET_HIT};
 
-enum class direction :int8_t { UP, DOWN, RIGHT, LEFT ,NONE};
+enum class direction :int8_t { UP = 0, DOWN = 1, RIGHT = 2, LEFT = 3,NONE = 4};
 
 struct TankAction {
   action_type type;

@@ -20,9 +20,9 @@ class Gun_mngr {
   ArduinoSender& ard_mngr;
   std::string form_arduino_packet(TankAction & action);
   int32_t shoot_num;
-  int32_t cur_rotation; 
-  int32_t max_rotation;
-  int32_t min_rotation;
+  uint32_t cur_rotation; 
+  uint32_t max_rotation;
+  uint32_t min_rotation;
 };
 
 } //namespace tank

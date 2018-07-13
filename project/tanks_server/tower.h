@@ -19,14 +19,14 @@ class Tower_mngr: QObject {
   ArduinoSender& ard_mngr;
   Gun_mngr gun;
   Vision_mngr vision;
-  int8_t cur_rotation_step;
+  int32_t cur_rotation_step;
   bool is_action_valid(TankAction & action);
   bool is_step_less_max();
   bool is_step_more_min();
-  int8_t update_rotation_step();
+  int32_t update_rotation_step();
   std::string form_arduino_packet(TankAction & action);
-  const int8_t max_rotation_step = 100;
-  const int8_t min_rotation_step = -100;
+  const int32_t max_rotation_step = 600;
+  const int32_t min_rotation_step = -600;
 };
 
 }//namespace tank

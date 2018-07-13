@@ -5,7 +5,7 @@ Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_,QObject *pa
   cur_rotation_step = update_rotation_step();
 }
 
-int8_t Tower_mngr::update_rotation_step() {
+int32_t Tower_mngr::update_rotation_step() {
   //form buffer with command give info about cur rotation
   //send it to arduino
   return 0;
@@ -18,16 +18,17 @@ std::string Tower_mngr::form_arduino_packet(TankAction & action) {
   std::string tower_packet;
   switch (action.type) {
     case action_type::MOVE_TOWER_LEFT:
-      tower_packet = "H105";
-      cur_rotation_step -= 10;
+      tower_packet = "H115";
+      cur_rotation_step -= 15;
       break;
     case action_type::MOVE_TOWER_RIGHT:
-      tower_packet = "H005";
-      cur_rotation_step += 10;
+      tower_packet = "H015";
+      cur_rotation_step += 15;
       break;
     default:
       break;
   }
+  gui->tank_out->appendPlainText("Tower manager: cur_rotation:" + QString::number(cur_rotation_step));
   return tower_packet;
   
 }
@@ -40,11 +41,14 @@ tank_status Tower_mngr::ManageAction(TankAction & action)  {
   }
 
   if (is_action_valid(action)) {
-    return ard_mngr.SendAction(form_arduino_packet(action));
+    result = ard_mngr.SendAction(form_arduino_packet(action));
   } else if (!is_step_less_max()){
     gui->tank_out->appendPlainText("Tower manager:\n Max limit. Turn to left");
   } else if (!is_step_more_min()) {
     gui->tank_out->appendPlainText("Tower manager:\n Min limit. Turn to right");
+  }
+  if (result == tank_status::OPERATION_FAILED) {
+    gui->tank_out->appendPlainText("Tower manager:\n Sending action error");
   }
   gui->centralWidget->update();
   return result;

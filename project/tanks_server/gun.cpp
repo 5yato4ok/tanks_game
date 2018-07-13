@@ -4,8 +4,8 @@ namespace tank {
 Gun_mngr::Gun_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_):
   gui(gui_),ard_mngr(ard_mngr_) {
   cur_rotation = 0;
-  max_rotation = 48;
-  min_rotation = -48;
+  max_rotation = 90;
+  min_rotation = 0;
 }
 
 tank_status Gun_mngr::ManageAction(TankAction & action) {
@@ -15,9 +15,9 @@ tank_status Gun_mngr::ManageAction(TankAction & action) {
   case action_type::MOVE_GUN_UP:
   case action_type::MOVE_GUN_DOWN:
   {
-    QEventLoop loop;
-    QTimer::singleShot(10, &loop, SLOT(quit()));
-    loop.exec();
+    //QEventLoop loop;
+    //QTimer::singleShot(10, &loop, SLOT(quit()));
+    //loop.exec();
     if (is_action_valid(action)) {
       return ard_mngr.SendAction(form_arduino_packet(action));
     }
@@ -33,14 +33,15 @@ std::string Gun_mngr::form_arduino_packet(TankAction & action) {
   
   switch (action.type) {
   case action_type::MOVE_GUN_DOWN:
-    cur_rotation -= 2;
+    cur_rotation -= 3;
     break;
   case action_type::MOVE_GUN_UP:
-    cur_rotation += 2;
+    cur_rotation += 3;
     break;
   default:
     break;
   }
+  gui->tank_out->appendPlainText("Tower manager: cur_rotation:" + QString::number(cur_rotation));
   std::string tower_packet = "G0" + std::to_string(cur_rotation);
   return tower_packet;
 }
