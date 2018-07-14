@@ -191,6 +191,7 @@ void GamePadMngr::buttonDOWN_packet(bool pressed) {
 }
 
 void GamePadMngr::button_is_pressed(Raw_Action buffer) {
+  thread.Exit();
   if (buffer.is_pressed) {
     emit sendAction(buffer);
   } else {

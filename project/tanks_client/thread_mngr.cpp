@@ -14,28 +14,34 @@ void GamePadThread::Start() {
 }
 
 void GamePadThread::Exit() {
-  thread->exit();
+  if (thread->isRunning()) {
+    thread->exit();
+  }
 }
 
 void GamePadThread::SetAxis_x(double x,gp_helper::gp_buttons button) {
   mutex.lock();
   input_state.button = button;
+  input_state.value_x = x;
+  input_state.is_pressed = true;
   axis_condition[button].current.x = x;
   mutex.unlock();
 }
 void GamePadThread::SetAxis_y(double y,gp_helper::gp_buttons button) {
   mutex.lock();
   input_state.button = button;
+  input_state.value_y = y;
+  input_state.is_pressed = true;
   axis_condition[button].current.y = y;
   mutex.unlock();
 }
 
 void GamePadThread::SetRawAction(Raw_Action buffer) {
-  if (thread->isRunning()) {
-    thread->exit();
-  }
+  //if (thread->isRunning()) {
+  //  thread->exit();
+  //}
   mutex.lock();
-  switch (input_state.button) {
+  switch (buffer.button) {
   case gp_helper::gp_buttons::AXIS_LEFT:
   case gp_helper::gp_buttons::AXIS_RIGHT:
     //axis_condition[buffer.button].current.x = buffer.value_x;
@@ -50,9 +56,7 @@ void GamePadThread::SetRawAction(Raw_Action buffer) {
 }
 
 void GamePadThread::ThreadLoop() {
-  mutex.lock();
   axis_condition[input_state.button].previos = axis_condition[input_state.button].current;
-  mutex.unlock();
   switch (input_state.button) {
   case gp_helper::gp_buttons::AXIS_LEFT:
   case gp_helper::gp_buttons::AXIS_RIGHT:
@@ -62,11 +66,11 @@ void GamePadThread::ThreadLoop() {
       axis_condition[input_state.button].current.y != 0
       ) {
       QEventLoop loop;
-      QTimer::singleShot(500, &loop, SLOT(quit()));
+      QTimer::singleShot(100, &loop, SLOT(quit()));
       loop.exec();
       emit is_same(input_state);
     }
-    qDebug() << "Out of while loop.";
+    qDebug() << "Out of while loop.Thread";
     break;
    default:
      while (condition_state[input_state.button]) {
