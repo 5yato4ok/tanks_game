@@ -25,10 +25,10 @@ void GamePadMngr::connectedChangedEvent(bool value) {
 
 void GamePadMngr::Listen_Input() {
   connect(this, &QGamepad::buttonAChanged, this, &GamePadMngr::buttonA_packet);
-  connect(this, &QGamepad::axisLeftXChanged, this, &GamePadMngr::axisLeftX_packet);
+  //connect(this, &QGamepad::axisLeftXChanged, this, &GamePadMngr::axisLeftX_packet);
   //connect(this, &QGamepad::axisLeftYChanged, this, &GamePadMngr::axisLeftY_packet);
   connect(this, &QGamepad::axisRightXChanged, this, &GamePadMngr::axisRightX_packet);
-  //connect(this, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
+  connect(this, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
   connect(this, &QGamepad::buttonBChanged, this, &GamePadMngr::buttonB_packet);
   connect(this, &QGamepad::buttonXChanged, this, &GamePadMngr::buttonX_packet);
   connect(this, &QGamepad::buttonYChanged, this, &GamePadMngr::buttonY_packet);
@@ -63,20 +63,22 @@ void GamePadMngr::axisRightX_packet(double value) {
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
   buffer.value_x = value;
-  buffer.value_y = QGamepad::axisRightY();
-  qDebug() << "Right Y: " << buffer.value_y;
-  thread.SetRawAction(buffer);
+  //buffer.value_y = QGamepad::axisRightY();
+  //qDebug() << "Right Y: " << buffer.value_y;
+  //thread.SetRawAction(buffer);
+  thread.SetAxis_x(value);
   thread.Start();
 }
 
 void GamePadMngr::axisRightY_packet(double value) {
-  qDebug() << "Left Y" << value;
-  
+  qDebug() << "Right Y" << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
-  buffer.value_x= QGamepad::axisRightX();
+  //buffer.value_x= QGamepad::axisRightX();
+  //qDebug() << "Right X" << buffer.value_x;
   buffer.value_y = value;
-  thread.SetRawAction(buffer);
+  //thread.SetRawAction(buffer);
+  thread.SetAxis_y(value);
   thread.Start();
 }
 

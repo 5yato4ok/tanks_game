@@ -29,6 +29,7 @@ int8_t Track_mngr::get_delta_velocity(const TankAction& descr) {
   float angle_new_degree = angle_new * 180 / 3.41;
   float angle_old = atan2(current_y, current_x);
   float angle_old_degree = angle_old * 180 / 3.41;
+
   return 0;
 }
 
@@ -56,8 +57,7 @@ track_move Track_mngr::get_track_move_kind(const TankAction& action) {
   track_move result = track_move::ROTATE_MOVE;
   if (action.x_value == current_x && action.y_value == current_y) {
     return track_move::CONTINUE_MOVE;
-  } else if (!action.x_value && action.y_value ||
-    !action.y_value && action.x_value) {
+  } else if (!action.x_value && action.y_value) {
     return track_move::DIRECT_MOVE;
   }
   return result;

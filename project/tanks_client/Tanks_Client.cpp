@@ -46,11 +46,10 @@ void Tanks_Client::ReceiveData(Raw_Action buffer) {
     supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_UP || 
     supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_DOWN) {
     ui->output->appendPlainText("\nIs tower action");
-    send_action(action);
   } else if (supported_buttons[buffer.button] == (int)action_type::SHOT) {
     ui->output->appendPlainText("\nIs gun action");
-    send_action(action);
   }
+  send_action(action);
   return;
 }
 

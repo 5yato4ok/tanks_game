@@ -1,11 +1,13 @@
 #pragma once
 #include <QThread>
 #include <QMutex>
+#include <qdebug>
 #include <QByteArray>
 #include <QEventLoop>
 #include "default_gp_settings.h"
 #include <map>
 #include <Qtimer>
+#include <qwaitcondition.h>
 
 using Button_state = std::map<gp_helper::gp_buttons, double>;
 
@@ -36,6 +38,8 @@ class GamePadThread: public QObject {
    GamePadThread();
    ~GamePadThread();
    void SetRawAction(Raw_Action buffer);
+   void SetAxis_x(double x,gp_helper::gp_buttons button = gp_helper::gp_buttons::AXIS_RIGHT);
+   void SetAxis_y(double y, gp_helper::gp_buttons button = gp_helper::gp_buttons::AXIS_RIGHT);
    void ThreadLoop();
    void Start();
    void Exit();
