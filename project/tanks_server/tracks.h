@@ -18,7 +18,7 @@ class Track_mngr:public QObject {
   Track_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr);
   tank_status ManageAction(TankAction& action);
  public slots:
-  void send_to_arduino(Tank_Tracks& tracks_descr);
+  void send_to_arduino(Tank_Tracks tracks_descr);
   void update_tracks(Tank_Tracks& tracks_descr);
  private:
   Ui_MainWindow* gui;
@@ -27,7 +27,6 @@ class Track_mngr:public QObject {
   Tank_Tracks get_tracks_descr(const TankAction& action);
   Track_desc get_track_descr(int8_t track_value);
   std::string form_arduino_packet(const Tank_Tracks& tracks_descr);
-  tank_status send_action_sequence(Tank_Tracks& tracks_descr);
   bool is_first_launch();
   Tank_Tracks current_tracks;
   const int8_t max_speed = 99;

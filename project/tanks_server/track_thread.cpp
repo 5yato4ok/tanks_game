@@ -44,6 +44,9 @@ void TrackThread::Thread_Send_Sequence() {
   }
   int8_t delta = calculate_delta();
   for (int i = 0; i < delta; i++) {
+    QEventLoop loop;
+    QTimer::singleShot(250, &loop, SLOT(quit()));
+    loop.exec();
     if (required.left_track < current.left_track) {
       current.left_track.velocity -= 1;
     } else if (required.left_track == current.left_track) {

@@ -67,6 +67,9 @@
     <ClCompile Include="track.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
+    <ClCompile Include="track_thread.cpp">
+      <Filter>tanks_part</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_server.ui">
@@ -127,6 +130,9 @@
       <Filter>steel_stuff</Filter>
     </QtMoc>
     <QtMoc Include="tracks.h">
+      <Filter>tanks_part</Filter>
+    </QtMoc>
+    <QtMoc Include="track_thread.h">
       <Filter>tanks_part</Filter>
     </QtMoc>
   </ItemGroup>

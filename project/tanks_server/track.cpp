@@ -11,4 +11,8 @@ bool Track_desc::operator <(const Track_desc& rhs) {
 bool Track_desc::operator == (const Track_desc& rhs) {
   return velocity == rhs.velocity;
 }
+
+bool Track_desc::operator >(const Track_desc& rhs) {
+  return velocity > rhs.velocity;
+}
 }//namespace tank
