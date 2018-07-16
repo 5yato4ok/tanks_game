@@ -18,12 +18,12 @@ std::string Tower_mngr::form_arduino_packet(TankAction & action) {
   std::string tower_packet;
   switch (action.type) {
     case action_type::MOVE_TOWER_LEFT:
-      tower_packet = "H115";
-      cur_rotation_step -= 15;
+      tower_packet = "H125";
+      cur_rotation_step -= 25;
       break;
     case action_type::MOVE_TOWER_RIGHT:
-      tower_packet = "H015";
-      cur_rotation_step += 15;
+      tower_packet = "H025";
+      cur_rotation_step += 25;
       break;
     default:
       break;

@@ -19,21 +19,15 @@ class Track_mngr:public QObject {
  private:
   Ui_MainWindow* gui;
   ArduinoSender& ard_mngr;
-  track_move get_track_move_kind(const TankAction& action);
-  bool is_left_turn(const TankAction& action);
-  bool is_right_turn(const TankAction& action);
-  int8_t get_delta_velocity(const TankAction& descr);
-  int8_t get_common_velocity(const TankAction& descr);
-  direction get_direction(const TankAction& descr);
-  Tank_Tracks get_direct_descr(const TankAction& descr);
-  Tank_Tracks get_rotate_descr(const TankAction& descr);
+  Tank_Tracks get_tracks_descr(const TankAction& action);
+  Track_desc get_track_descr(int8_t track_value);
   std::string form_arduino_packet(const Tank_Tracks& tracks_descr);
   tank_status send_action_sequence(Tank_Tracks& tracks_descr);
   bool is_first_launch();
   Tank_Tracks current_tracks;
   double current_x;
   double current_y;
-  const int8_t max_speed = 100;
+  const int8_t max_speed = 99;
   const int8_t velocity_step = 1;
 };
 }//namespace tank

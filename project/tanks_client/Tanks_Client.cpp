@@ -40,7 +40,8 @@ void Tanks_Client::ReceiveData(Raw_Action buffer) {
   action.y_value = buffer.value_y;
   action.is_pressed = buffer.is_pressed;
   if (supported_buttons[buffer.button] == (int)action_type::MOVE_TRACK) {
-    ui->output->appendPlainText("\nIs track action");
+    ui->output->appendPlainText("\nIs track action:\n X" + QString::number(buffer.value_x)+ 
+    "Y: " + QString::number(buffer.value_y));
   } else if (supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_RIGHT||
     supported_buttons[buffer.button] == (int)action_type::MOVE_TOWER_LEFT ||
     supported_buttons[buffer.button] == (int)action_type::MOVE_GUN_UP || 

@@ -59,19 +59,19 @@ void GamePadThread::ThreadLoop() {
   axis_condition[input_state.button].previos = axis_condition[input_state.button].current;
   switch (input_state.button) {
   case gp_helper::gp_buttons::AXIS_LEFT:
-  case gp_helper::gp_buttons::AXIS_RIGHT:
+  case gp_helper::gp_buttons::AXIS_RIGHT: {
+    bool is_stop = true;
     while (axis_condition[input_state.button].current
-      == axis_condition[input_state.button].previos  &&
-      axis_condition[input_state.button].current.x != 0 &&
-      axis_condition[input_state.button].current.y != 0
-      ) {
+      == axis_condition[input_state.button].previos  &&is_stop) {
+      is_stop = false;
       QEventLoop loop;
-      QTimer::singleShot(100, &loop, SLOT(quit()));
+      QTimer::singleShot(250, &loop, SLOT(quit()));
       loop.exec();
       emit is_same(input_state);
     }
     qDebug() << "Out of while loop.Thread";
     break;
+  }
    default:
      while (condition_state[input_state.button]) {
        QEventLoop loop;

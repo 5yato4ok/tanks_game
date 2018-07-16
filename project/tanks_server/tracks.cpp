@@ -15,54 +15,44 @@ Track_mngr::Track_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_)
 //  5 - 6 цифра Ц мощность в процентах правой гусеницы
 
 std::string Track_mngr::form_arduino_packet(const Tank_Tracks& tracks_descr) {
-  std::string command = "M" + std::to_string(int(tracks_descr.left_track.up_down)) +
-    std::to_string(tracks_descr.left_track.velocity) +
-    std::to_string(int(tracks_descr.right_track.up_down)) +
-    std::to_string(tracks_descr.right_track.velocity);
+  std::string command = "M" + std::to_string(int(tracks_descr.left_track.up_down));
+  if (tracks_descr.left_track.velocity < 10) {
+    command += std::to_string(0);
+  }
+  command += std::to_string(tracks_descr.left_track.velocity) + 
+    std::to_string(int(tracks_descr.right_track.up_down));
+  if (tracks_descr.right_track.velocity < 10) {
+    command += std::to_string(0);
+  }
+  command += std::to_string(tracks_descr.right_track.velocity);
   return command;
 }
 
-int8_t Track_mngr::get_delta_velocity(const TankAction& descr) {
-  //float angle = atan2(p1.y - p2.y, p1.x - p2.x)
-  //return type is in radians, if you need it in degrees just do angle * 180 / PI
-  float angle_new = atan2(descr.y_value, descr.x_value);
-  float angle_new_degree = angle_new * 180 / 3.41;
-  float angle_old = atan2(current_y, current_x);
-  float angle_old_degree = angle_old * 180 / 3.41;
-
-  return 0;
-}
-
-Tank_Tracks Track_mngr::get_rotate_descr(const TankAction& descr) {
-  Tank_Tracks rotate_descr = current_tracks;
-  rotate_descr.left_track.up_down = get_direction(descr);
-  rotate_descr.right_track.up_down = get_direction(descr);
-  if (is_left_turn(descr)) {
-    rotate_descr.right_track.velocity += get_delta_velocity(descr);
-  } else if (is_right_turn(descr)) {
-    rotate_descr.left_track.velocity += get_delta_velocity(descr);
+Track_desc Track_mngr::get_track_descr(int8_t track_value) {
+  Track_desc track;
+  if (track_value < 0) {
+    track.up_down = direction::DOWN;
+    track.velocity = track_value * (-1);
+  } else {
+    track.up_down = direction::UP;
+    track.velocity = track_value;
   }
-  return rotate_descr;
+  return track;
 }
 
-bool Track_mngr::is_left_turn(const TankAction& action) {
-  return action.x_value< current_x;
-}
-
-bool Track_mngr::is_right_turn(const TankAction& action) {
-  return action.x_value > current_x;
-}
-
-track_move Track_mngr::get_track_move_kind(const TankAction& action) {
-  track_move result = track_move::ROTATE_MOVE;
-  if (action.x_value == current_x && action.y_value == current_y) {
-    return track_move::CONTINUE_MOVE;
-  } else if (!action.x_value && action.y_value) {
-    return track_move::DIRECT_MOVE;
-  }
+Tank_Tracks Track_mngr::get_tracks_descr(const TankAction& action) {
+  int8_t x = action.x_value * 100;
+  int8_t y = action.y_value * 100;
+  x = x * (-1);
+  int8_t V = (100 - abs(x)) * (y / 100) + y; // R+L
+  int8_t W = (100 - abs(y)) * (x / 100) + x; //R-L
+  int8_t right_track = (V + W) / 2;
+  int8_t left_track = (V - W) / 2;
+  Tank_Tracks result;
+  result.left_track = get_track_descr(left_track);
+  result.right_track = get_track_descr(right_track);
   return result;
 }
-
 bool Track_mngr::is_first_launch() {
   return current_tracks.left_track.velocity == 0 && 
     current_tracks.right_track.velocity == 0;
@@ -72,16 +62,21 @@ tank_status Track_mngr::send_action_sequence(Tank_Tracks& tracks_descr) {
   Track_desc max_track;
   Track_desc min_track;
   tank_status result;
+  int i = 0;
   if (tracks_descr.left_track == tracks_descr.right_track) {
-    max_track = min_track = tracks_descr.left_track;
+    max_track = tracks_descr.left_track;
+    min_track = tracks_descr.right_track;
+    i = current_tracks.left_track.velocity;
   } else if (tracks_descr.left_track < tracks_descr.right_track) {
     max_track = tracks_descr.right_track;
     min_track = tracks_descr.left_track;
+    i = current_tracks.left_track.velocity;
   } else {
+    i = current_tracks.right_track.velocity;
     max_track = tracks_descr.left_track;
     min_track = tracks_descr.right_track;
   }
-  for (int i = 0; i < max_track.velocity; i++) {
+  for (i; i < max_track.velocity; i+=10) {
     Tank_Tracks tmp_descr;
     tmp_descr.left_track.up_down = tracks_descr.left_track.up_down;
     tmp_descr.right_track.up_down = tracks_descr.right_track.up_down;
@@ -95,48 +90,22 @@ tank_status Track_mngr::send_action_sequence(Tank_Tracks& tracks_descr) {
     } else if (!min_track.is_right && tmp_descr.right_track < min_track){
       tmp_descr.left_track.velocity = i;
     }
-    result = ard_mngr.SendAction(form_arduino_packet(tracks_descr));
+    result = ard_mngr.SendAction(form_arduino_packet(tmp_descr));
   }
   return result;
 }
 
-int8_t Track_mngr::get_common_velocity(const TankAction& descr) {
-  double vector_size = sqrt(descr.x_value*descr.x_value + descr.y_value*descr.y_value);
-  int8_t velocity = vector_size * 99;
-  return velocity;
-}
-
-Tank_Tracks Track_mngr::get_direct_descr(const TankAction& descr) {
-  Tank_Tracks tracks_descr;
-  tracks_descr.left_track.velocity = get_common_velocity(descr);
-  tracks_descr.left_track.up_down = get_direction(descr);
-  tracks_descr.right_track = tracks_descr.left_track;
-  return tracks_descr;
-}
-
 tank_status Track_mngr::ManageAction(TankAction& action) {
-  Tank_Tracks tracks_descr;
-  switch (get_track_move_kind(action)) {
-  case track_move::CONTINUE_MOVE:
-    tracks_descr = current_tracks;
-    break;
-  case track_move::DIRECT_MOVE:
-    tracks_descr = get_direct_descr(action);
-    break;
-  case track_move::ROTATE_MOVE:
-    tracks_descr = get_rotate_descr(action);
-    break;
-  default:
-    return tank_status::OPERATION_FAILED;
-  }
-  if (!is_first_launch()) {
-    return ard_mngr.SendAction(form_arduino_packet(tracks_descr));
+  Tank_Tracks tracks_descr = get_tracks_descr(action);
+  tank_status result;
+  if (!action.x_value && !action.y_value) {
+    result= ard_mngr.SendAction(form_arduino_packet(tracks_descr));
   } 
-  return send_action_sequence(tracks_descr);
-}
-
-direction Track_mngr::get_direction(const TankAction& descr) {
-  return (descr.y_value < current_y) ? direction::DOWN : direction::UP;
+  result = send_action_sequence(tracks_descr);
+  current_x = action.x_value;
+  current_y = action.y_value;
+  current_tracks = tracks_descr;
+  return result;
 }
 
 }//namespace tank

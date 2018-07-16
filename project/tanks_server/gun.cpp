@@ -33,10 +33,10 @@ std::string Gun_mngr::form_arduino_packet(TankAction & action) {
   
   switch (action.type) {
   case action_type::MOVE_GUN_DOWN:
-    cur_rotation -= 3;
+    cur_rotation -= 7;
     break;
   case action_type::MOVE_GUN_UP:
-    cur_rotation += 3;
+    cur_rotation += 7;
     break;
   default:
     break;

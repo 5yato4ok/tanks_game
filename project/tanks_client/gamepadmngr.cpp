@@ -1,5 +1,6 @@
 #include "gamepadmngr.h"
 #include "iostream"
+#include <iomanip>
 namespace gp_helper {
 GamePadMngr::GamePadMngr(QObject *parent) : QGamepad(0,parent){
   //m_gamepad = new QGamepad(0, this);//or just m_gamepad = new QGamepad; is ok//
@@ -62,11 +63,12 @@ void GamePadMngr::axisRightX_packet(double value) {
   qDebug() << "Right X: " << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
-  buffer.value_x = value;
+  buffer.value_x = floor(value * (100)) / 100;
+
   //buffer.value_y = QGamepad::axisRightY();
   //qDebug() << "Right Y: " << buffer.value_y;
   //thread.SetRawAction(buffer);
-  thread.SetAxis_x(value);
+  thread.SetAxis_x(buffer.value_x);
   thread.Start();
 }
 
@@ -76,9 +78,9 @@ void GamePadMngr::axisRightY_packet(double value) {
   buffer.button = gp_buttons::AXIS_RIGHT;
   //buffer.value_x= QGamepad::axisRightX();
   //qDebug() << "Right X" << buffer.value_x;
-  buffer.value_y = value;
+  buffer.value_y = floor(value * (-100)) / 100; // For some reason value is inverted
   //thread.SetRawAction(buffer);
-  thread.SetAxis_y(value);
+  thread.SetAxis_y(buffer.value_y);
   thread.Start();
 }
 
@@ -86,7 +88,7 @@ void GamePadMngr::axisLeftY_packet(double value) {
   qDebug() << "Left Y" << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_LEFT;
-  buffer.value_x= QGamepad::axisLeftX();
+  buffer.value_x= QGamepad::axisLeftX(); 
   buffer.value_y = value;
   thread.SetRawAction(buffer);
   thread.Start();
@@ -192,11 +194,7 @@ void GamePadMngr::buttonDOWN_packet(bool pressed) {
 
 void GamePadMngr::button_is_pressed(Raw_Action buffer) {
   thread.Exit();
-  if (buffer.is_pressed) {
-    emit sendAction(buffer);
-  } else {
-    qDebug() << "Out of sending loop";
-  }
+  emit sendAction(buffer);
 }
 
 void GamePadMngr::buttonLEFT_packet(bool pressed) {

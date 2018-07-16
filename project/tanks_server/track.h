@@ -7,7 +7,7 @@ class Track_desc {
   Track_desc();
   bool operator <(const Track_desc& rhs);
   bool operator == (const Track_desc& rhs);
-  int8_t velocity;
+  uint8_t velocity;
   direction up_down;
   bool is_right;
 };
