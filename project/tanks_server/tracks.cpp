@@ -3,8 +3,6 @@
 namespace tank {
 Track_mngr::Track_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_)
   :gui(gui_),ard_mngr(ard_mngr_) {
-  current_x = 0;
-  current_y = 0;
   current_tracks.right_track.is_right = true;
 }
 
@@ -58,6 +56,11 @@ bool Track_mngr::is_first_launch() {
     current_tracks.right_track.velocity == 0;
 }
 
+void Track_mngr::send_to_arduino(Tank_Tracks& tracks_descr) {
+  ard_mngr.SendAction(form_arduino_packet(tracks_descr));
+  update_tracks(tracks_descr);
+}
+
 tank_status Track_mngr::send_action_sequence(Tank_Tracks& tracks_descr) {
   Track_desc max_track;
   Track_desc min_track;
@@ -95,16 +98,21 @@ tank_status Track_mngr::send_action_sequence(Tank_Tracks& tracks_descr) {
   return result;
 }
 
+void Track_mngr::update_tracks(Tank_Tracks& tracks_descr) {
+  current_tracks = tracks_descr;
+}
+
 tank_status Track_mngr::ManageAction(TankAction& action) {
   Tank_Tracks tracks_descr = get_tracks_descr(action);
   tank_status result;
-  if (!action.x_value && !action.y_value) {
-    result= ard_mngr.SendAction(form_arduino_packet(tracks_descr));
-  } 
-  result = send_action_sequence(tracks_descr);
-  current_x = action.x_value;
-  current_y = action.y_value;
-  current_tracks = tracks_descr;
+  thread.Exit();
+  thread.SetPacket(current_tracks,tracks_descr);
+  //if (!action.x_value && !action.y_value) {
+  //  result= ard_mngr.SendAction(form_arduino_packet(tracks_descr));
+  //} 
+  //result = send_action_sequence(tracks_descr);
+  //current_tracks = tracks_descr;
+  thread.Start();
   return result;
 }
 
