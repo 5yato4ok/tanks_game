@@ -70,6 +70,9 @@
     <ClCompile Include="track_thread.cpp">
       <Filter>tanks_part</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\server_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_server.ui">

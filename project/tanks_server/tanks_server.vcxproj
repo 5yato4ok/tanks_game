@@ -113,6 +113,7 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\server_buffer.cpp" />
     <ClCompile Include="arduino_sender.cpp" />
     <ClCompile Include="body.cpp" />
     <ClCompile Include="camera.cpp" />

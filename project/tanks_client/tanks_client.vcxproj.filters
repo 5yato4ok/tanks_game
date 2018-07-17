@@ -46,6 +46,9 @@
     <ClCompile Include="thread_mngr.cpp">
       <Filter>gamepad</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\server_buffer.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_client.ui">

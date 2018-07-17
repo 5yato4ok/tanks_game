@@ -31,24 +31,28 @@ class Player_local: public QMainWindow {
   bool Authenticate(player_type player = player_type::TANK, 
     controler_type cntrl = controler_type::GAMEPAD);
   void ReDrawStreamingVideo();
- private:
-  const int32_t user_id;
-  game_type choosed_game;
-  const std::string password;
-  QTcpSocket *tcpSocket = nullptr;
-  QByteArray IntToArray(qint32 source);
-  QNetworkSession *networkSession = nullptr;
-  QMutex mutex;
-  QWaitCondition cond;
-  QDataStream in;
-  void get_streaming_video();
-  bool writeData(QByteArray data);
+ signals:
+  void camera_ip_initilized();
  public slots:
   bool connect_to_host();
  private slots:
   void readBuffer();
   void displayError(QAbstractSocket::SocketError socketError);
   void sessionOpened();
+ private:
+  const int32_t user_id;
+  game_type choosed_game;
+  QString camera_ip;
+  const std::string password;
+  QTcpSocket *tcpSocket = nullptr;
+  QByteArray IntToArray(qint32 source);
+  QNetworkSession *networkSession = nullptr;
+  QMutex mutex;
+  QDataStream in;
+  void get_streaming_video();
+  bool writeData(QByteArray data);
+  void manage_input_buffer(const ServerBuffer& buffer);
+  void init_camera_url(const ServerBuffer& buffer);
 };
 
 }

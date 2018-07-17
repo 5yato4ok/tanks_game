@@ -37,18 +37,40 @@ bool Player_local::connect_to_host() {
 }
 
 void Player_local::readBuffer() {
-
-  QString input_buff;
+   QByteArray input_buff;
+   QString value;
   for (;;) {
     in.startTransaction();
     in >> input_buff;
-    if (in.commitTransaction())
-      qDebug() << "Received: " << input_buff;
-    else
+    if (in.commitTransaction()) { 
+      //qDebug() << "Received: " << input_buff;
+      ServerBuffer buffer;
+      memcpy(&buffer, input_buff.data(), sizeof(ServerBuffer));
+      manage_input_buffer(buffer);
+    } else {
       break;
+    }
   }
 }
 
+void Player_local::init_camera_url(const ServerBuffer& buffer) {
+  QString tmp(buffer.tankAction);
+  tmp.resize(buffer.size);
+  camera_ip = tmp;
+  emit camera_ip_initilized();
+}
+
+void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
+  switch (buffer.type) {
+  case 2:
+    init_camera_url(buffer);
+    break;
+  case 3:
+    break;
+  default:
+    break;
+  }
+}
 
 void Player_local::ReDrawStreamingVideo() {
   get_streaming_video();

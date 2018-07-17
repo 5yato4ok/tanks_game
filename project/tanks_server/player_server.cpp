@@ -1,6 +1,15 @@
 #include "player_server.h"
 //TODO: realize close
 namespace game{
+
+QByteArray IntToArray(qint32 source) {
+  //Avoid use of cast, this is the Qt way to serialize objects
+  QByteArray temp;
+  QDataStream data(&temp, QIODevice::ReadWrite);
+  data << source;
+  return temp;
+}
+
   TankAction tk; //TODO: fix
 qint32 ArrayToInt(QByteArray source) {
   qint32 temp;
@@ -89,15 +98,21 @@ void Player_server::SendVideoToLocal(QString camera_url) {
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
-  out << camera_url;
+  ServerBuffer buffer;
+  buffer.size = camera_url.size();
+  buffer.type = 2;
+  memcpy(buffer.tankAction, camera_url.data(), buffer.size);
+  out << buffer;
   sendBuffer(block);
 }
 
-void Player_server::sendBuffer(QByteArray block) {
-  if (!socket) {
-    return;
-  }
-  socket->write(block);
+bool Player_server::sendBuffer(QByteArray block) {
+  if (socket->state() == QAbstractSocket::ConnectedState) {
+    socket->write(IntToArray(block.size())); //write size of data
+    socket->write(block); //write the data itself
+    return socket->waitForBytesWritten();
+  } else
+    return false;
 }
 
 void Player_server::newConnection() {
@@ -157,7 +172,6 @@ void Player_server::readyRead() {
         *s = size;
         ServerBuffer buffer;
         memcpy(&buffer, data.data(), data.size());
-        
           if (is_tank_action(buffer)) {
             memcpy(&tk, buffer.tankAction, sizeof(tk));
             gui->player_out->appendPlainText("Sending Tank Action with following data:");

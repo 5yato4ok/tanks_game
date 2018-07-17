@@ -114,6 +114,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\default_gp_settings.cpp" />
+    <ClCompile Include="..\common\server_buffer.cpp" />
     <ClCompile Include="gamepadmngr.cpp" />
     <ClCompile Include="main_client.cpp" />
     <ClCompile Include="Player_local.cpp" />

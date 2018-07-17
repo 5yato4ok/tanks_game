@@ -44,7 +44,7 @@ class Player_server: public QObject {
  private slots:
   void sessionOpened();
   void init_player_id();
-  void sendBuffer(QByteArray block);
+  bool sendBuffer(QByteArray block);
   void disconnected();
   void readyRead();
   void newConnection();
