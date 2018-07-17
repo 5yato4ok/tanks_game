@@ -58,7 +58,7 @@ void Tanks_Client::send_action(TankAction buffer) {
   ServerBuffer packet;
   ui->output->appendPlainText(QTime::currentTime().toString() +": Sending action");
   packet.size = sizeof(TankAction);
-  packet.type = 1;
+  packet.type =msg_type::TANK_ACTION;
   memcpy(packet.tankAction, &buffer, sizeof(TankAction));
   Player_local::SendActionsToServer(packet);
 }

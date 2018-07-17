@@ -94,13 +94,13 @@ void Player_server::sessionOpened() {
   gui->centralWidget->update();
 }
 
-void Player_server::SendVideoToLocal(QString camera_url) {
+void Player_server::SendVideoToLocal(std::string camera_url) {
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
   ServerBuffer buffer;
   buffer.size = camera_url.size();
-  buffer.type = 2;
+  buffer.type = msg_type::CAMERA_URL;
   memcpy(buffer.tankAction, camera_url.data(), buffer.size);
   out << buffer;
   sendBuffer(block);
@@ -186,6 +186,6 @@ void Player_server::readyRead() {
   }
 }
 bool Player_server::is_tank_action(ServerBuffer buffer) {
-  return buffer.type == 1;
+  return buffer.type == msg_type::TANK_ACTION;
 }
 } //namespace game

@@ -42,7 +42,7 @@ class Player_local: public QMainWindow {
  private:
   const int32_t user_id;
   game_type choosed_game;
-  QString camera_ip;
+  std::string camera_ip;
   const std::string password;
   QTcpSocket *tcpSocket = nullptr;
   QByteArray IntToArray(qint32 source);

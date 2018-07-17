@@ -10,7 +10,7 @@
 enum class msg_type :int {TANK_ACTION, CAMERA_URL, GAME_BUFFER, LAST};
 
 struct ServerBuffer {
-  int type;
+  msg_type type;
   int size;
   char tankAction[1024];
 };

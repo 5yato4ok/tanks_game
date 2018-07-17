@@ -54,18 +54,16 @@ void Player_local::readBuffer() {
 }
 
 void Player_local::init_camera_url(const ServerBuffer& buffer) {
-  QString tmp(buffer.tankAction);
-  tmp.resize(buffer.size);
-  camera_ip = tmp;
+  camera_ip = std::string(buffer.tankAction,buffer.size);
   emit camera_ip_initilized();
 }
 
 void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
   switch (buffer.type) {
-  case 2:
+  case msg_type::CAMERA_URL:
     init_camera_url(buffer);
     break;
-  case 3:
+  case msg_type::GAME_BUFFER:
     break;
   default:
     break;
