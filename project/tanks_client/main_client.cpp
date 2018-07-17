@@ -35,7 +35,10 @@ int main(int argc, char *argv[]) {
   //time.start(100);
   //ServerBuffer tmp3 = { 0 };
   //TankAction tmp_tk3;
-  //tmp_tk2.type = action_type::MOVE_GUN_UP;
+  //tmp_tk3.type = action_type::MOVE_TRACK;
+  //tmp_tk3.x_value = 0.3;
+  //tmp_tk3.y_value = 1;
+  //tmp_tk3.is_pressed = true;
   //memcpy(tmp3.tankAction, &tmp_tk3, sizeof(TankAction));
   //tclient.SendActionsToServer(tmp3);
   //time.start(100);

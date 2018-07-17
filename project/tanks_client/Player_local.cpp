@@ -37,11 +37,8 @@ bool Player_local::connect_to_host() {
 }
 
 void Player_local::readBuffer() {
-//in.startTransaction();
 
   QString input_buff;
-  //in >> input_buff;
-
   for (;;) {
     in.startTransaction();
     in >> input_buff;

@@ -1,7 +1,7 @@
 #include "tower.h"
 namespace tank{
 Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_,QObject *parent):
-  gui(gui_),gun(gui_,ard_mngr_),vision(gui_), ard_mngr(ard_mngr_) {
+  gui(gui_),gun(gui_,ard_mngr_),ard_mngr(ard_mngr_) {
   cur_rotation_step = update_rotation_step();
 }
 

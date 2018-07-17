@@ -14,6 +14,7 @@
 #include "qdatastream.h"
 #include "server_buffer.h"
 #include "ui_tanks_server.h"
+#include "tanks_ip.h"
 //TODO: make gui global as separate debug class
 namespace game {
 class Player_server: public QObject {
@@ -22,7 +23,7 @@ class Player_server: public QObject {
   Player_server(Ui_MainWindow* gui);
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
   void GetGameAttributes(game_type type);
-  void SendVideoToLocal();
+  void SendVideoToLocal(QString camera_url);
   int32_t GetPlayerId() { return player_id; }
  signals:
   void tankDataReceived(TankAction action);
@@ -32,8 +33,10 @@ class Player_server: public QObject {
  protected:
   Ui_MainWindow* gui;
  private:
+  QTcpSocket *socket = nullptr;
   bool is_tank_action(ServerBuffer buffer);
   int32_t player_id;
+  QString camera_ip;
   QTcpServer *tcpServer = nullptr;
   QNetworkSession *networkSession = nullptr;
   QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
@@ -41,7 +44,7 @@ class Player_server: public QObject {
  private slots:
   void sessionOpened();
   void init_player_id();
-  void sendBuffer();
+  void sendBuffer(QByteArray block);
   void disconnected();
   void readyRead();
   void newConnection();

@@ -18,7 +18,6 @@ class Tower_mngr: QObject {
   Ui_MainWindow* gui;
   ArduinoSender& ard_mngr;
   Gun_mngr gun;
-  Vision_mngr vision;
   int32_t cur_rotation_step;
   bool is_action_valid(TankAction & action);
   bool is_step_less_max();

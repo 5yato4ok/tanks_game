@@ -32,6 +32,7 @@ Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_) {
   } else {
     sessionOpened();
   }
+  camera_ip = camera_url_1;
   connect(tcpServer, &QTcpServer::newConnection, this, &Player_server::newConnection);
 }
 
@@ -84,29 +85,32 @@ void Player_server::sessionOpened() {
   gui->centralWidget->update();
 }
 
-void Player_server::sendBuffer() {
+void Player_server::SendVideoToLocal(QString camera_url) {
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
-  QString tmp = "Some test data.Player id.12345";
-  out << tmp;
-  QTcpSocket *clientConnection = tcpServer->nextPendingConnection();
-  connect(clientConnection, &QAbstractSocket::disconnected,
-    clientConnection, &QObject::deleteLater);
+  out << camera_url;
+  sendBuffer(block);
+}
 
-  clientConnection->write(block);
-  clientConnection->disconnectFromHost();
+void Player_server::sendBuffer(QByteArray block) {
+  if (!socket) {
+    return;
+  }
+  socket->write(block);
 }
 
 void Player_server::newConnection() {
   while (tcpServer->hasPendingConnections()) {
-    QTcpSocket *socket = tcpServer->nextPendingConnection();
+    socket = tcpServer->nextPendingConnection();
     connect(socket, &QTcpSocket::readyRead,this, &Player_server::readyRead);
     connect(socket, &QTcpSocket::disconnected, this, &Player_server::disconnected);
+    SendVideoToLocal(camera_ip);
     QByteArray *buffer = new QByteArray();
     qint32 *s = new qint32(0);
     buffers.insert(socket, buffer);
     sizes.insert(socket, s);
+    
   }
 }
 

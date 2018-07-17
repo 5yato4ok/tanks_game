@@ -5,7 +5,7 @@
 #include "tracks.h"
 #include "action.h"
 #include "player_server.h"
-#include "tanks_ip.h"
+
 // TODO: make action setting window from qt example
 
 namespace tank {
@@ -22,6 +22,7 @@ class TankMngr: public game::Player_server {
   void find_free_steel();
   quint16 steel_port;
   QHostAddress steel_ip;
+  QString camera_url;
   int32_t tank_id;
   bool init_receive_port();
   ArduinoSender ard_mngr;

@@ -88,9 +88,6 @@
     <ClInclude Include="tanks_settings.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
-    <ClInclude Include="vision.h">
-      <Filter>tanks_part</Filter>
-    </ClInclude>
     <ClInclude Include="body.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
@@ -113,6 +110,9 @@
       <Filter>tanks_part</Filter>
     </ClInclude>
     <ClInclude Include="track.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="vision.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
   </ItemGroup>

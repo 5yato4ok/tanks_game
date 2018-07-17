@@ -7,6 +7,7 @@ TankMngr::TankMngr(Ui_MainWindow* gui_) :
   init_receive_port();
   is_intialized_ = true;
   connect(this, SIGNAL(tankDataReceived(TankAction)), SLOT(ReceiveData(TankAction)));
+  
   //}
 }
 
