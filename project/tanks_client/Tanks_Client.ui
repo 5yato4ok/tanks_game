@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
-    <height>374</height>
+    <width>947</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="ChooseGameButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>20</y>
+      <x>630</x>
+      <y>60</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -30,10 +30,20 @@
    <widget class="QPlainTextEdit" name="output">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
+      <x>540</x>
+      <y>120</y>
       <width>281</width>
       <height>201</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QOpenGLWidget" name="openGLWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>461</width>
+      <height>431</height>
      </rect>
     </property>
    </widget>
@@ -43,7 +53,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>578</width>
+     <width>947</width>
      <height>18</height>
     </rect>
    </property>

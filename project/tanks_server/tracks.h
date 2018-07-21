@@ -28,6 +28,7 @@ class Track_mngr:public QObject {
   Track_desc get_track_descr(int8_t track_value);
   std::string form_arduino_packet(const Tank_Tracks& tracks_descr);
   bool is_first_launch();
+  bool is_reverse_turn(double x, double y);
   Tank_Tracks current_tracks;
   const int8_t max_speed = 99;
   const int8_t velocity_step = 1;

@@ -27,6 +27,10 @@ std::string Track_mngr::form_arduino_packet(const Tank_Tracks& tracks_descr) {
   return command;
 }
 
+bool  Track_mngr::is_reverse_turn(double x, double y) {
+  return abs(x) == 1 && !y;
+}
+
 Track_desc Track_mngr::get_track_descr(int8_t track_value) {
   Track_desc track;
   if (track_value < 0) {
@@ -42,7 +46,9 @@ Track_desc Track_mngr::get_track_descr(int8_t track_value) {
 Tank_Tracks Track_mngr::get_tracks_descr(const TankAction& action) {
   int8_t x = action.x_value * 100;
   int8_t y = action.y_value * 100;
-  x = x * (-1);
+  if (is_reverse_turn(action.x_value, action.y_value)) {
+    x = x * (-1);
+  }
   int8_t V = (100 - abs(x)) * (y / 100) + y; // R+L
   int8_t W = (100 - abs(y)) * (x / 100) + x; //R-L
   int8_t right_track = (V + W) / 2;
@@ -50,6 +56,7 @@ Tank_Tracks Track_mngr::get_tracks_descr(const TankAction& action) {
   Tank_Tracks result;
   result.left_track = get_track_descr(left_track);
   result.right_track = get_track_descr(right_track);
+  result.right_track.is_right = true;
   return result;
 }
 bool Track_mngr::is_first_launch() {
