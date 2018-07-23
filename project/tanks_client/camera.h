@@ -35,8 +35,8 @@ class Camera : public QThread {
    QWaitCondition condition;
    cv::Mat frame;
    int frameRate;
-   //cv::VideoCapture capture;
-   //cv::Mat RGBframe;
+   cv::VideoCapture capture;
+   cv::Mat RGBframe;
    QImage img;
 };
 

@@ -8,12 +8,12 @@ Camera::Camera(Ui::Tanks_ClientClass* ui_, QObject *parent):
 
 bool Camera::LoadVideo(std::string camera_url) {
   // Открываем поток с камеры средствами OpenCV
-  //capture = cv::VideoCapture(camera_url);
+  capture = cv::VideoCapture(camera_url);
   ui->output->appendPlainText("Input stream: " + QString::fromStdString(camera_url));
-  //if (capture.isOpened()) {
-  //  frameRate = (int)capture.get(CV_CAP_PROP_FPS);
-  //  return true;
-  //}   
+  if (capture.isOpened()) {
+    frameRate = (int)capture.get(CV_CAP_PROP_FPS);
+    return true;
+  }   
   ui->output->appendPlainText("OpenCV Failed::: can't open input stream:" + QString::fromStdString(camera_url));
   return false;
 }
