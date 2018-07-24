@@ -49,6 +49,9 @@
     <ClCompile Include="..\common\server_buffer.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="camera_thread.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>player</Filter>
     </ClCompile>
@@ -75,6 +78,9 @@
     </QtMoc>
     <QtMoc Include="thread_mngr.h">
       <Filter>gamepad</Filter>
+    </QtMoc>
+    <QtMoc Include="camera_thread.h">
+      <Filter>player</Filter>
     </QtMoc>
     <QtMoc Include="camera.h">
       <Filter>player</Filter>

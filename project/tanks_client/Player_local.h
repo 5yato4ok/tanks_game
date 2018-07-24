@@ -15,6 +15,7 @@
 #include "server_settings.h"
 #include "server_buffer.h"
 #include <qbytearray.h>
+
 enum class player_type : int32_t {TANK,ROBOT, LAST};
 enum class controler_type: int32_t {GAMEPAD, KEYBOARD,LAST};
 
@@ -39,10 +40,11 @@ class Player_local: public QMainWindow {
   void readBuffer();
   void displayError(QAbstractSocket::SocketError socketError);
   void sessionOpened();
+ protected:
+  std::string camera_ip;
  private:
   const int32_t user_id;
   game_type choosed_game;
-  std::string camera_ip;
   const std::string password;
   QTcpSocket *tcpSocket = nullptr;
   QByteArray IntToArray(qint32 source);

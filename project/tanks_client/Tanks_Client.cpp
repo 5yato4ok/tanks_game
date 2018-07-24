@@ -1,6 +1,7 @@
 #include "Tanks_Client.h"
 namespace client {
-Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent), ui(new Ui::Tanks_ClientClass) {
+Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent),
+ui(new Ui::Tanks_ClientClass),camera(ui,parent){
   //if (!gamepad.Is_connected()) {
   //  return;
   //}
@@ -9,6 +10,11 @@ Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent), ui(new Ui::T
   Connect_signals();
   gamepad.Listen_Input();
   get_default_buttons_settings();
+}
+
+void Tanks_Client::load_video() {
+  camera.LoadVideo(Player_local::camera_ip);
+  camera.StartVideo();
 }
 
 gp_helper::Button_settings Tanks_Client::Init_User_Buttons(gp_helper::Button_settings user_def) {
@@ -66,10 +72,13 @@ void Tanks_Client::send_action(TankAction buffer) {
 void Tanks_Client::Connect_signals() {
   connect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
     SLOT(ReceiveData(Raw_Action)));
+  connect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
 }
 void Tanks_Client::Disconnect_signals() {
   disconnect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
     SLOT(ReceiveData(Raw_Action)));
+  disconnect(this, &Player_local::camera_ip_initilized, this, 
+    &Tanks_Client::load_video);
 }
   
 }//namespace client

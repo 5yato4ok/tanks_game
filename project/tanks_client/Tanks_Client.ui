@@ -37,14 +37,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QOpenGLWidget" name="openGLWidget">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
-      <width>461</width>
-      <height>431</height>
+      <x>60</x>
+      <y>50</y>
+      <width>401</width>
+      <height>341</height>
      </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
