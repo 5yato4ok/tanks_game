@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1F57F4A5-05DC-459A-90AC-C461D7192530}</ProjectGuid>
+    <ProjectGuid>{F3B8EE54-C862-4628-8DB2-12005D69DC35}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,7 +70,7 @@
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
       <IncludePath>..\common\;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
-      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
+      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -101,7 +101,7 @@
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
       <IncludePath>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</IncludePath>
-      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
+      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</Define>
     </QtMoc>
     <QtUic>
       <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
@@ -114,63 +114,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\server_buffer.cpp" />
-    <ClCompile Include="arduino_sender.cpp" />
-    <ClCompile Include="body.cpp" />
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="gun.cpp" />
-    <ClCompile Include="main_server.cpp" />
-    <ClCompile Include="player_server.cpp" />
-    <ClCompile Include="tank.cpp" />
-    <ClCompile Include="tower.cpp" />
-    <ClCompile Include="track.cpp" />
-    <ClCompile Include="tracks.cpp" />
-    <ClCompile Include="track_thread.cpp">
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-    </ClCompile>
-    <ClCompile Include="vision.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="game_server.cpp" />
+    <ClCompile Include="game_thread.cpp" />
+    <ClCompile Include="main_game.cpp" />
+    <ClCompile Include="rules.cpp" />
+    <ClCompile Include="tanks_game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="tanks_server.ui" />
+    <QtMoc Include="tanks_game.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="tanks_server.qrc" />
+    <QtUic Include="tanks_game.ui" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\action.h" />
+    <QtRcc Include="tanks_game.qrc" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="..\common\server_buffer.h" />
-    <QtMoc Include="arduino_sender.h">
+    <ClInclude Include="rules.h" />
+    <QtMoc Include="game.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
     </QtMoc>
-    <ClInclude Include="body.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="gun.h" />
-    <QtMoc Include="player_server.h">
+    <QtMoc Include="game_server.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
     </QtMoc>
-    <ClInclude Include="tanks_ip.h" />
-    <ClInclude Include="tanks_settings.h" />
-    <QtMoc Include="tracks.h">
+    <QtMoc Include="game_thread.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_UITOOLS_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;QT_WIDGETS_LIB</Define>
     </QtMoc>
-    <ClInclude Include="track.h" />
-    <QtMoc Include="track_thread.h">
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-    </QtMoc>
-    <ClInclude Include="vision.h">
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\..\common;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWidgets</IncludePath>
-    </ClInclude>
-    <QtMoc Include="tower.h" />
-    <QtMoc Include="tank.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

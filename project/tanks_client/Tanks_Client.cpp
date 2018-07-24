@@ -13,8 +13,9 @@ ui(new Ui::Tanks_ClientClass),camera(ui,parent){
 }
 
 void Tanks_Client::load_video() {
-  camera.LoadVideo(Player_local::camera_ip);
-  camera.StartVideo();
+  if (camera.LoadVideo(Player_local::camera_ip)) {
+    camera.StartVideo();
+  }
 }
 
 gp_helper::Button_settings Tanks_Client::Init_User_Buttons(gp_helper::Button_settings user_def) {

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{aa51f0d3-d711-420c-802c-d8df954da8de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="tanks_game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="main_game.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="game_thread.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game_server.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="rules.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\server_buffer.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="tanks_game.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="rules.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\server_buffer.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="tanks_game.qrc">
+      <Filter>Form Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="tanks_game.h">
+      <Filter>game</Filter>
+    </QtMoc>
+    <QtMoc Include="game_thread.h">
+      <Filter>game</Filter>
+    </QtMoc>
+    <QtMoc Include="game_server.h">
+      <Filter>game</Filter>
+    </QtMoc>
+    <QtMoc Include="game.h">
+      <Filter>game</Filter>
+    </QtMoc>
+  </ItemGroup>
+</Project>

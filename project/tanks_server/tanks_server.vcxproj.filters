@@ -49,12 +49,6 @@
     <ClCompile Include="camera.cpp">
       <Filter>steel_stuff</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
-    <ClCompile Include="rules.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="player_server.cpp">
       <Filter>game</Filter>
     </ClCompile>
@@ -99,12 +93,6 @@
     </ClInclude>
     <ClInclude Include="..\common\action.h">
       <Filter>steel_stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="rules.h">
-      <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
       <Filter>game</Filter>
