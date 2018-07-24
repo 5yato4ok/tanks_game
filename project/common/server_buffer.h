@@ -2,11 +2,6 @@
 #include "action.h"
 #include <QDataStream>
 #include <QHostAddress>
-//type:
-// 1- tank_action //TODO: make enum
-// 2 - camera_url
-// 3 - game_buffer
-//
 
 enum class msg_type :int {TANK_ACTION, CAMERA_URL, GAME_BUFFER, LAST};
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "game_server.h"
-#include <QMainwindow>
+#include "ui_tanks_game.h"
+#include <QMainWindow>
 namespace game {
 class Game : public QMainWindow {
   Q_OBJECT
@@ -8,6 +9,7 @@ class Game : public QMainWindow {
   Game::Game(QMainWindow* parent = nullptr);
   void Manage_P2P_Action();
  private:
+  Ui_tanks_gameClass* gui;
   QNetworkSession *networkSession = nullptr;
   Game_Server server;
   void set_rules(game_type type);

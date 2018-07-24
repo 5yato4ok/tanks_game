@@ -1,7 +1,8 @@
 #include "game.h"
 
 namespace game {
-Game::Game(QMainWindow* parent):QMainWindow(parent) {
+Game::Game(QMainWindow* parent):QMainWindow(parent),gui(new Ui_tanks_gameClass){
+  gui->setupUi(this);
   QNetworkConfigurationManager manager;
   if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
     // Get saved network configuration
@@ -20,7 +21,7 @@ Game::Game(QMainWindow* parent):QMainWindow(parent) {
     networkSession = new QNetworkSession(config, this);
     connect(networkSession, &QNetworkSession::opened, this, &Game::sessionOpened);
 
-    //gui->label->setText(tr("Opening network session."));
+    gui->label->setText(tr("Opening network session."));
     networkSession->open();
   } else {
     sessionOpened();
@@ -58,15 +59,15 @@ void Game::sessionOpened() {
 
   if (ipAddress.isEmpty())
     ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-  if (!server.listen(ip, 15666)) {
+  if (!server.listen(ip, 15667)) {
     qDebug() << "Unable to start the server: %1. " << server.errorString();
     //close();
     return;
   }
-  //gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
-  //  "Run the Tank Client example now.")
-  //  .arg(ipAddress).arg(server.serverPort()));
-  //gui->centralWidget->update();
+  gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
+    "Run the Tank Client example now.")
+    .arg(ipAddress).arg(server.serverPort()));
+  gui->centralWidget->update();
 }
 
 } //namespace game

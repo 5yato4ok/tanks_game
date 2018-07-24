@@ -119,10 +119,6 @@
     <ClCompile Include="game_thread.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="rules.cpp" />
-    <ClCompile Include="tanks_game.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="tanks_game.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_game.ui" />

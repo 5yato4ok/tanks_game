@@ -28,9 +28,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tanks_game.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="main_game.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="tanks_game.h">
-      <Filter>game</Filter>
-    </QtMoc>
     <QtMoc Include="game_thread.h">
       <Filter>game</Filter>
     </QtMoc>
