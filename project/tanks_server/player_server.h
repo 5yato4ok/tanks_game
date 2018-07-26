@@ -6,9 +6,9 @@
 #include "action.h"
 #include "game_type.h"
 #include <QtNetwork>
-#include <qrandom.h>
 #include <qdatastream.h>
 #include "server_buffer.h"
+#include "server_settings.h"
 #include "ui_tanks_server.h"
 #include "tanks_ip.h"
 //TODO: make gui global as separate debug class
@@ -24,11 +24,14 @@ class Player_server: public QObject {
  signals:
   void tankDataReceived(TankAction action);
   void dataReceived(QByteArray);
+  void server_started(int32_t player_id);
  public slots:
   void ManageArduinoInfo(); //Steel Info
+  void StartServer();
  protected:
   Ui_MainWindow* gui;
  private:
+  QHostAddress server_ip;
   QTcpSocket *socket = nullptr;
   bool is_tank_action(ServerBuffer buffer);
   int32_t player_id;

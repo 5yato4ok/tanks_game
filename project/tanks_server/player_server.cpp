@@ -19,6 +19,14 @@ qint32 ArrayToInt(QByteArray source) {
 }
 Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_) {
   QNetworkConfigurationManager manager;
+  gui->comboBox->addItem("Tank 1");
+  gui->comboBox->addItem("Tank 2");
+  gui->comboBox->addItem("Tank 3");
+  init_player_id();
+  connect(gui->comboBox, &QComboBox::editTextChanged,
+    this, &Player_server::init_player_id);
+  connect(gui->pushButton, &QAbstractButton::clicked,
+    this, &Player_server::StartServer);
   if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
     // Get saved network configuration
     QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
@@ -46,8 +54,29 @@ Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_) {
 }
 
 void Player_server::init_player_id() {
-  QRandomGenerator gen;
-  player_id = gen.generate();
+  auto user_choice = gui->comboBox->currentText();
+  if (user_choice == "Tank 2") {
+    player_id  = g_server_port_2;
+  } else if (user_choice == "Tank 3") {
+    player_id = g_server_port_3;
+  } else {
+    player_id = g_server_port_1;
+  }
+}
+
+void Player_server::StartServer() {
+  init_player_id();
+  if (!tcpServer->listen(server_ip, player_id)) {
+    qDebug() << "Unable to start the server: %1. " << tcpServer->errorString();
+    //close();
+    return;
+  }
+  gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n")
+    .arg(server_ip.toString()).arg(tcpServer->serverPort()));
+  gui->comboBox->hide();
+  gui->pushButton->hide();
+  gui->centralWidget->update();
+  emit server_started(player_id);
 }
 
 void Player_server::sessionOpened() {
@@ -59,39 +88,23 @@ void Player_server::sessionOpened() {
       id = networkSession->sessionProperty(QLatin1String("UserChoiceConfiguration")).toString();
     else
       id = config.identifier();
-
     QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
     settings.beginGroup(QLatin1String("QtNetwork"));
     settings.setValue(QLatin1String("DefaultNetworkConfiguration"), id);
     settings.endGroup();
   }
-
   tcpServer = new QTcpServer(this);
-
   QString ipAddress;
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
-  QHostAddress ip;
   for (int i = 0; i < ipAddressesList.size(); ++i) {
     if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
       ipAddress = ipAddressesList.at(i).toString();
-      ip = ipAddressesList.at(i);
+      server_ip = ipAddressesList.at(i);
       break;
     }
   }
-  // if we did not find one, use IPv4 localhost
 
-  if (ipAddress.isEmpty())
-    ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-  if (!tcpServer->listen(ip, 15666)) {
-    qDebug() << "Unable to start the server: %1. " << tcpServer->errorString();
-    //close();
-    return;
-  }
-  gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
-    "Run the Tank Client example now.")
-    .arg(ipAddress).arg(tcpServer->serverPort()));
-  gui->centralWidget->update();
 }
 
 void Player_server::SendVideoToLocal(std::string camera_url) {

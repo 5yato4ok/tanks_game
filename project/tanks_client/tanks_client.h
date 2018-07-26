@@ -4,6 +4,7 @@
 #include "ui_tanks_client.h"
 #include <QEventLoop>
 #include "camera.h"
+#include "server_settings.h"
 //TODO: Make controller as input
 //TODO: make separate gui tank_client or improve this to gui
 //TODO: make button to ping server
@@ -20,7 +21,9 @@ class Tanks_Client : public Player_local {
  public slots:
   void ReceiveData(Raw_Action buffer);
   void load_video();
+  void reconnect();
  private:
+  void Tanks_Client::enable_reconnect_button();
   void send_action(TankAction buffer);
   bool get_default_buttons_settings();
   gp_helper::Button_settings supported_buttons;

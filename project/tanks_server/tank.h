@@ -19,12 +19,11 @@ class TankMngr: public game::Player_server {
  public slots:
   void ReceiveData(TankAction buffer);
  private:
-  void find_free_steel();
   quint16 steel_port;
   QHostAddress steel_ip;
   QString camera_url;
   int32_t tank_id;
-  bool init_receive_port();
+  void init_receive_port(int32_t tank_id);
   ArduinoSender ard_mngr;
   Tower_mngr tower;
   Track_mngr track;

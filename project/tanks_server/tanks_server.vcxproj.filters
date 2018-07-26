@@ -14,10 +14,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="game">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="steel_stuff">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
@@ -25,6 +21,10 @@
     </Filter>
     <Filter Include="tanks_part">
       <UniqueIdentifier>{1d6cb504-5394-4ec3-bc3b-71412f351d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player_server">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +50,7 @@
       <Filter>steel_stuff</Filter>
     </ClCompile>
     <ClCompile Include="player_server.cpp">
-      <Filter>game</Filter>
+      <Filter>player_server</Filter>
     </ClCompile>
     <ClCompile Include="main_server.cpp">
       <Filter>Source Files</Filter>
@@ -95,16 +95,22 @@
       <Filter>steel_stuff</Filter>
     </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="tanks_ip.h">
-      <Filter>tanks_part</Filter>
+      <Filter>player_server</Filter>
     </ClInclude>
     <ClInclude Include="track.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
     <ClInclude Include="vision.h">
       <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\tanks_ip.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="tanks_ip.h">
+      <Filter>tanks_part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\server_settings.h">
+      <Filter>player_server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +121,7 @@
       <Filter>tanks_part</Filter>
     </QtMoc>
     <QtMoc Include="player_server.h">
-      <Filter>game</Filter>
+      <Filter>player_server</Filter>
     </QtMoc>
     <QtMoc Include="arduino_sender.h">
       <Filter>steel_stuff</Filter>

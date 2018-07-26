@@ -6,10 +6,37 @@ ui(new Ui::Tanks_ClientClass),camera(ui,parent){
   //  return;
   //}
   ui->setupUi(this);
-  auto result = Player_local::connect_to_host();
+  ui->comboBox->addItem("Tank 1");
+  ui->comboBox->addItem("Tank 2");
+  ui->comboBox->addItem("Tank 3");
+  ui->connect_server->setDefault(true);
+  ui->connect_server->setEnabled(false);
+  connect(ui->comboBox, &QComboBox::editTextChanged,
+    this, &Tanks_Client::enable_reconnect_button);
+  connect(ui->connect_server, &QAbstractButton::clicked,
+    this, &Tanks_Client::reconnect);
+  //auto result = Player_local::connect_to_host();
   Connect_signals();
   gamepad.Listen_Input();
   get_default_buttons_settings();
+}
+
+void Tanks_Client::enable_reconnect_button() {
+  ui->connect_server->setEnabled(is_valid_network_session() &&
+    !ui->comboBox->currentText().isEmpty());
+}
+void Tanks_Client::reconnect() {
+  ui->connect_server->setEnabled(false);
+  auto user_choice = ui->comboBox->currentText();
+  int32_t port;
+  if (user_choice == "Tank 2") {
+    port = g_server_port_2;
+  } else if (user_choice == "Tank 3") {
+    port = g_server_port_3;
+  } else {
+    port = g_server_port_1;
+  }
+  Connect_to_host(g_server_ip, port);
 }
 
 void Tanks_Client::load_video() {
