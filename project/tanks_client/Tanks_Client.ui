@@ -17,14 +17,14 @@
    <widget class="QPushButton" name="connect_server">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>640</x>
       <y>90</y>
-      <width>101</width>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>ConnectButton</string>
+     <string>Connect</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="output">

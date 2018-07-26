@@ -31,14 +31,15 @@ Player_local::Player_local(QWidget *parent) : QMainWindow(parent),
 }
 
 bool Player_local::is_valid_network_session() {
-  return !networkSession || networkSession->isOpen();
+  //return !networkSession || networkSession->isOpen();
+  return false;
 }
 
 void Player_local::init_player_server_port(int32_t port) {
   player_server_port = port;
 }
 
-bool Player_local::Connect_to_host(const QString& ip, int32_t port) {
+bool Player_local::Connect_to_host(QString ip, int32_t port) {
   tcpSocket->abort();
   tcpSocket->connectToHost(ip, port);
   return tcpSocket->waitForConnected();

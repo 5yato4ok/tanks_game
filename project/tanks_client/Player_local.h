@@ -30,7 +30,7 @@ class Player_local: public QMainWindow {
   bool Authenticate(player_type player = player_type::TANK, 
     controler_type cntrl = controler_type::GAMEPAD);
   void ReDrawStreamingVideo();
-  bool Connect_to_host(const QString&  ip,int32_t port);
+  bool Connect_to_host(QString  ip,int32_t port);
  signals:
   void camera_ip_initilized();
  public slots:

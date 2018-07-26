@@ -112,6 +112,7 @@ void Player_server::SendVideoToLocal(std::string camera_url) {
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
   ServerBuffer buffer;
+  memcpy(buffer.sender, server_ip.toString().data(), server_ip.toString().size());
   buffer.size = camera_url.size();
   buffer.type = msg_type::CAMERA_URL;
   memcpy(buffer.tankAction, camera_url.data(), buffer.size);

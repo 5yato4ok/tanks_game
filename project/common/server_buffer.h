@@ -8,7 +8,7 @@ enum class msg_type :int {TANK_ACTION, CAMERA_URL, GAME_BUFFER, LAST};
 struct ServerBuffer {
   msg_type type;
   int size;
-  QHostAddress sender;
+  char sender[256];
   char tankAction[1024];
 };
 

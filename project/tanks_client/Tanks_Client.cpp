@@ -10,7 +10,7 @@ ui(new Ui::Tanks_ClientClass),camera(ui,parent){
   ui->comboBox->addItem("Tank 2");
   ui->comboBox->addItem("Tank 3");
   ui->connect_server->setDefault(true);
-  ui->connect_server->setEnabled(false);
+  //ui->connect_server->setEnabled(false);
   connect(ui->comboBox, &QComboBox::editTextChanged,
     this, &Tanks_Client::enable_reconnect_button);
   connect(ui->connect_server, &QAbstractButton::clicked,
@@ -26,7 +26,6 @@ void Tanks_Client::enable_reconnect_button() {
     !ui->comboBox->currentText().isEmpty());
 }
 void Tanks_Client::reconnect() {
-  ui->connect_server->setEnabled(false);
   auto user_choice = ui->comboBox->currentText();
   int32_t port;
   if (user_choice == "Tank 2") {
@@ -36,7 +35,10 @@ void Tanks_Client::reconnect() {
   } else {
     port = g_server_port_1;
   }
-  Connect_to_host(g_server_ip, port);
+  if (Connect_to_host(g_server_ip, port)) {
+    ui->comboBox->hide(); //we can enable only to one player
+    ui->connect_server->setText("Reconnect");
+  }
 }
 
 void Tanks_Client::load_video() {
