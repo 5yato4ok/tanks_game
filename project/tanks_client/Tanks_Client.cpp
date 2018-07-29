@@ -1,23 +1,15 @@
 #include "Tanks_Client.h"
 namespace client {
 Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent),
-ui(new Ui::Tanks_ClientClass),camera(ui,parent){
-  //if (!gamepad.Is_connected()) {
-  //  return;
-  //}
+ ui(new Ui::Tanks_ClientClass),camera(ui,parent){
   ui->setupUi(this);
   ui->comboBox->addItem("Tank 1");
   ui->comboBox->addItem("Tank 2");
   ui->comboBox->addItem("Tank 3");
   ui->connect_server->setDefault(true);
-  //ui->connect_server->setEnabled(false);
-  connect(ui->comboBox, &QComboBox::editTextChanged,
-    this, &Tanks_Client::enable_reconnect_button);
-  connect(ui->connect_server, &QAbstractButton::clicked,
-    this, &Tanks_Client::reconnect);
-  //auto result = Player_local::connect_to_host();
-  Connect_signals();
-  gamepad.Listen_Input();
+  connect(ui->comboBox, &QComboBox::editTextChanged, this, &Tanks_Client::enable_reconnect_button);
+  connect(ui->connect_server, &QAbstractButton::clicked,this, &Tanks_Client::reconnect);
+  connect(this, &Player_local::is_authenticated, this, &Tanks_Client::Connect_signals);
   get_default_buttons_settings();
 }
 
@@ -38,6 +30,7 @@ void Tanks_Client::reconnect() {
   if (Connect_to_host(g_server_ip, port)) {
     ui->comboBox->hide(); //we can enable only to one player
     ui->connect_server->setText("Reconnect");
+    Player_local::Authenticate();
   }
 }
 
@@ -103,7 +96,9 @@ void Tanks_Client::Connect_signals() {
   connect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
     SLOT(ReceiveData(Raw_Action)));
   connect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
+  gamepad.Listen_Input();
 }
+
 void Tanks_Client::Disconnect_signals() {
   disconnect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
     SLOT(ReceiveData(Raw_Action)));

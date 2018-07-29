@@ -17,7 +17,8 @@ class TankMngr: public game::Player_server {
  signals:
   void GetArduinoInfo(); //TankInfo
  public slots:
-  void ReceiveData(TankAction buffer);
+  void ReceiveClientData(TankAction buffer);
+  void ReceveArduinoData(ArduinoBuffer buffer);
  private:
   quint16 steel_port;
   QHostAddress steel_ip;

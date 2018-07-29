@@ -1,23 +1,9 @@
 #include "player_server.h"
 //TODO: realize close
 namespace game{
-
-QByteArray IntToArray(qint32 source) {
-  //Avoid use of cast, this is the Qt way to serialize objects
-  QByteArray temp;
-  QDataStream data(&temp, QIODevice::ReadWrite);
-  data << source;
-  return temp;
-}
-
   TankAction tk; //TODO: fix
-qint32 ArrayToInt(QByteArray source) {
-  qint32 temp;
-  QDataStream data(&source, QIODevice::ReadWrite);
-  data >> temp;
-  return temp;
-}
-Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_) {
+Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_),
+ tcpServer(new QTcpServer(this)) {
   QNetworkConfigurationManager manager;
   gui->comboBox->addItem("Tank 1");
   gui->comboBox->addItem("Tank 2");
@@ -93,7 +79,7 @@ void Player_server::sessionOpened() {
     settings.setValue(QLatin1String("DefaultNetworkConfiguration"), id);
     settings.endGroup();
   }
-  tcpServer = new QTcpServer(this);
+  
   QString ipAddress;
   QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
@@ -134,12 +120,11 @@ void Player_server::newConnection() {
     socket = tcpServer->nextPendingConnection();
     connect(socket, &QTcpSocket::readyRead,this, &Player_server::readyRead);
     connect(socket, &QTcpSocket::disconnected, this, &Player_server::disconnected);
-    SendVideoToLocal(camera_ip);
     QByteArray *buffer = new QByteArray();
     qint32 *s = new qint32(0);
     buffers.insert(socket, buffer);
     sizes.insert(socket, s);
-    
+    SendVideoToLocal(camera_ip);
   }
 }
 
@@ -152,8 +137,40 @@ void Player_server::disconnected() {
   delete s;
 }
 
-void Player_server::ManageArduinoInfo() {
+void Player_server::ManageArduinoInfo(ServerBuffer& buffer) {
+  //if get_hit
+  //send action to game server
   return;
+}
+
+void Player_server::ManageGameAction(ServerBuffer& buffer) {
+  if (!buffer.size) {
+    GetGameAttributes();
+    //send this attributes to client
+  }
+}
+
+void Player_server::GetGameAttributes(game_type type) {
+
+}
+
+void Player_server::manage_client_buffer(ServerBuffer& buffer) {
+  switch (buffer.type) {
+  case msg_type::GAME_BUFFER:
+    ManageGameAction(buffer);
+    break;
+  case msg_type::GAME_INIT:
+    //GetGameAttributes();
+    break;
+  case msg_type::TANK_ACTION:
+    memcpy(&tk, buffer.tankAction, sizeof(tk));
+    gui->player_out->appendPlainText("Sending Tank Action with following data:");
+    gui->player_out->appendPlainText("Type: " + QString::number((int)tk.type) + "; X value: "
+      + QString::number(tk.x_value) + "; Y value:" + QString::number(tk.y_value));
+    gui->centralWidget->update();
+    emit tankDataReceived(tk);
+    break;
+  }
 }
 
 void Player_server::readyRead() {
@@ -161,7 +178,6 @@ void Player_server::readyRead() {
   QByteArray *buffer = buffers.value(socket);
   qint32 *s = sizes.value(socket);
   qint32 size = *s;
-
   gui->player_out->appendPlainText("Started readyRead()");
   gui->centralWidget->update();
   gui->centralWidget->update();
@@ -186,20 +202,22 @@ void Player_server::readyRead() {
         *s = size;
         ServerBuffer buffer;
         memcpy(&buffer, data.data(), data.size());
-          if (is_tank_action(buffer)) {
-            memcpy(&tk, buffer.tankAction, sizeof(tk));
-            gui->player_out->appendPlainText("Sending Tank Action with following data:");
-            gui->player_out->appendPlainText("Type: " + QString::number((int)tk.type) + "; X value: "
-              + QString::number(tk.x_value) + "; Y value:" + QString::number(tk.y_value));
-            gui->centralWidget->update();
-            emit tankDataReceived(tk);
-          }
-        //emit dataReceived(data);
+        manage_client_buffer(buffer);
       }
     }
   }
 }
-bool Player_server::is_tank_action(ServerBuffer buffer) {
-  return buffer.type == msg_type::TANK_ACTION;
+
+Player_server::~Player_server() {
+  if (!socket) {
+    delete socket;
+  }
+  if (!tcpServer) {
+    delete tcpServer;
+ }
+  if (networkSession) {
+    delete networkSession;
+  }
 }
+
 } //namespace game

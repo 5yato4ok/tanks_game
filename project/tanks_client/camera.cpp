@@ -1,7 +1,7 @@
 #include "camera.h"
 
 namespace client {
-Camera::Camera(Ui::Tanks_ClientClass* ui, QObject *parent) {
+Camera::Camera(Ui::Tanks_ClientClass* ui_, QObject *parent):ui(ui_) {
   camera = new Camera_Thread(ui,parent);
   QObject::connect(camera, SIGNAL(processedImage(QImage)),
     this, SLOT(updatePlayerUI(QImage)));

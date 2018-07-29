@@ -103,9 +103,6 @@
     <ClInclude Include="vision.h">
       <Filter>tanks_part</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\tanks_ip.h">
-      <Filter>tanks_part</Filter>
-    </ClInclude>
     <ClInclude Include="tanks_ip.h">
       <Filter>tanks_part</Filter>
     </ClInclude>

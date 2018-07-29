@@ -99,5 +99,8 @@
     <ClInclude Include="..\common\server_settings.h">
       <Filter>player</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\server_buffer.h">
+      <Filter>player</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

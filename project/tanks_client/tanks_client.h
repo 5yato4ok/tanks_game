@@ -14,11 +14,11 @@ class Tanks_Client : public Player_local {
   Q_OBJECT
  public:
   Tanks_Client(QWidget *parent = Q_NULLPTR);
-  void Connect_signals();
   void Disconnect_signals();
   bool Is_initialized() { return is_intialized_; }
   gp_helper::Button_settings Init_User_Buttons(gp_helper::Button_settings user_def);
  public slots:
+  void Connect_signals();
   void ReceiveData(Raw_Action buffer);
   void load_video();
   void reconnect();

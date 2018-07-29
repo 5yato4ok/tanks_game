@@ -25,7 +25,7 @@ class Player_local: public QMainWindow {
   Q_OBJECT
  public:
   Player_local(QWidget *parent = Q_NULLPTR);
-  void SendActionsToServer(ServerBuffer& buffer);
+
   void ChooseGame(game_type game_type = game_type::ONE_AGAINTS_ALL);
   bool Authenticate(player_type player = player_type::TANK, 
     controler_type cntrl = controler_type::GAMEPAD);
@@ -33,14 +33,17 @@ class Player_local: public QMainWindow {
   bool Connect_to_host(QString  ip,int32_t port);
  signals:
   void camera_ip_initilized();
+  void is_authenticated();
  public slots:
   void readBuffer();
   void displayError(QAbstractSocket::SocketError socketError);
   void sessionOpened();
   void init_player_server_port(int32_t ip);
  protected:
+  void SendActionsToServer(ServerBuffer buffer);
   std::string camera_ip;
   bool is_valid_network_session();
+  bool is_autenticated_;
  private:
   int32_t player_server_port;
   game_type choosed_game;

@@ -84,7 +84,7 @@ void Player_local::ReDrawStreamingVideo() {
 //and here comes some fun
 }
 
-void Player_local::SendActionsToServer(ServerBuffer& buffer) {
+void Player_local::SendActionsToServer(ServerBuffer buffer) {
 //sending buffer to server
   qDebug() << "Try to send data;";
   QByteArray packet;
@@ -103,7 +103,15 @@ void Player_local::ChooseGame(game_type game_type) {
 
 bool Player_local::Authenticate(player_type player, controler_type cntrl) {
 //make here checking on which controller and player type
-return true;
+  ServerBuffer buffer;
+  buffer.type = msg_type::GAME_INIT;
+  buffer.size = 0;
+  SendActionsToServer(buffer);
+  is_autenticated_ = tcpSocket->state() == QAbstractSocket::ConnectedState;
+  if (is_autenticated_) {
+    emit is_authenticated();
+  }
+  return is_autenticated_;
 }
 
 void Player_local::displayError(QAbstractSocket::SocketError socketError) {

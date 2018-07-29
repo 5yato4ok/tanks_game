@@ -3,7 +3,8 @@
 std::map<action_type, std::string> command_dict;
 
 ArduinoSender::ArduinoSender(Ui_MainWindow* gui_, QHostAddress steel_ip_, quint16 steel_port_):
-  tcpSocket(new QTcpSocket(this)), gui(gui_) , steel_ip(steel_ip_),steel_port(steel_port_)
+  tcpSocket(new QTcpSocket(this)), gui(gui_) , steel_ip(steel_ip_),steel_port_in(steel_port_),
+  tcpServer(new QTcpServer(this))
 {
   in.setDevice(tcpSocket);
   in.setVersion(QDataStream::Qt_5_10);
@@ -31,12 +32,75 @@ ArduinoSender::ArduinoSender(Ui_MainWindow* gui_, QHostAddress steel_ip_, quint1
     gui->centralWidget->update();
     networkSession->open();
   }
+  connect(tcpServer, &QTcpServer::newConnection, this, &ArduinoSender::newConnection);
 }
 
-bool ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_) {
+void ArduinoSender::disconnected() {
+  QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+  QByteArray *buffer = buffers.value(socket);
+  qint32 *s = sizes.value(socket);
+  socket->deleteLater();
+  delete buffer;
+  delete s;
+}
+
+void ArduinoSender::readyRead() {
+  QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+  QByteArray *buffer = buffers.value(socket);
+  qint32 *s = sizes.value(socket);
+  qint32 size = *s;
+
+  gui->arduino_out->appendPlainText("ArduinoSender::Started readyRead()");
+  gui->centralWidget->update();
+  gui->centralWidget->update();
+  while (socket->bytesAvailable() > 0) {
+    buffer->append(socket->readAll());
+    //While can process data, process it
+    gui->arduino_out->appendPlainText("ArduinoSender::Reading data");
+    gui->centralWidget->update();
+    while ((size == 0 && buffer->size() >= 4) || (size > 0 && buffer->size() >= size)) {
+      //if size of data has received completely, then store it on our global variable
+      if (size == 0 && buffer->size() >= 4) {
+        size = ArrayToInt(buffer->mid(0, 4));
+        *s = size;
+        buffer->remove(0, 4);
+      }
+      gui->arduino_out->appendPlainText("ArduinoSender::Storing received data");
+      gui->centralWidget->update();
+      if (size > 0 && buffer->size() >= size) {
+        QByteArray data = buffer->mid(0, size);
+        buffer->remove(0, size);
+        size = 0;
+        *s = size;
+        ArduinoBuffer buffer;
+        memcpy(&buffer, data.data(), data.size());
+        emit tankDataReceived(buffer);
+      }
+    }
+  }
+}
+
+void ArduinoSender::newConnection() {
+  while (tcpServer->hasPendingConnections()) {
+    socket_out = tcpServer->nextPendingConnection();
+    connect(socket_out, &QTcpSocket::readyRead, this, &ArduinoSender::readyRead);
+    connect(socket_out, &QTcpSocket::disconnected, this, &ArduinoSender::disconnected);
+    QByteArray *buffer = new QByteArray();
+    qint32 *s = new qint32(0);
+    buffers.insert(socket_out, buffer);
+    sizes.insert(socket_out, s);
+  }
+}
+
+bool ArduinoSender::connect_to_output() {
+  return tcpServer->listen(steel_ip, steel_port_out);
+}
+
+bool ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_in_, quint16 steel_port_out_) {
   steel_ip = steel_ip_;
-  steel_port = steel_port_;
-  return connect_to_host();
+  steel_port_in = steel_port_in_;
+  steel_port_out = steel_port_out_;
+  return connect_to_host(); // &&connect_to_output();
 }
 
 bool ArduinoSender::writeData(const std::string& data) {
@@ -65,7 +129,7 @@ tank_status ArduinoSender::SendAction(std::string& packet) {
 bool ArduinoSender::connect_to_host() {
   tcpSocket->abort();
   gui->arduino_out->appendPlainText("Arduino sender: connecting to " + steel_ip.toString());
-  tcpSocket->connectToHost(steel_ip, steel_port);
+  tcpSocket->connectToHost(steel_ip, steel_port_in);
   return tcpSocket->waitForConnected(1000);
 }
 

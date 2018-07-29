@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>947</width>
-    <height>514</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Tanks_Client</string>
@@ -17,8 +23,8 @@
    <widget class="QPushButton" name="connect_server">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>90</y>
+      <x>1630</x>
+      <y>340</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -30,20 +36,20 @@
    <widget class="QPlainTextEdit" name="output">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>230</y>
+      <x>1530</x>
+      <y>590</y>
       <width>281</width>
-      <height>201</height>
+      <height>71</height>
      </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>50</y>
-      <width>401</width>
-      <height>341</height>
+      <x>20</x>
+      <y>40</y>
+      <width>1411</width>
+      <height>971</height>
      </rect>
     </property>
     <property name="text">
@@ -53,10 +59,33 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>40</y>
+      <x>1520</x>
+      <y>270</y>
       <width>281</width>
       <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1530</x>
+      <y>430</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>HP:</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="gameState">
+    <property name="geometry">
+     <rect>
+      <x>1530</x>
+      <y>470</y>
+      <width>281</width>
+      <height>101</height>
      </rect>
     </property>
    </widget>
@@ -66,7 +95,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>947</width>
+     <width>1920</width>
      <height>18</height>
     </rect>
    </property>

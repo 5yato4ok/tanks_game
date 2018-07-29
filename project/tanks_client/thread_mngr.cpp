@@ -15,6 +15,7 @@ void GamePadThread::Start() {
 
 void GamePadThread::Exit() {
   if (thread->isRunning()) {
+
     thread->exit();
   }
 }
@@ -65,7 +66,7 @@ void GamePadThread::ThreadLoop() {
       == axis_condition[input_state.button].previos  &&is_stop) {
       is_stop = false;
       QEventLoop loop;
-      QTimer::singleShot(250, &loop, SLOT(quit()));
+      QTimer::singleShot(50, &loop, SLOT(quit()));
       loop.exec();
       emit is_same(input_state);
     }
