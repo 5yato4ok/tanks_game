@@ -2,15 +2,17 @@
 
 namespace client {
 Camera_Thread::Camera_Thread(Ui::Tanks_ClientClass* ui_, QObject *parent):
-  ui(ui_) ,QThread(parent){
+  ui(ui_) ,QThread(parent),capture(nullptr){
   stop = true;
 }
 
 bool Camera_Thread::LoadVideo(std::string camera_url) {
-  capture = cv::VideoCapture(camera_url);
+  if (!capture) {
+    capture = new cv::VideoCapture(camera_url);
+  }
   ui->output->appendPlainText("Input stream: " + QString::fromStdString(camera_url));
-  if (capture.isOpened()) {
-    frameRate = (int)capture.get(CV_CAP_PROP_FPS);
+  if (capture && capture->isOpened()) {
+    frameRate = (int)capture->get(CV_CAP_PROP_FPS);
     return true;
   }   
   ui->output->appendPlainText("OpenCV Failed::: can't open input stream:" + QString::fromStdString(camera_url));
@@ -29,7 +31,7 @@ void Camera_Thread::Play() {
 void Camera_Thread::run() {
   int delay = (1000 / frameRate);
   while (!stop) {
-    if (!capture.read(frame)) {
+    if (!capture->read(frame)) {
       stop = true;
     }
     if (frame.channels() == 3) {
@@ -48,7 +50,7 @@ void Camera_Thread::run() {
 Camera_Thread::~Camera_Thread() {
   mutex.lock();
   stop = true;
-  capture.release();
+  capture->release();
   condition.wakeOne();
   mutex.unlock();
   wait();

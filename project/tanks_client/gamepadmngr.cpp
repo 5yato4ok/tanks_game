@@ -87,7 +87,7 @@ void GamePadMngr::axisRightY_packet(double value) {
   if (buffer.value_y > 1) {
     buffer.value_y = 1;
   } else if (buffer.value_y < -1) {
-    buffer.value_y = -1;
+    buffer.value_y = -0.99;
   }
   //thread.SetRawAction(buffer);
   thread.SetAxis_y(buffer.value_y);

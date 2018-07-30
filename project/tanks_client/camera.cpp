@@ -28,6 +28,9 @@ void Camera::StopVideo() {
 }
 
 bool Camera::LoadVideo(std::string camera_url) {
+  if (camera->isRunning()) {
+    camera->exit();
+  }
   return  camera->LoadVideo(camera_url);
 }
 

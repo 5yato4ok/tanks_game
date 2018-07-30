@@ -27,7 +27,8 @@ class Camera_Thread : public QThread {
    //Signal to output frame to be displayed
    void processedImage(const QImage &image);
  protected:
-   void run();
+  void run();
+
   void msleep(int ms);
  private:
    Ui::Tanks_ClientClass* ui;
@@ -37,7 +38,7 @@ class Camera_Thread : public QThread {
    QWaitCondition condition;
    cv::Mat frame;
    int frameRate;
-   cv::VideoCapture capture;
+   cv::VideoCapture* capture;
    cv::Mat RGBframe;
    QImage img;
 };
