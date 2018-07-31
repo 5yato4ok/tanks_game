@@ -18,7 +18,7 @@ class TankMngr: public game::Player_server {
   void GetArduinoInfo(); //TankInfo
  public slots:
   void ReceiveClientData(TankAction buffer);
-  void ReceveArduinoData(ArduinoBuffer buffer);
+  void ReceveArduinoData(std::string buffer); //TODO: change to some buffer
  private:
   quint16 steel_port;
   QHostAddress steel_ip;

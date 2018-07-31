@@ -2,6 +2,7 @@
 #include "game_server.h"
 #include "ui_tanks_game.h"
 #include <QMainWindow>
+#include "server_settings.h"
 namespace game {
 class Game : public QMainWindow {
   Q_OBJECT

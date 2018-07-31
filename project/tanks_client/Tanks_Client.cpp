@@ -3,9 +3,9 @@ namespace client {
 Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent),
  ui(new Ui::Tanks_ClientClass),camera(ui,parent){
   ui->setupUi(this);
+  ui->comboBox->addItem("Tank 0");
   ui->comboBox->addItem("Tank 1");
   ui->comboBox->addItem("Tank 2");
-  ui->comboBox->addItem("Tank 3");
   ui->connect_server->setDefault(true);
   connect(ui->comboBox, &QComboBox::editTextChanged, this, &Tanks_Client::enable_reconnect_button);
   connect(ui->connect_server, &QAbstractButton::clicked,this, &Tanks_Client::reconnect);
@@ -20,12 +20,12 @@ void Tanks_Client::enable_reconnect_button() {
 void Tanks_Client::reconnect() {
   auto user_choice = ui->comboBox->currentText();
   int32_t port;
-  if (user_choice == "Tank 2") {
-    port = g_server_port_2;
-  } else if (user_choice == "Tank 3") {
-    port = g_server_port_3;
-  } else {
+  if (user_choice == "Tank 0") {
+    port = g_server_port_0;
+  } else if (user_choice == "Tank 1") {
     port = g_server_port_1;
+  } else {
+    port = g_server_port_2;
   }
   if (Connect_to_host(g_server_ip, port)) {
     ui->comboBox->hide(); //we can enable only to one player

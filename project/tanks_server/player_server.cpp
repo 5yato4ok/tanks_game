@@ -3,16 +3,17 @@
 namespace game{
   TankAction tk; //TODO: fix
 Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_),
- tcpServer(new QTcpServer(this)) {
+ tcpServer(new QTcpServer(this)), socket_game(new QTcpSocket(this)){
   QNetworkConfigurationManager manager;
+  gui->comboBox->addItem("Tank 0");
   gui->comboBox->addItem("Tank 1");
   gui->comboBox->addItem("Tank 2");
-  gui->comboBox->addItem("Tank 3");
   init_player_id();
   connect(gui->comboBox, &QComboBox::editTextChanged,
     this, &Player_server::init_player_id);
   connect(gui->pushButton, &QAbstractButton::clicked,
     this, &Player_server::StartServer);
+  connect(socket_game, &QTcpSocket::readyRead, this, &Player_server::readyRead);
   if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
     // Get saved network configuration
     QSettings settings(QSettings::UserScope, QLatin1String("QtProject"));
@@ -35,18 +36,20 @@ Player_server::Player_server(Ui_MainWindow* gui_): player_id(-1),gui(gui_),
   } else {
     sessionOpened();
   }
-  camera_ip = camera_url_1;
   connect(tcpServer, &QTcpServer::newConnection, this, &Player_server::newConnection);
 }
 
 void Player_server::init_player_id() {
   auto user_choice = gui->comboBox->currentText();
-  if (user_choice == "Tank 2") {
-    player_id  = g_server_port_2;
-  } else if (user_choice == "Tank 3") {
-    player_id = g_server_port_3;
-  } else {
+  if (user_choice == "Tank 0") {
+    player_id  = g_server_port_0;
+    camera_ip = camera_url_0;
+  } else if (user_choice == "Tank 1") {
     player_id = g_server_port_1;
+    camera_ip = camera_url_1;
+  } else if (user_choice == "Tank 2") {
+    player_id = g_server_port_2;
+    camera_ip = camera_url_2;
   }
 }
 
@@ -87,44 +90,46 @@ void Player_server::sessionOpened() {
     if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
       ipAddress = ipAddressesList.at(i).toString();
       server_ip = ipAddressesList.at(i);
+      game_ip = ipAddress;
+      game_port = g_game_port;
       break;
     }
   }
 
 }
 
-void Player_server::SendVideoToLocal(std::string camera_url) {
+void Player_server::SendVideoToLocal() {
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
   ServerBuffer buffer;
   memcpy(buffer.sender, server_ip.toString().data(), server_ip.toString().size());
-  buffer.size = camera_url.size();
+  buffer.size = camera_ip.size();
   buffer.type = msg_type::CAMERA_URL;
-  memcpy(buffer.tankAction, camera_url.data(), buffer.size);
+  memcpy(buffer.tankAction, camera_ip.data(), buffer.size);
   out << buffer;
-  sendBuffer(block);
+  sendBuffer(block,socket_game);
 }
 
-bool Player_server::sendBuffer(QByteArray block) {
-  if (socket->state() == QAbstractSocket::ConnectedState) {
-    socket->write(IntToArray(block.size())); //write size of data
-    socket->write(block); //write the data itself
-    return socket->waitForBytesWritten();
+bool Player_server::sendBuffer(QByteArray block,QTcpSocket* socket_s) {
+  if (socket_s->state() == QAbstractSocket::ConnectedState) {
+    socket_s->write(IntToArray(block.size())); //write size of data
+    socket_s->write(block); //write the data itself
+    return socket_s->waitForBytesWritten();
   } else
     return false;
 }
 
 void Player_server::newConnection() {
   while (tcpServer->hasPendingConnections()) {
-    socket = tcpServer->nextPendingConnection();
-    connect(socket, &QTcpSocket::readyRead,this, &Player_server::readyRead);
-    connect(socket, &QTcpSocket::disconnected, this, &Player_server::disconnected);
+    socket_client = tcpServer->nextPendingConnection();
+    connect(socket_client, &QTcpSocket::readyRead,this, &Player_server::readyRead);
+    connect(socket_client, &QTcpSocket::disconnected, this, &Player_server::disconnected);
     QByteArray *buffer = new QByteArray();
     qint32 *s = new qint32(0);
-    buffers.insert(socket, buffer);
-    sizes.insert(socket, s);
-    SendVideoToLocal(camera_ip);
+    buffers.insert(socket_client, buffer);
+    sizes.insert(socket_client, s);
+    SendVideoToLocal();
   }
 }
 
@@ -143,15 +148,33 @@ void Player_server::ManageArduinoInfo(ServerBuffer& buffer) {
   return;
 }
 
-void Player_server::ManageGameAction(ServerBuffer& buffer) {
-  if (!buffer.size) {
-    GetGameAttributes();
-    //send this attributes to client
-  }
+void Player_server::ManageGameAction(ServerBuffer& buffer_) {
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+  out.setVersion(QDataStream::Qt_5_10);
+  out << buffer_;
+  sendBuffer(data, socket_client);
 }
 
-void Player_server::GetGameAttributes(game_type type) {
+bool Player_server::connect_to_game_server() {
+  socket_game->abort();
+  socket_game->connectToHost(game_ip, game_port);
+  return socket_game->waitForConnected();
+}
 
+void Player_server::get_game_attributes(game_type type) {
+  //init connection to game server
+  if (connect_to_game_server()) {
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_10);
+    ServerBuffer buffer;
+    memcpy(buffer.sender, server_ip.toString().data(), server_ip.toString().size());
+    buffer.size = camera_ip.size();
+    buffer.type = msg_type::GAME_INIT;
+    out << buffer;
+    sendBuffer(data,socket_client);
+  }
 }
 
 void Player_server::manage_client_buffer(ServerBuffer& buffer) {
@@ -160,7 +183,7 @@ void Player_server::manage_client_buffer(ServerBuffer& buffer) {
     ManageGameAction(buffer);
     break;
   case msg_type::GAME_INIT:
-    //GetGameAttributes();
+    get_game_attributes();
     break;
   case msg_type::TANK_ACTION:
     memcpy(&tk, buffer.tankAction, sizeof(tk));
@@ -209,8 +232,8 @@ void Player_server::readyRead() {
 }
 
 Player_server::~Player_server() {
-  if (!socket) {
-    delete socket;
+  if (!socket_client) {
+    delete socket_client;
   }
   if (!tcpServer) {
     delete tcpServer;

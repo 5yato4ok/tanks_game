@@ -9,20 +9,21 @@ ArduinoSender::ArduinoSender(Ui_MainWindow* gui_, QHostAddress steel_ip_, quint1
   in.setVersion(QDataStream::Qt_5_10);
   connect(tcpSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
     this, &ArduinoSender::displayError);
+  connect(socket_out, &QTcpSocket::readyRead, this, &ArduinoSender::readyRead);
 }
 
 void ArduinoSender::readyRead() {
   QByteArray data = socket_out->readAll();
   gui->arduino_out->appendPlainText("Arduino Manager: get info from steel:");
   gui->arduino_out->appendPlainText(data.data());
+  std::string s_data = data.toStdString();
   //ArduinoBuffer buffer;
   //memcpy(&buffer, data.data(), data.size());
-  //emit tankDataReceived(buffer);
+  emit tankDataReceived(s_data);
 }
 
 bool ArduinoSender::connect_to_host_out() {
   socket_out->abort();
-  connect(socket_out, &QTcpSocket::readyRead, this, &ArduinoSender::readyRead);
   //socket_out->connectToHost("google.com", 80);
   //if (socket_out->waitForConnected())
   //  socket_out->write("HEAD / HTTP/1.0\r\n\r\n\r\n");

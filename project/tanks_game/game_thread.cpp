@@ -1,22 +1,7 @@
 #include "game_thread.h"
 
 namespace game {
-QByteArray IntToArray(qint32 source) {
-  //Avoid use of cast, this is the Qt way to serialize objects
-  QByteArray temp;
-  QDataStream data(&temp, QIODevice::ReadWrite);
-  data << source;
-  return temp;
-};
-
-qint32 ArrayToInt(QByteArray source) {
-  qint32 temp;
-  QDataStream data(&source, QIODevice::ReadWrite);
-  data >> temp;
-  return temp;
-}
-
-  Game_Thread::Game_Thread(int socketDescriptor, const ServerBuffer &respond, QObject *parent)
+Game_Thread::Game_Thread(int socketDescriptor, const ServerBuffer &respond, QObject *parent)
   : QThread(parent), socketDescriptor(socketDescriptor), respond(respond) {}
 //
 //bool Game_Thread::sendBuffer(QByteArray block) {

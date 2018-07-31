@@ -59,14 +59,14 @@ void Game::sessionOpened() {
 
   if (ipAddress.isEmpty())
     ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-  if (!server.listen(ip, 15667)) {
+  if (!server.listen(ip, g_game_port)) {
     qDebug() << "Unable to start the server: %1. " << server.errorString();
     //close();
     return;
   }
   gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
     "Run the Tank Client example now.")
-    .arg(ipAddress).arg(server.serverPort()));
+    .arg(ipAddress).arg(g_game_port));
   gui->centralWidget->update();
 }
 

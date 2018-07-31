@@ -19,8 +19,8 @@ class Player_server: public QObject {
   Player_server(Ui_MainWindow* gui);
   ~Player_server();
   void AuthenticateWithSteel(int32_t player_id, int32_t tank_id);
-  void GetGameAttributes(game_type type=game_type::ONE_AGAINTS_ALL);
-  void SendVideoToLocal(std::string camera_url);
+
+  void SendVideoToLocal();
   int32_t GetPlayerId() { return player_id; }
  signals:
   void tankDataReceived(TankAction action);
@@ -33,11 +33,17 @@ class Player_server: public QObject {
   void ManageArduinoInfo(ServerBuffer& buffer); //Steel Info
   void ManageGameAction(ServerBuffer& buffer);
  private:
+  bool connect_to_game_server();
+  void get_game_attributes(game_type type = game_type::ONE_AGAINTS_ALL);
+  void send_data_to_game_server();
   void manage_client_buffer(ServerBuffer& buffer);
   QHostAddress server_ip;
-  QTcpSocket *socket = nullptr;
+  QTcpSocket *socket_client = nullptr;
+  QTcpSocket *socket_game = nullptr;
   int32_t player_id;
   std::string camera_ip;
+  QString game_ip;
+  quint16 game_port;
   QTcpServer *tcpServer = nullptr;
   QNetworkSession *networkSession = nullptr;
   QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
@@ -46,7 +52,7 @@ class Player_server: public QObject {
  private slots:
   void sessionOpened();
   void init_player_id();
-  bool sendBuffer(QByteArray block);
+  bool sendBuffer(QByteArray block, QTcpSocket* socket_s);
   void disconnected();
   void readyRead();
   void newConnection();

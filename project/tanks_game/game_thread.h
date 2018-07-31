@@ -5,8 +5,6 @@
 #include <QtNetwork>
 #include "server_buffer.h"
 namespace game {
-QByteArray IntToArray(qint32 source);
-qint32 ArrayToInt(QByteArray source);
 class Game_Thread : public QThread {
   Q_OBJECT
 public:

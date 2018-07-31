@@ -8,9 +8,13 @@ TankMngr::TankMngr(Ui_MainWindow* gui_) :
   connect(&ard_mngr, &ArduinoSender::tankDataReceived, this, &TankMngr::ReceveArduinoData);
 }
 
-void TankMngr::ReceveArduinoData(ArduinoBuffer buffer_) {
-  if (buffer_.type = 1) {
+void TankMngr::ReceveArduinoData(std::string buffer_) {
+  if (buffer_.find("BH") != std::string::npos) {
     ServerBuffer buffer;
+    buffer.type = msg_type::GAME_BUFFER;
+    buffer.size = buffer_.size();
+    memset(buffer.tankAction, 0, 1024);
+    memcpy(buffer.tankAction, buffer_.data(), buffer_.size());
     //some initialization based on buffer
     Player_server::ManageArduinoInfo(buffer);
   }
@@ -33,14 +37,14 @@ void TankMngr::ReceiveClientData(TankAction buffer) {
 
 void TankMngr::init_receive_port(int32_t tank_id) {
   switch (tank_id) {
+  case g_server_port_0:
+    is_intialized_ = ard_mngr.Init(ip_tank_0, port_in,port_out);
+    break;
   case g_server_port_1:
-    is_intialized_ = ard_mngr.Init(ip_tank_1, port_in,port_out);
+    is_intialized_ = ard_mngr.Init(ip_tank_1, port_in, port_out);
     break;
   case g_server_port_2:
     is_intialized_ = ard_mngr.Init(ip_tank_2, port_in, port_out);
-    break;
-  case g_server_port_3:
-    is_intialized_ = ard_mngr.Init(ip_tank_3, port_in, port_out);
     break;
   default:
     is_intialized_ = false;
