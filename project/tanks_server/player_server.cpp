@@ -108,7 +108,7 @@ void Player_server::SendVideoToLocal() {
   buffer.type = msg_type::CAMERA_URL;
   memcpy(buffer.tankAction, camera_ip.data(), buffer.size);
   out << buffer;
-  sendBuffer(block,socket_game);
+  sendBuffer(block,socket_client);
 }
 
 bool Player_server::sendBuffer(QByteArray block,QTcpSocket* socket_s) {

@@ -28,7 +28,8 @@ bool ArduinoSender::connect_to_host_out() {
   //if (socket_out->waitForConnected())
   //  socket_out->write("HEAD / HTTP/1.0\r\n\r\n\r\n");
   socket_out->connectToHost(steel_ip, port_out);
-  return socket_out->waitForConnected();
+  auto value =  socket_out->waitForConnected(1000);
+  return value;
 }
 
 bool ArduinoSender::Init(const QHostAddress steel_ip_, quint16 steel_port_in_, quint16 steel_port_out_) {
@@ -65,8 +66,8 @@ bool ArduinoSender::connect_to_host_in() {
   tcpSocket->abort();
   gui->arduino_out->appendPlainText("Arduino sender: connecting to " + steel_ip.toString());
   tcpSocket->connectToHost(steel_ip, steel_port_in);
-  //return tcpSocket->waitForConnected(1000);
-  return true;
+  auto value = tcpSocket->waitForConnected(1000);
+  return value;
 }
 
 QByteArray ArduinoSender::IntToArray(qint32 source) {
