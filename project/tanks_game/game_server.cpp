@@ -1,12 +1,9 @@
 #include "game_server.h"
 
 namespace game{
-Game_Server::Game_Server(QTcpServer* parent):QTcpServer(parent), socket_client(new QTcpSocket()){
-
-}
-
-void Game_Server::manage_client_buffer(ServerBuffer& buffer) {
-
+Game_Server::Game_Server(QTcpServer* parent):QTcpServer(parent){
+  Rules buf = { 0 };
+  buf.number_life = 10;
 }
 
 void Game_Server::readyRead() {
@@ -38,20 +35,33 @@ void Game_Server::readyRead() {
         *s = size;
         ServerBuffer buffer;
         memcpy(&buffer, data.data(), data.size());
-        manage_client_buffer(buffer);
+        //manage_client_buffer(buffer);
       }
     }
   }
 }
 
 void Game_Server::incomingConnection(qintptr socketDescriptor) {
-  connect(socket_client, &QTcpSocket::readyRead, this, &Game_Server::readyRead);
   ServerBuffer tmp;
+  memset(&tmp, 0, sizeof(ServerBuffer));
+  tmp.type = msg_type::GAME_BUFFER;
+  tmp.size = sizeof(Rules);
+  memcpy(tmp.tankAction, &game_rules, sizeof(Rules));
+  //init_new_player
+  QTcpSocket* new_player = new QTcpSocket();
+  new_player->setSocketDescriptor(socketDescriptor);
+  players_lifes[new_player] = 10;
   QByteArray *buffer = new QByteArray();
   qint32 *s = new qint32(0);
-  buffers.insert(socket_client, buffer);
-  sizes.insert(socket_client, s);
-  Game_Thread *thread = new Game_Thread(socketDescriptor, tmp , this);
+  buffers.insert(new_player, buffer);
+  sizes.insert(new_player, s);
+  //some map with sockets and rules. for now it will be only number of life
+  //socket_client = tcpServer->nextPendingConnection();
+  //connect this socket with readRead in wich called
+  //So here not send on connection anything
+  connect(new_player, &QTcpSocket::readyRead, this, &Game_Server::readyRead);
+  //connect(socket_client, &QTcpSocket::disconnected, this, &Player_server::disconnected);
+  Game_Thread_Sender *thread = new Game_Thread_Sender(socketDescriptor, tmp , this);
   connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
   thread->start();
 }

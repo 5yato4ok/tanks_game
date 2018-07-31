@@ -1,8 +1,10 @@
 #include "game_thread.h"
 
 namespace game {
-Game_Thread::Game_Thread(int socketDescriptor, const ServerBuffer &respond, QObject *parent)
-  : QThread(parent), socketDescriptor(socketDescriptor), respond(respond) {}
+Game_Thread_Sender::Game_Thread_Sender(int socketDescriptor, const ServerBuffer &respond, QObject *parent)
+  : QThread(parent), socketDescriptor(socketDescriptor), respond(respond){
+
+}
 //
 //bool Game_Thread::sendBuffer(QByteArray block) {
 //  if (socket->state() == QAbstractSocket::ConnectedState) {
@@ -12,7 +14,7 @@ Game_Thread::Game_Thread(int socketDescriptor, const ServerBuffer &respond, QObj
 //  } else
 //    return false;
 //}
-void Game_Thread::run() {
+void Game_Thread_Sender::run() {
   QTcpSocket tcpSocket;
   if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
     emit error(tcpSocket.error());

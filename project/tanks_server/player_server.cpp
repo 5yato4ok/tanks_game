@@ -153,12 +153,20 @@ void Player_server::ManageGameAction(ServerBuffer& buffer_) {
   QDataStream out(&data, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
   out << buffer_;
-  sendBuffer(data, socket_client);
+  sendBuffer(data, socket_game);
+  //if sender server
+  //reply to client
+  //if arduino
+  //send data to server
 }
 
 bool Player_server::connect_to_game_server() {
   socket_game->abort();
   socket_game->connectToHost(game_ip, game_port);
+  QByteArray *buffer = new QByteArray();
+  qint32 *s = new qint32(0);
+  buffers.insert(socket_game, buffer);
+  sizes.insert(socket_game, s);
   return socket_game->waitForConnected();
 }
 
@@ -170,10 +178,9 @@ void Player_server::get_game_attributes(game_type type) {
     out.setVersion(QDataStream::Qt_5_10);
     ServerBuffer buffer;
     memcpy(buffer.sender, server_ip.toString().data(), server_ip.toString().size());
-    buffer.size = camera_ip.size();
     buffer.type = msg_type::GAME_INIT;
     out << buffer;
-    sendBuffer(data,socket_client);
+    sendBuffer(data,socket_game);
   }
 }
 
