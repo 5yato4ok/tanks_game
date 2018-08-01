@@ -9,7 +9,6 @@ int main(int argc, char *argv[]) {
     //now we are sending actions from gamepad to Tank
   }
   tclient.Init_User_Buttons(gp_helper::default_gamepad_settings);
-  tclient.setAttribute(Qt::WA_DeleteOnClose, true);
   tclient.show();
   
   return a.exec();

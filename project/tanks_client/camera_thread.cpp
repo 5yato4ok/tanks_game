@@ -2,17 +2,24 @@
 
 namespace client {
 Camera_Thread::Camera_Thread(Ui::Tanks_ClientClass* ui_, QObject *parent):
-  ui(ui_) ,QThread(parent),capture(nullptr){
+  ui(ui_)  {
+  connect(&thread, &QThread::started, this, &Camera_Thread::run_thread);
   stop = true;
 }
 
+Camera_Thread::Camera_Thread(Camera_Thread &&) {
+  int i = 3;
+  stop = true;
+}
+
+
 bool Camera_Thread::LoadVideo(std::string camera_url) {
-  if (!capture) {
-    capture = new cv::VideoCapture(camera_url);
+  if (!capture.isOpened()) {
+    capture.open(camera_url);
   }
   ui->output->appendPlainText("Input stream: " + QString::fromStdString(camera_url));
-  if (capture && capture->isOpened()) {
-    frameRate = (int)capture->get(CV_CAP_PROP_FPS);
+  if (capture.isOpened()) {
+    frameRate = (int)capture.get(CV_CAP_PROP_FPS);
     return true;
   }   
   ui->output->appendPlainText("OpenCV Failed::: can't open input stream:" + QString::fromStdString(camera_url));
@@ -20,18 +27,18 @@ bool Camera_Thread::LoadVideo(std::string camera_url) {
 }
 
 void Camera_Thread::Play() {
-  if (!isRunning()) {
+  if (!thread.isRunning()) {
     if (isStopped()) {
       stop = false;
     }
-    start(LowPriority);
+    thread.start();
   }
 }
 
-void Camera_Thread::run() {
+void Camera_Thread::run_thread() {
   int delay = (1000 / frameRate);
   while (!stop) {
-    if (!capture->read(frame)) {
+    if (!capture.read(frame)) {
       stop = true;
     }
     if (frame.channels() == 3) {
@@ -47,13 +54,19 @@ void Camera_Thread::run() {
   }
 }
 
+void Camera_Thread::Exit() {
+  if (thread.isRunning()) {
+    thread.exit();
+  }
+}
+
 Camera_Thread::~Camera_Thread() {
   mutex.lock();
   stop = true;
-  capture->release();
+  capture.release();
   condition.wakeOne();
   mutex.unlock();
-  wait();
+  thread.exit();
 }
 void Camera_Thread::Stop() {
   stop = true;
@@ -61,7 +74,7 @@ void Camera_Thread::Stop() {
 void Camera_Thread::msleep(int ms) {
   //struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
   //nanosleep(&ts, NULL);
-  sleep(ms / 1000);
+  thread.sleep(ms / 1000);
 }
 bool Camera_Thread::isStopped() const {
   return this->stop;

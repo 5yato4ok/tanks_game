@@ -1,9 +1,9 @@
 #include "camera.h"
 
 namespace client {
-Camera::Camera(Ui::Tanks_ClientClass* ui_, QObject *parent):ui(ui_) {
-  camera = new Camera_Thread(ui,parent);
-  QObject::connect(camera, SIGNAL(processedImage(QImage)),
+Camera::Camera(Ui::Tanks_ClientClass* ui_, QObject *parent): ui(ui_),
+ camera(Camera_Thread(ui_,parent)){
+  QObject::connect(&camera, SIGNAL(processedImage(QImage)),
     this, SLOT(updatePlayerUI(QImage)));
 }
 
@@ -16,22 +16,20 @@ void Camera::updatePlayerUI(QImage img) {
 }
 
 void Camera::StartVideo() {
-  if (camera->isStopped()) {
-    camera->Play();
+  if (camera.isStopped()) {
+    camera.Play();
   } 
 }
 
 void Camera::StopVideo() {
-  if (!camera->isStopped()) {
-    camera->Stop();
+  if (!camera.isStopped()) {
+    camera.Stop();
   }
 }
 
 bool Camera::LoadVideo(std::string camera_url) {
-  if (camera->isRunning()) {
-    camera->exit();
-  }
-  return  camera->LoadVideo(camera_url);
+  camera.Exit();
+  return  camera.LoadVideo(camera_url);
 }
 
 } //namespace client

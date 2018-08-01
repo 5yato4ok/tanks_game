@@ -14,7 +14,7 @@ class Camera: public QObject {
    void updatePlayerUI(QImage img);
  private:
   Ui::Tanks_ClientClass* ui;
-  Camera_Thread * camera;
+  Camera_Thread camera;
 
 };
 } //namespace client

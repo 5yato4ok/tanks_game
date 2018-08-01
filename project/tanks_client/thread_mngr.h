@@ -47,7 +47,7 @@ class GamePadThread: public QObject {
  signals:
   void is_same(Raw_Action buffer);
  private:
-   QThread* thread;
+   QThread thread;
    Raw_Action input_state;
    QMutex mutex;
    Button_state condition_state;

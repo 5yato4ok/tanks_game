@@ -239,7 +239,7 @@ void Player_server::readyRead() {
 }
 
 Player_server::~Player_server() {
-  if (!socket_client) {
+  if (socket_client) {
     delete socket_client;
   }
   if (!tcpServer) {

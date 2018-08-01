@@ -1,22 +1,21 @@
 #include "thread_mngr.h"
 
-GamePadThread::GamePadThread():thread(new QThread()) {
-  connect(thread, &QThread::started, this, &GamePadThread::ThreadLoop);
+GamePadThread::GamePadThread() {
+  connect(&thread, &QThread::started, this, &GamePadThread::ThreadLoop);
   axis_condition[input_state.button].current.x = 0;
   axis_condition[input_state.button].current.y = 0;
 }
 
 GamePadThread::~GamePadThread() {
-  thread->exit();
+  thread.exit();
 }
 void GamePadThread::Start() {
-  thread->start();
+  thread.start();
 }
 
 void GamePadThread::Exit() {
-  if (thread->isRunning()) {
-
-    thread->exit();
+  if (thread.isRunning()) {
+    thread.exit();
   }
 }
 

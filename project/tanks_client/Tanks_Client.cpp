@@ -35,6 +35,7 @@ void Tanks_Client::reconnect() {
 }
 
 void Tanks_Client::load_video() {
+  camera.StopVideo();
   if (camera.LoadVideo(Player_local::camera_ip)) {
     camera.StartVideo();
   }

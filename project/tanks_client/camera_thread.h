@@ -14,23 +14,28 @@
 //#include <opencv2/swscale.h>
 namespace client {
 
-class Camera_Thread : public QThread {
+class Camera_Thread:public QObject{
   Q_OBJECT
  public:
    Camera_Thread(Ui::Tanks_ClientClass* ui,QObject *parent = nullptr);
+   Camera_Thread(Camera_Thread &&);
+   Camera_Thread(const Camera_Thread&) = delete;
+   Camera_Thread& operator=(const Camera_Thread&) = delete;
    ~Camera_Thread();
    bool LoadVideo(std::string camera_url);
    void Play();
    void Stop();
+   void Exit();
    bool isStopped() const;
  signals:
    //Signal to output frame to be displayed
    void processedImage(const QImage &image);
  protected:
-  void run();
+  void run_thread();
 
   void msleep(int ms);
  private:
+   QThread thread;
    Ui::Tanks_ClientClass* ui;
    std::string camera_url;
    bool stop;
@@ -38,7 +43,7 @@ class Camera_Thread : public QThread {
    QWaitCondition condition;
    cv::Mat frame;
    int frameRate;
-   cv::VideoCapture* capture;
+   cv::VideoCapture capture;
    cv::Mat RGBframe;
    QImage img;
 };
