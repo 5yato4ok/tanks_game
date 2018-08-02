@@ -13,6 +13,12 @@ Tanks_Client::Tanks_Client(QWidget *parent) : Player_local(parent),
   get_default_buttons_settings();
 }
 
+void Tanks_Client::change_hp(Player_condition current_condition) {
+  std::string hitted_by(current_condition.hitted_by, current_condition.size);
+  ui->gameState->appendPlainText(QString::number(current_condition.current_life));
+  ui->gameState->appendPlainText("Was hitted by: " + QString::fromStdString(hitted_by));
+}
+
 void Tanks_Client::enable_reconnect_button() {
   ui->connect_server->setEnabled(is_valid_network_session() &&
     !ui->comboBox->currentText().isEmpty());
@@ -36,9 +42,9 @@ void Tanks_Client::reconnect() {
 
 void Tanks_Client::load_video() {
   camera.StopVideo();
-  if (camera.LoadVideo(Player_local::camera_ip)) {
-    camera.StartVideo();
-  }
+  //if (camera.LoadVideo(Player_local::camera_ip)) {
+  //  camera.StartVideo();
+  //}
 }
 
 gp_helper::Button_settings Tanks_Client::Init_User_Buttons(gp_helper::Button_settings user_def) {
@@ -94,9 +100,9 @@ void Tanks_Client::send_action(TankAction buffer) {
 }
 
 void Tanks_Client::Connect_signals() {
-  connect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
-    SLOT(ReceiveData(Raw_Action)));
+  connect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,SLOT(ReceiveData(Raw_Action)));
   connect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
+  connect(this, &Player_local::hp_changed, this, &Tanks_Client::change_hp);
   gamepad.Listen_Input();
 }
 

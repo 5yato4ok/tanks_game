@@ -67,12 +67,19 @@ void Player_local::init_camera_url(const ServerBuffer& buffer) {
   emit camera_ip_initilized();
 }
 
+void Player_local::manage_game_buffer(const ServerBuffer& buffer) {
+  Player_condition current;
+  memcpy(&current, buffer.tankAction, buffer.size);
+  emit hp_changed(current);
+}
+
 void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
   switch (buffer.type) {
   case msg_type::CAMERA_URL:
     init_camera_url(buffer);
     break;
-  case msg_type::GAME_BUFFER:
+  case msg_type::GAME_RESPONCE:
+    manage_game_buffer(buffer);
     break;
   default:
     break;

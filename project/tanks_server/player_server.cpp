@@ -145,10 +145,15 @@ void Player_server::disconnected() {
 void Player_server::ManageArduinoInfo(ServerBuffer& buffer) {
   //if get_hit
   //send action to game server
+  switch (buffer.type) {
+  case msg_type::GAME_BUFFER:
+    redirect_game_action(buffer);
+    break;
+  }
   return;
 }
 
-void Player_server::ManageGameAction(ServerBuffer& buffer_) {
+void Player_server::redirect_game_action(ServerBuffer& buffer_) {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
   out.setVersion(QDataStream::Qt_5_10);
@@ -158,6 +163,9 @@ void Player_server::ManageGameAction(ServerBuffer& buffer_) {
   //reply to client
   //if arduino
   //send data to server
+  //test
+  //some initialization based on buffer
+  //test
 }
 
 bool Player_server::connect_to_game_server() {
@@ -182,12 +190,25 @@ void Player_server::get_game_attributes(game_type type) {
     out << buffer;
     sendBuffer(data,socket_game);
   }
+
+}
+
+int i = 0;
+void Player_server::redirect_responce(ServerBuffer& buffer_) {
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+  out.setVersion(QDataStream::Qt_5_10);
+  out << buffer_;
+  sendBuffer(data, socket_client);
 }
 
 void Player_server::manage_client_buffer(ServerBuffer& buffer) {
   switch (buffer.type) {
   case msg_type::GAME_BUFFER:
-    ManageGameAction(buffer);
+    redirect_game_action(buffer);
+    break;
+  case msg_type::GAME_RESPONCE:
+    redirect_responce(buffer);
     break;
   case msg_type::GAME_INIT:
     get_game_attributes();

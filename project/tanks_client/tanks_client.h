@@ -22,6 +22,7 @@ class Tanks_Client : public Player_local {
   void ReceiveData(Raw_Action buffer);
   void load_video();
   void reconnect();
+  void change_hp(Player_condition current_condition);
  private:
   void Tanks_Client::enable_reconnect_button();
   void send_action(TankAction buffer);

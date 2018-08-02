@@ -21,7 +21,13 @@ class Game_Server: public QTcpServer {
  protected:
   void incomingConnection(qintptr socketDescriptor) override;
  private:
-  std::map<QTcpSocket*, int> players_lifes;
+   void start_sending_thread(qintptr socketDescriptor, ServerBuffer tmp);
+   std::string get_hitted_by(ServerBuffer& buffer);
+  void manage_client_buffer(QTcpSocket*, ServerBuffer& buffer);
+  ServerBuffer change_cpc(ServerBuffer& buffer, QTcpSocket *socket);
+  void send_responce(ServerBuffer& buffer);
+  ServerBuffer init_new_player(int socket_descriptior);
+  std::map<QTcpSocket*, Player_condition> players_lifes;
   QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
   QHash<QTcpSocket*, qint32*> sizes; //We need to store the size to verify if a block has received completely
   Rules game_rules;

@@ -11,4 +11,9 @@ struct Rules {
   gp_helper::Button_settings default_buttons;
 };
 
+struct Player_condition {
+  int current_life;
+  int size;
+  char hitted_by[1024];
+};
 //extern std::map<game_type,Rules> game_rules;

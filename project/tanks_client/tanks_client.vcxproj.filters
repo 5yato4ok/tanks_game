@@ -55,6 +55,9 @@
     <ClCompile Include="camera.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\rules.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_client.ui">
@@ -100,6 +103,9 @@
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\rules.h">
       <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>

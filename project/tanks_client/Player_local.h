@@ -13,7 +13,7 @@
 #include "server_settings.h"
 #include "server_buffer.h"
 #include <qbytearray.h>
-
+#include "rules.h"
 enum class player_type : int32_t {TANK,ROBOT, LAST};
 enum class controler_type: int32_t {GAMEPAD, KEYBOARD,LAST};
 
@@ -34,6 +34,7 @@ class Player_local: public QMainWindow {
  signals:
   void camera_ip_initilized();
   void is_authenticated();
+  void hp_changed(Player_condition current_condition);
  public slots:
   void readBuffer();
   void displayError(QAbstractSocket::SocketError socketError);
@@ -45,6 +46,7 @@ class Player_local: public QMainWindow {
   bool is_valid_network_session();
   bool is_autenticated_;
  private:
+  void manage_game_buffer(const ServerBuffer& buffer);
   int32_t player_server_port;
   game_type choosed_game;
   const std::string password;

@@ -31,8 +31,9 @@ class Player_server: public QObject {
  protected:
   Ui_MainWindow* gui;
   void ManageArduinoInfo(ServerBuffer& buffer); //Steel Info
-  void ManageGameAction(ServerBuffer& buffer);
+  void redirect_game_action(ServerBuffer& buffer);
  private:
+   void redirect_responce(ServerBuffer& buffer);
   bool connect_to_game_server();
   void get_game_attributes(game_type type = game_type::ONE_AGAINTS_ALL);
   void send_data_to_game_server();

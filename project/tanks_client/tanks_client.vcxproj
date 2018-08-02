@@ -114,6 +114,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\default_gp_settings.cpp" />
+    <ClCompile Include="..\common\rules.cpp" />
     <ClCompile Include="..\common\server_buffer.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="gamepadmngr.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="..\common\action.h" />
     <ClInclude Include="..\common\default_gp_settings.h" />
     <ClInclude Include="..\common\game_type.h" />
+    <ClInclude Include="..\common\rules.h" />
     <ClInclude Include="..\common\server_buffer.h" />
     <ClInclude Include="..\common\server_settings.h" />
     <QtMoc Include="camera_thread.h">

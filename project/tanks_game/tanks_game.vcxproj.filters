@@ -40,11 +40,11 @@
     <ClCompile Include="game_server.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="rules.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\server_buffer.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\rules.cpp">
+      <Filter>game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +53,11 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rules.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\rules.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
