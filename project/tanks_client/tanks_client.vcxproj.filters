@@ -26,6 +26,9 @@
     <Filter Include="player">
       <UniqueIdentifier>{f8f3609e-4b57-400f-810c-669cd1f42353}</UniqueIdentifier>
     </Filter>
+    <Filter Include="player\camera">
+      <UniqueIdentifier>{1cf17961-47a0-4d63-9843-967ad98e3f9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player_local.cpp">
@@ -49,14 +52,17 @@
     <ClCompile Include="..\common\server_buffer.cpp">
       <Filter>player</Filter>
     </ClCompile>
-    <ClCompile Include="camera_thread.cpp">
+    <ClCompile Include="..\common\rules.cpp">
       <Filter>player</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
-      <Filter>player</Filter>
+      <Filter>player\camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\rules.cpp">
-      <Filter>player</Filter>
+    <ClCompile Include="cam_init_thread.cpp">
+      <Filter>player\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cam_play_thread.cpp">
+      <Filter>player\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,11 +88,14 @@
     <QtMoc Include="thread_mngr.h">
       <Filter>gamepad</Filter>
     </QtMoc>
-    <QtMoc Include="camera_thread.h">
-      <Filter>player</Filter>
-    </QtMoc>
     <QtMoc Include="camera.h">
-      <Filter>player</Filter>
+      <Filter>player\camera</Filter>
+    </QtMoc>
+    <QtMoc Include="cam_init_thread.h">
+      <Filter>player\camera</Filter>
+    </QtMoc>
+    <QtMoc Include="cam_play_thread.h">
+      <Filter>player\camera</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ namespace client {
 class Tanks_Client : public Player_local {
   Q_OBJECT
  public:
+  void resizeEvent(QResizeEvent* event);
   Tanks_Client(QWidget *parent = Q_NULLPTR);
   void Disconnect_signals();
   bool Is_initialized() { return is_intialized_; }
@@ -21,6 +22,7 @@ class Tanks_Client : public Player_local {
   void Connect_signals();
   void ReceiveData(Raw_Action buffer);
   void load_video();
+  void start_video();
   void reconnect();
   void change_hp(Player_condition current_condition);
  private:

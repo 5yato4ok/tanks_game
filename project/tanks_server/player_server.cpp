@@ -129,7 +129,6 @@ void Player_server::newConnection() {
     qint32 *s = new qint32(0);
     buffers.insert(socket_client, buffer);
     sizes.insert(socket_client, s);
-    SendVideoToLocal();
   }
 }
 
@@ -212,6 +211,9 @@ void Player_server::manage_client_buffer(ServerBuffer& buffer) {
     break;
   case msg_type::GAME_INIT:
     get_game_attributes();
+    break;
+  case msg_type::CAMERA_URL:
+    SendVideoToLocal();
     break;
   case msg_type::TANK_ACTION:
     memcpy(&tk, buffer.tankAction, sizeof(tk));

@@ -86,11 +86,6 @@ void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
   }
 }
 
-void Player_local::ReDrawStreamingVideo() {
-  get_streaming_video();
-//and here comes some fun
-}
-
 void Player_local::SendActionsToServer(ServerBuffer buffer) {
 //sending buffer to server
   qDebug() << "Try to send data;";
@@ -100,15 +95,12 @@ void Player_local::SendActionsToServer(ServerBuffer buffer) {
   writeData(packet);
 }
 
-void Player_local::get_streaming_video() {
-//open cv connect by rhtcp
-}
 
 void Player_local::ChooseGame(game_type game_type) {
   choosed_game = game_type;
 }
 
-bool Player_local::Authenticate(player_type player, controler_type cntrl) {
+void Player_local::Authenticate(player_type player, controler_type cntrl) {
 //make here checking on which controller and player type
   ServerBuffer buffer;
   buffer.type = msg_type::GAME_INIT;
@@ -118,7 +110,13 @@ bool Player_local::Authenticate(player_type player, controler_type cntrl) {
   if (is_autenticated_) {
     emit is_authenticated();
   }
-  return is_autenticated_;
+}
+
+void Player_local::GetCameraUrl() {
+  ServerBuffer buffer;
+  buffer.type = msg_type::CAMERA_URL;
+  buffer.size = 0;
+  SendActionsToServer(buffer);
 }
 
 void Player_local::displayError(QAbstractSocket::SocketError socketError) {
