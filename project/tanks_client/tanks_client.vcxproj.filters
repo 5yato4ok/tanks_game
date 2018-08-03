@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
     <Filter Include="Form Files">
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
@@ -29,6 +20,9 @@
     <Filter Include="player\camera">
       <UniqueIdentifier>{1cf17961-47a0-4d63-9843-967ad98e3f9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{5f583b4d-a54b-4641-b8cb-5d346c73c1e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player_local.cpp">
@@ -43,17 +37,8 @@
     <ClCompile Include="..\common\default_gp_settings.cpp">
       <Filter>gamepad</Filter>
     </ClCompile>
-    <ClCompile Include="main_client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="thread_mngr.cpp">
       <Filter>gamepad</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\server_buffer.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\rules.cpp">
-      <Filter>player</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>player\camera</Filter>
@@ -64,6 +49,13 @@
     <ClCompile Include="cam_play_thread.cpp">
       <Filter>player\camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\server_buffer.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\rules.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="main_client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_client.ui">
@@ -108,14 +100,14 @@
     <ClInclude Include="..\common\game_type.h">
       <Filter>player</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\server_settings.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\server_buffer.h">
-      <Filter>player</Filter>
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\server_settings.h">
+      <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\common\rules.h">
-      <Filter>player</Filter>
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
