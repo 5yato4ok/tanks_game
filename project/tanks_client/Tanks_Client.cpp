@@ -22,16 +22,20 @@ void Tanks_Client::resizeEvent(QResizeEvent* event) {
 
 void Tanks_Client::change_hp(Player_condition current_condition) {
   std::string hitted_by(current_condition.hitted_by, current_condition.size);
-  ui->gameState->appendPlainText(QString::number(current_condition.current_life));
-  ui->gameState->appendPlainText("Was hitted by: " + QString::fromStdString(hitted_by));
+  ui->gameState->appendPlainText("HP:"+QString::number(current_condition.current_life));
+  if (hitted_by.size()) {
+    ui->gameState->appendPlainText("Was hitted by: " + QString::fromStdString(hitted_by));
+  }
 }
 
 void Tanks_Client::enable_reconnect_button() {
   ui->connect_server->setEnabled(is_valid_network_session() &&
     !ui->comboBox->currentText().isEmpty());
 }
+
 void Tanks_Client::reconnect() {
   auto user_choice = ui->comboBox->currentText();
+  ui->gameState->clear();
   int32_t port;
   if (user_choice == "Tank 0") {
     port = g_server_port_0;
@@ -119,10 +123,12 @@ void Tanks_Client::Connect_signals() {
 }
 
 void Tanks_Client::Disconnect_signals() {
-  disconnect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,
-    SLOT(ReceiveData(Raw_Action)));
-  disconnect(this, &Player_local::camera_ip_initilized, this, 
-    &Tanks_Client::load_video);
+  disconnect(&gamepad, SIGNAL(sendAction(Raw_Action)), this,SLOT(ReceiveData(Raw_Action)));
+  disconnect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
+  disconnect(this, &Player_local::hp_changed, this, &Tanks_Client::change_hp);
+  disconnect(&camera, &Camera::video_loaded, this, &Tanks_Client::start_video);
+  disconnect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
+  gamepad.Stop_Listen();
 }
   
 }//namespace client

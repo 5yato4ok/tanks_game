@@ -8,6 +8,7 @@
 #include <QThread>
 #include <QImage>
 #include <QWaitCondition>
+#include <Qtime>
 
 //#include <opencv2/avcodec.h>
 //#include <opencv2/avformat.h>

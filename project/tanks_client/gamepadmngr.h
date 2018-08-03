@@ -24,6 +24,7 @@ class GamePadMngr : public QGamepad {
 public:
   explicit GamePadMngr(QObject *parent = nullptr);
   void Listen_Input();
+  void Stop_Listen();
   bool Is_connected();
   ~GamePadMngr();
   void connectedChangedEvent(bool value);

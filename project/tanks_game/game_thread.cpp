@@ -27,8 +27,8 @@ void Game_Thread_Sender::run() {
   tcpSocket.write(IntToArray(block.size())); //write size of data
   tcpSocket.write(block); //write the data itself
   tcpSocket.waitForBytesWritten();
-  //tcpSocket.disconnectFromHost();
-  //tcpSocket.waitForDisconnected();
+  tcpSocket.disconnectFromHost();
+  tcpSocket.waitForDisconnected();
 }
 
 } //namesapce game

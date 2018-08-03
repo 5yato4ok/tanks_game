@@ -48,6 +48,29 @@ void GamePadMngr::Listen_Input() {
   connect(&thread, &GamePadThread::is_same, this, &GamePadMngr::button_is_pressed);
 }
 
+void GamePadMngr::Stop_Listen() {
+  disconnect(this, &QGamepad::buttonAChanged, this, &GamePadMngr::buttonA_packet);
+  //disconnect(this, &QGamepad::axisLeftXChanged, this, &GamePadMngr::axisLeftX_packet);
+  //disconnect(this, &QGamepad::axisLeftYChanged, this, &GamePadMngr::axisLeftY_packet);
+  disconnect(this, &QGamepad::axisRightXChanged, this, &GamePadMngr::axisRightX_packet);
+  disconnect(this, &QGamepad::axisRightYChanged, this, &GamePadMngr::axisRightY_packet);
+  disconnect(this, &QGamepad::buttonBChanged, this, &GamePadMngr::buttonB_packet);
+  disconnect(this, &QGamepad::buttonXChanged, this, &GamePadMngr::buttonX_packet);
+  disconnect(this, &QGamepad::buttonYChanged, this, &GamePadMngr::buttonY_packet);
+  disconnect(this, &QGamepad::buttonL1Changed, this, &GamePadMngr::buttonL1_packet);
+  disconnect(this, &QGamepad::buttonR1Changed, this, &GamePadMngr::buttonR1_packet);
+  disconnect(this, &QGamepad::buttonL2Changed, this, &GamePadMngr::buttonL2_packet);
+  disconnect(this, &QGamepad::buttonR2Changed, this, &GamePadMngr::buttonR2_packet);
+  disconnect(this, &QGamepad::buttonSelectChanged, this, &GamePadMngr::buttonSelect_packet);
+  disconnect(this, &QGamepad::buttonStartChanged, this, &GamePadMngr::buttonStart_packet);
+  disconnect(this, &QGamepad::buttonGuideChanged, this, &GamePadMngr::buttonGuide_packet);
+  disconnect(this, &QGamepad::buttonUpChanged, this, &GamePadMngr::buttonUP_packet);
+  disconnect(this, &QGamepad::buttonDownChanged, this, &GamePadMngr::buttonDOWN_packet);
+  disconnect(this, &QGamepad::buttonLeftChanged, this, &GamePadMngr::buttonLEFT_packet);
+  disconnect(this, &QGamepad::buttonRightChanged, this, &GamePadMngr::buttonRIGHT_packet);
+  disconnect(&thread, &GamePadThread::is_same, this, &GamePadMngr::button_is_pressed);
+}
+
 void GamePadMngr::axisLeftX_packet(double value) {
   qDebug() << "Left X: " << value;
   Raw_Action buffer;
