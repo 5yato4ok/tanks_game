@@ -210,6 +210,7 @@ void Player_server::manage_client_buffer(ServerBuffer& buffer) {
     redirect_game_action(buffer);
     break;
   case msg_type::GAME_RESPONCE:
+  case msg_type::GAME_OVER:
     redirect_responce(buffer);
     break;
   case msg_type::GAME_INIT:

@@ -119,7 +119,12 @@ void Tanks_Client::Connect_signals() {
   connect(this, &Player_local::camera_ip_initilized, this, &Tanks_Client::load_video);
   connect(&camera, &Camera::video_loaded, this, &Tanks_Client::start_video);
   connect(this, &Player_local::hp_changed, this, &Tanks_Client::change_hp);
+  connect(this, &Player_local::game_over, this, &Tanks_Client::game_over);
   gamepad.Listen_Input();
+}
+
+void Tanks_Client::game_over(Player_condition current_condition) {
+  ui->gameState->appendPlainText("Game_over!");
 }
 
 void Tanks_Client::Disconnect_signals() {

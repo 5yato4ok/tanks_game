@@ -36,7 +36,7 @@ std::string Tower_mngr::form_arduino_packet(TankAction & action) {
 tank_status Tower_mngr::ManageAction(TankAction & action)  {
   tank_status result = tank_status::OPERATION_FAILED;
   if (action.type == action_type::MOVE_GUN_UP ||
-    action.type == action_type::MOVE_GUN_DOWN) {
+    action.type == action_type::MOVE_GUN_DOWN || action.type == action_type::SHOT) {
     return gun.ManageAction(action);
   }
 

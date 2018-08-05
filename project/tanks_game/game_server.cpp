@@ -82,7 +82,6 @@ void Game_Server::manage_client_buffer(QTcpSocket* socket, ServerBuffer& buffer)
   switch (buffer.type) {
   case msg_type::GAME_BUFFER:
     auto responce = change_cpc(buffer,socket);
-    responce.type = msg_type::GAME_RESPONCE;
     start_sending_thread(socket, responce);
     break;
   case msg_type::GAME_INIT:

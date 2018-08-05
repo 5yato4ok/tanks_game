@@ -25,6 +25,7 @@ class Tanks_Client : public Player_local {
   void start_video();
   void reconnect();
   void change_hp(Player_condition current_condition);
+  void game_over(Player_condition current_condition);
  private:
   void Tanks_Client::enable_reconnect_button();
   void send_action(TankAction buffer);

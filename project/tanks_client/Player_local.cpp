@@ -73,6 +73,12 @@ void Player_local::manage_game_buffer(const ServerBuffer& buffer) {
   emit hp_changed(current);
 }
 
+void Player_local::manage_game_over(const ServerBuffer& buffer) {
+  Player_condition current;
+  memcpy(&current, buffer.tankAction, buffer.size);
+  emit game_over(current);
+}
+
 void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
   switch (buffer.type) {
   case msg_type::CAMERA_URL:
@@ -80,6 +86,9 @@ void Player_local::manage_input_buffer(const ServerBuffer& buffer) {
     break;
   case msg_type::GAME_RESPONCE:
     manage_game_buffer(buffer);
+    break;
+  case msg_type::GAME_OVER:
+    manage_game_over(buffer);
     break;
   default:
     break;

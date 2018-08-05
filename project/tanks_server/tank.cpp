@@ -27,6 +27,7 @@ void TankMngr::ReceiveClientData(TankAction buffer) {
   case action_type::MOVE_GUN_DOWN:
   case action_type::MOVE_TOWER_LEFT:
   case action_type::MOVE_TOWER_RIGHT:
+  case action_type::SHOT:
     tower.ManageAction(buffer);
     break;
   case action_type::MOVE_TRACK:
