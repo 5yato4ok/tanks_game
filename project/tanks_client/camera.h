@@ -7,6 +7,7 @@ class Camera : public QObject {
   Q_OBJECT
  public:
   Camera(Ui::Tanks_ClientClass* ui, QObject *parent = nullptr);
+  ~Camera();
   void LoadVideo(std::string camera_url);
   void StartVideo();
   void StopVideo();

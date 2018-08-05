@@ -50,11 +50,11 @@ void TankMngr::init_receive_port(int32_t tank_id) {
     is_intialized_ = false;
     return;
   }
-  //std::string tmp = "V";
-  //ard_mngr.SendAction(tmp);
-  //if (!is_intialized_) {
-  //  gui->player_out->appendPlainText("Tank::Connection failure");
-  //}
+  std::string tmp = "V";
+  ard_mngr.SendAction(tmp);
+  if (!is_intialized_) {
+    gui->player_out->appendPlainText("Tank::Connection failure");
+  }
 
   //ReceveArduinoData("BH_1");
 }

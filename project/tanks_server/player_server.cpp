@@ -265,7 +265,7 @@ Player_server::~Player_server() {
   if (socket_client) {
     delete socket_client;
   }
-  if (!tcpServer) {
+  if (tcpServer) {
     delete tcpServer;
  }
   if (networkSession) {

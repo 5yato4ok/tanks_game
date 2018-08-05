@@ -44,4 +44,13 @@ void Camera::LoadVideo(std::string camera_url) {
   init_thread.OpenVideo(camera_url);
 }
 
+Camera::~Camera() {
+  if (init_thread.isRunning()) {
+    init_thread.exit();
+  }
+  if (play_thread.isRunning()) {
+    play_thread.exit();
+  }
+}
+
 } //namespace client
