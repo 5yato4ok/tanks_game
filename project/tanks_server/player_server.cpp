@@ -83,18 +83,21 @@ void Player_server::sessionOpened() {
     settings.endGroup();
   }
   
-  QString ipAddress;
-  QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+  //QString ipAddress;
+  //QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
   // use the first non-localhost IPv4 address
-  for (int i = 0; i < ipAddressesList.size(); ++i) {
-    if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
-      ipAddress = ipAddressesList.at(i).toString();
-      server_ip = ipAddressesList.at(i);
-      game_ip = ipAddress;
-      game_port = g_game_port;
-      break;
-    }
-  }
+  server_ip = g_server_ip;
+  game_ip = g_server_ip;
+  game_port = g_game_port;
+  //for (int i = 0; i < ipAddressesList.size(); ++i) {
+  //  if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
+  //    ipAddress = ipAddressesList.at(i).toString();
+  //    server_ip = ipAddressesList.at(i);
+  //    game_ip = ipAddress;
+  //    game_port = g_game_port;
+  //    break;
+  //  }
+  //}
 
 }
 

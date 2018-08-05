@@ -50,9 +50,12 @@ std::string Game_Server::get_hitted_by(ServerBuffer& buffer) {
 
 }
 
-void Game_Server::start_sending_thread(qintptr socketDescriptor, ServerBuffer buffer) {
-  Game_Thread_Sender *thread = new Game_Thread_Sender(socketDescriptor, buffer, this);
-  connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+void Game_Server::start_sending_thread(QTcpSocket* sock, ServerBuffer buffer) {
+  if (!sock) {
+    return;
+  }
+  Game_Thread_Sender *thread = new Game_Thread_Sender(sock, buffer, this);
+  //connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
   thread->start();
 }
 ServerBuffer Game_Server::change_cpc(ServerBuffer& buffer_, QTcpSocket *socket) {
@@ -79,7 +82,8 @@ void Game_Server::manage_client_buffer(QTcpSocket* socket, ServerBuffer& buffer)
   switch (buffer.type) {
   case msg_type::GAME_BUFFER:
     auto responce = change_cpc(buffer,socket);
-    start_sending_thread(socket->socketDescriptor(), buffer);
+    responce.type = msg_type::GAME_RESPONCE;
+    start_sending_thread(socket, responce);
     break;
   case msg_type::GAME_INIT:
     auto cur_pleyer = players_lifes[socket];
@@ -88,7 +92,7 @@ void Game_Server::manage_client_buffer(QTcpSocket* socket, ServerBuffer& buffer)
     tmp.type = msg_type::GAME_RESPONCE;
     tmp.size = sizeof(cur_pleyer);
     memcpy(&tmp.tankAction, &cur_pleyer, sizeof(cur_pleyer));
-    start_sending_thread(socket->socketDescriptor(), tmp);
+    start_sending_thread(socket, tmp);
     break;
   }
 }

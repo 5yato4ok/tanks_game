@@ -86,7 +86,7 @@ void GamePadMngr::axisRightX_packet(double value) {
   qDebug() << "Right X: " << value;
   Raw_Action buffer;
   buffer.button = gp_buttons::AXIS_RIGHT;
-  buffer.value_x = floor(value * (100)) / 100;
+  buffer.value_x = floor(value * (10)) / 10;
   if (buffer.value_x > 1) {
     buffer.value_x = 1;
   }  else if (buffer.value_x < -1) {
@@ -106,11 +106,17 @@ void GamePadMngr::axisRightY_packet(double value) {
   //buffer.value_x= QGamepad::axisRightX();
   //qDebug() << "Right X" << buffer.value_x;
   qDebug() << "Right Y" << value;
-  buffer.value_y = floor(value * (-100)) / 100; // For some reason value is inverted
+  buffer.value_y = floor(value * (-10)) / 10; // For some reason value is inverted
   if (buffer.value_y > 1) {
     buffer.value_y = 1;
   } else if (buffer.value_y < -1) {
     buffer.value_y = -0.99;
+  }
+  if (buffer.value_y < 0.2 && buffer.value_y> 0) {
+    buffer.value_y = 0;
+  }
+  if (buffer.value_y > -0.2 && buffer.value_y < 0) {
+    buffer.value_y = 0;
   }
   //thread.SetRawAction(buffer);
   thread.SetAxis_y(buffer.value_y);

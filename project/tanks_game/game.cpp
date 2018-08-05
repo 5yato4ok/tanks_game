@@ -43,22 +43,9 @@ void Game::sessionOpened() {
     settings.setValue(QLatin1String("DefaultNetworkConfiguration"), id);
     settings.endGroup();
   }
-  //Finding ip on wich we will have fun
-  QString ipAddress;
-  QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
-  // use the first non-localhost IPv4 address
-  QHostAddress ip;
-  for (int i = 0; i < ipAddressesList.size(); ++i) {
-    if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address()) {
-      ipAddress = ipAddressesList.at(i).toString();
-      ip = ipAddressesList.at(i);
-      break;
-    }
-  }
-  // if we did not find one, use IPv4 localhost
 
-  if (ipAddress.isEmpty())
-    ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+  // use the first non-localhost IPv4 address
+  QHostAddress ip (g_server_ip);
   if (!server.listen(ip, g_game_port)) {
     qDebug() << "Unable to start the server: %1. " << server.errorString();
     //close();
@@ -66,7 +53,7 @@ void Game::sessionOpened() {
   }
   gui->label->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
     "Run the Tank Client example now.")
-    .arg(ipAddress).arg(g_game_port));
+    .arg(ip.toString()).arg(g_game_port));
   gui->centralWidget->update();
 }
 

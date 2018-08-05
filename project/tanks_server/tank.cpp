@@ -5,7 +5,7 @@ TankMngr::TankMngr(Ui_MainWindow* gui_) :
  tower(gui_,ard_mngr),track(gui_,ard_mngr) {
   connect(this, &Player_server::server_started, this, &TankMngr::init_receive_port);
   connect(this, SIGNAL(tankDataReceived(TankAction)), SLOT(ReceiveClientData(TankAction)));
-  connect(&ard_mngr, &ArduinoSender::tankDataReceived, this, &TankMngr::ReceveArduinoData);
+  connect(&ard_mngr, &ArduinoSender::ArdDataReceived, this, &TankMngr::ReceveArduinoData);
 }
 
 void TankMngr::ReceveArduinoData(std::string buffer_) {

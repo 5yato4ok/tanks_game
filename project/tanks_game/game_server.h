@@ -21,7 +21,7 @@ class Game_Server: public QTcpServer {
  protected:
   void incomingConnection(qintptr socketDescriptor) override;
  private:
-   void start_sending_thread(qintptr socketDescriptor, ServerBuffer tmp);
+   void start_sending_thread(QTcpSocket* sock, ServerBuffer tmp);
    std::string get_hitted_by(ServerBuffer& buffer);
   void manage_client_buffer(QTcpSocket*, ServerBuffer& buffer);
   ServerBuffer change_cpc(ServerBuffer& buffer, QTcpSocket *socket);

@@ -22,7 +22,7 @@ void Camera_Init_Thread::OpenVideo(std::string camera_url_) {
 }
 
 void Camera_Init_Thread::run() {
-  capture.open(camera_url, cv::CAP_FFMPEG);// cv::CAP_GSTREAMER);
+  capture.open(camera_url,cv::CAP_FFMPEG);// cv::CAP_GSTREAMER);
   emit camera_initialized(capture.isOpened());
 }
 

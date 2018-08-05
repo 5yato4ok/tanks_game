@@ -19,7 +19,7 @@ void ArduinoSender::readyRead() {
   std::string s_data = data.toStdString();
   //ArduinoBuffer buffer;
   //memcpy(&buffer, data.data(), data.size());
-  emit tankDataReceived(s_data);
+  emit ArdDataReceived(s_data);
 }
 
 bool ArduinoSender::connect_to_host_out() {

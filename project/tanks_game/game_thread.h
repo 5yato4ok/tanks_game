@@ -8,7 +8,7 @@ namespace game {
 class Game_Thread_Sender : public QThread {
   Q_OBJECT
 public:
-  Game_Thread_Sender(int socketDescriptor, const ServerBuffer &respond, QObject *parent);
+  Game_Thread_Sender(QTcpSocket* socket, const ServerBuffer &respond, QObject *parent);
   void run() override;
 
 signals:
@@ -16,6 +16,7 @@ signals:
 private:
   //bool sendBuffer(QByteArray block);
   //player_map_with_current_rules
+  QTcpSocket* current_socket;
   int socketDescriptor;
   ServerBuffer respond;
   std::vector<int32_t> intialized_players;

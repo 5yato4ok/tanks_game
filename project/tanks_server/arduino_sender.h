@@ -23,7 +23,7 @@ class ArduinoSender:public QObject {
   tank_status SendAction(std::string& packet);
   
  signals:
-  void tankDataReceived(std::string action);
+  void ArdDataReceived(std::string action);
  private slots:
   void readyRead();
   void displayError(QAbstractSocket::SocketError socketError);

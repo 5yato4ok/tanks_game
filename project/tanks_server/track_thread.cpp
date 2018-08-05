@@ -62,10 +62,13 @@ void TrackThread::Thread_Send_Sequence() {
     }
     if (required.right_track < current.right_track) {
       current.right_track.velocity -= i;
+      current.right_track.is_right = true;
     } else if (required.left_track == current.left_track) {
       current.right_track = required.right_track;
+      current.right_track.is_right = true;
     } else {
       current.right_track.velocity += i;
+      current.right_track.is_right = true;
     }
     current.right_track.is_right = true;
     emit send_action(current);
