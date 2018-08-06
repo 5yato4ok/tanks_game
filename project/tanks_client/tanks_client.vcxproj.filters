@@ -56,6 +56,9 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="main_client.cpp" />
+    <ClCompile Include="timer_thread.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="tanks_client.ui">
@@ -88,6 +91,9 @@
     </QtMoc>
     <QtMoc Include="cam_play_thread.h">
       <Filter>player\camera</Filter>
+    </QtMoc>
+    <QtMoc Include="timer_thread.h">
+      <Filter>player</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

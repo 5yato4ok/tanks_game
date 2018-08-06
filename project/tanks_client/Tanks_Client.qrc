@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="Tanks_Client">
+    <qresource prefix="/Tanks_Client">
+        <file>Resources/gun_shot.wav</file>
+        <file>Resources/logo.png</file>
     </qresource>
 </RCC>

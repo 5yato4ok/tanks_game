@@ -31,7 +31,7 @@ void Camera::StopVideo() {
 }
 
 void Camera::loading_complete(bool is_loaded) {
-  ui->connect_server->setEnabled(true);
+  //ui->connect_server->setEnabled(true);
   if (is_loaded) {
     ui->output->appendPlainText("Video is succesfuly loaded.");
     emit video_loaded();
