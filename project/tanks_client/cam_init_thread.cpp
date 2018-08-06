@@ -13,7 +13,7 @@ Camera_Init_Thread::Camera_Init_Thread(Camera_Init_Thread && copy) :
 
 void Camera_Init_Thread::OpenVideo(std::string camera_url_) {
   camera_url = camera_url_;
-  ui->connect_server->setEnabled(false);
+  ui->connect_server->hide();
   ui->output->appendPlainText(QTime::currentTime().toString()+"Starting to load video. It may take some time:");
   ui->output->appendPlainText("Input stream: " + QString::fromStdString(camera_url));
   if (!isRunning()) {

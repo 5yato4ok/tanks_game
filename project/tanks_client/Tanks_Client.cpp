@@ -6,7 +6,6 @@ Tanks_Client::Tanks_Client(QMainWindow *parent) : Player_local(parent),
   connect(ui->comboBox, &QComboBox::editTextChanged, this, &Tanks_Client::enable_reconnect_button);
   connect(ui->connect_server, &QAbstractButton::clicked,this, &Tanks_Client::reconnect);
   connect(this, &Player_local::is_authenticated, this, &Tanks_Client::Connect_signals);
-
   get_default_buttons_settings();
 
 }
@@ -32,8 +31,16 @@ void Tanks_Client::set_gui() {
   gun_shot.setSource(QUrl::fromLocalFile("gun_shot.wav"));
   gun_shot.setVolume(0.25f);
   ui->logo->setAlignment(Qt::AlignCenter);
-  ui->logo->setPixmap(QPixmap("logo.png"));//.scaled(ui->output->size()));
+  ui->logo->setPixmap(QPixmap("logo.png"));
   ui->logo_name->setPixmap(QPixmap("logo_name.png"));
+  QPalette sample_palette;
+  sample_palette.setColor(QPalette::Window, Qt::black);
+  sample_palette.setColor(QPalette::WindowText, Qt::red);
+  ui->label_2->setAutoFillBackground(true);
+  QFont f("Arial", 10, QFont::Bold);
+  ui->label_2->setFont(f);
+  ui->label_2->setPalette(sample_palette);
+  setPalette(sample_palette);
   connect(ui->debugButton, &QPushButton::clicked, this, &Tanks_Client::show_debug_window);
 
 }
@@ -41,7 +48,6 @@ void Tanks_Client::set_gui() {
 void Tanks_Client::resizeEvent(QResizeEvent* event) {
   QMainWindow::resizeEvent(event);
   ui->layoutWidget->resize(event->size());
-  //ui->layoutWidget->resizeEvent(event);
 }
 
 void Tanks_Client::change_hp(Player_condition current_condition) {
@@ -174,7 +180,7 @@ void Tanks_Client::Connect_signals() {
 
 void Tanks_Client::game_over(Player_condition current_condition) {
   ui->gameState->appendPlainText("Game_over!");
-  ui->connect_server->setEnabled(true);
+  ui->connect_server->show();
 }
 
 void Tanks_Client::Disconnect_signals() {
