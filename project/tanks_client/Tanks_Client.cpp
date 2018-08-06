@@ -7,7 +7,6 @@ Tanks_Client::Tanks_Client(QMainWindow *parent) : Player_local(parent),
   connect(ui->connect_server, &QAbstractButton::clicked,this, &Tanks_Client::reconnect);
   connect(this, &Player_local::is_authenticated, this, &Tanks_Client::Connect_signals);
   get_default_buttons_settings();
-
 }
 
 void Tanks_Client::show_debug_window() {
@@ -41,8 +40,8 @@ void Tanks_Client::set_gui() {
   ui->label_2->setFont(f);
   ui->label_2->setPalette(sample_palette);
   setPalette(sample_palette);
+  setWindowIcon(QIcon("icon.png"));
   connect(ui->debugButton, &QPushButton::clicked, this, &Tanks_Client::show_debug_window);
-
 }
 
 void Tanks_Client::resizeEvent(QResizeEvent* event) {

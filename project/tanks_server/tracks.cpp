@@ -7,6 +7,14 @@ Track_mngr::Track_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_)
   connect(&thread, &TrackThread::send_action, this, &Track_mngr::send_to_arduino);
 }
 
+void Track_mngr::Reset() {
+  current_tracks.left_track.velocity = 0;
+  current_tracks.right_track.velocity = 0;
+  thread.Exit();
+  std::string null_tracks = "M0";
+  ard_mngr.SendAction(null_tracks);
+}
+
 //M000111 Ц управление гусеницами танка, где :
 //  1 цифра Ц направление движени€ левой гусеницы(0 - вперед, 1 Ц назад)
 //  2 - 3 цифры Ц мощность в процентах от 00 до 99 поданна€ на левую гусеницу танка
@@ -71,10 +79,12 @@ void Track_mngr::send_to_arduino(Tank_Tracks tracks_descr) {
 
 void Track_mngr::update_tracks(Tank_Tracks& tracks_descr) {
   current_tracks = tracks_descr;
+  current_tracks.right_track.is_right = true;
 }
 
 tank_status Track_mngr::ManageAction(TankAction& action) {
   Tank_Tracks tracks_descr = get_tracks_descr(action);
+  tracks_descr.right_track.is_right = true;
   thread.Exit();
   thread.SetPacket(current_tracks,tracks_descr);
   thread.Start();

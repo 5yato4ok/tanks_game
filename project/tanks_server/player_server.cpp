@@ -132,6 +132,7 @@ void Player_server::newConnection() {
     qint32 *s = new qint32(0);
     buffers.insert(socket_client, buffer);
     sizes.insert(socket_client, s);
+    emit new_player();
   }
 }
 

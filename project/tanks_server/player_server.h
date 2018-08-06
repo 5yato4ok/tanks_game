@@ -26,6 +26,7 @@ class Player_server: public QObject {
   void tankDataReceived(TankAction action);
   void dataReceived(QByteArray);
   void server_started(int32_t player_id);
+  void new_player();
  public slots:
   void StartServer();
  protected:

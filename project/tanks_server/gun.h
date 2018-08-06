@@ -12,6 +12,7 @@ class Gun_mngr {
  public:
   Gun_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr);
   tank_status ManageAction(TankAction& action);
+  void Reset();
  private:
   bool is_action_valid(TankAction & action);
   bool is_step_less_max();

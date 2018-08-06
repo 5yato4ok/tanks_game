@@ -8,6 +8,14 @@ Gun_mngr::Gun_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_):
   min_rotation = 0;
 }
 
+void Gun_mngr::Reset() {
+  gui->tank_out->appendPlainText("Gun manager:\n Reseting tank");
+  cur_rotation = 0;
+  TankAction action;
+  std::string null_gun = "G00";
+  ard_mngr.SendAction(null_gun);
+}
+
 tank_status Gun_mngr::ManageAction(TankAction & action) {
   switch (action.type) {
   case action_type::SHOT:

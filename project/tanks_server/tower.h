@@ -14,6 +14,7 @@ class Tower_mngr: QObject {
  public:
   Tower_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr, QObject *parent = nullptr);
   tank_status ManageAction(TankAction& action);
+  void Reset();
  private:
   Ui_MainWindow* gui;
   ArduinoSender& ard_mngr;

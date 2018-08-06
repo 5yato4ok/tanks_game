@@ -5,6 +5,15 @@ Tower_mngr::Tower_mngr(Ui_MainWindow* gui_, ArduinoSender& ard_mngr_,QObject *pa
   cur_rotation_step = update_rotation_step();
 }
 
+void Tower_mngr::Reset() {
+  gui->tank_out->appendPlainText("Tower manager:\n Reseting tank");
+  cur_rotation_step = 0;
+  TankAction action;
+  std::string null_tower = "H00";
+  ard_mngr.SendAction(null_tower);
+  gun.Reset();
+}
+
 int32_t Tower_mngr::update_rotation_step() {
   //form buffer with command give info about cur rotation
   //send it to arduino

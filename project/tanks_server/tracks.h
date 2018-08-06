@@ -17,6 +17,7 @@ class Track_mngr:public QObject {
  public:
   Track_mngr(Ui_MainWindow* gui, ArduinoSender& ard_mngr);
   tank_status ManageAction(TankAction& action);
+  void Reset();
  public slots:
   void send_to_arduino(Tank_Tracks tracks_descr);
   void update_tracks(Tank_Tracks& tracks_descr);

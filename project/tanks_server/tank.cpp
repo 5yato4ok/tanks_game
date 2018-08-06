@@ -6,6 +6,7 @@ TankMngr::TankMngr(Ui_MainWindow* gui_) :
   connect(this, &Player_server::server_started, this, &TankMngr::init_receive_port);
   connect(this, SIGNAL(tankDataReceived(TankAction)), SLOT(ReceiveClientData(TankAction)));
   connect(&ard_mngr, &ArduinoSender::ArdDataReceived, this, &TankMngr::ReceveArduinoData);
+  connect(this, &Player_server::new_player, this, &TankMngr::reset_tank);
 }
 
 void TankMngr::ReceveArduinoData(std::string buffer_) {
@@ -18,6 +19,11 @@ void TankMngr::ReceveArduinoData(std::string buffer_) {
     //some initialization based on buffer
     Player_server::ManageArduinoInfo(buffer);
   }
+}
+
+void TankMngr::reset_tank() {
+  tower.Reset();
+  track.Reset();
 }
 
 void TankMngr::ReceiveClientData(TankAction buffer) {
