@@ -3,6 +3,7 @@ namespace client {
 Tanks_Client::Tanks_Client(QMainWindow *parent) : Player_local(parent),
  ui(new Ui::Tanks_ClientClass),camera(ui,parent), can_shoot(true), timer(30000){
   set_gui();
+  Connect_signals();
   connect(ui->comboBox, &QComboBox::editTextChanged, this, &Tanks_Client::enable_reconnect_button);
   connect(ui->connect_server, &QAbstractButton::clicked,this, &Tanks_Client::reconnect);
   connect(this, &Player_local::is_authenticated, this, &Tanks_Client::Connect_signals);
