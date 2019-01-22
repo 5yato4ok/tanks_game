@@ -5,7 +5,6 @@ Tanks is a project for controlling Arduino based game devices and use them in a 
 
 tanks_client:
 =============
-This is a GUI application allows to:
 * Control remote game device,based on Arduino platform. It handles input from gamepad and send it to the tanks_server;
 * Shows game statistic from game server.
 * Handles video-camera output from Arduino device.
