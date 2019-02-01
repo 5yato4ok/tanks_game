@@ -1,7 +1,8 @@
 Tanks Game
 ==========
 
-Tanks is a project for controlling Arduino based game devices and use them in a game. All applications in this project have been written on C++, with some Qt libs and OpenCV libs. This project contains 3 applications:
+Tanks is a project for controlling Arduino based game devices and use them in a game. All documentation, which contains *UML* description of classes, description of protocol, are in folder docs.  
+All applications in this project have been written on *C++*, with some *Qt libs* and *OpenCV* libs. This project contains 3 applications:
 
 tanks_client:
 =============
